@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core'
 ]
 
 MIDDLEWARE = [
@@ -74,8 +75,12 @@ WSGI_APPLICATION = 'anjosdaruaproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'anjosdaruaDB',    # The name of the database you created
+        'USER': 'postgres',        # Your PostgreSQL username
+        'PASSWORD': 'mandioca', # The password you set during installation
+        'HOST': 'localhost',       # Or the IP address of your database server
+        'PORT': '5432',            # The default PostgreSQL port
     }
 }
 

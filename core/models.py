@@ -21,7 +21,7 @@ class Endereco(models.Model):
 
 class Abrigo(models.Model):
     nome = models.CharField(max_length=50)
-    endereco = models.ForeignKey(Endereco, on_delete=models.SET_NULL)
+    endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nome
