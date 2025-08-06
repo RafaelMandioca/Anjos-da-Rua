@@ -1,0 +1,18 @@
+<header>
+    <nav>
+        <a href="{% url 'index' %}">Anjos da Rua</a>
+        <ul>
+            <li><a href="{% url 'veterinario-list' %}">Veterinários</a></li>
+            <li><a href="{% url 'animal-list' %}">Animais</a></li>
+            <li><a href="{% url 'especie-list' %}">Espécies</a></li>
+            <li><a href="{% url 'item-list' %}">Itens</a></li>
+            <li><a href="{% url 'abrigo-list' %}">Abrigos</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="#">Olá, {{ user.username }}</a></li>
+                <li><a href="{% url 'logout' %}">Sair</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}">Entrar</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>

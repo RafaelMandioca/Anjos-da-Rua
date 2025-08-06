@@ -1,16 +1,8 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anjos da Rua</title>
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
-</head>
-<body>
-    <h1>Welcome to Anjos da Rua!</h1>
-    <p>This is a test page.</p>
+{% extends 'core/base.html' %}
 
-    <script src="{% static 'js/main.js' %}"></script>
-</body>
-</html>
+{% block title %}Página Inicial - Anjos da Rua{% endblock %}
+
+{% block content %}
+    <h1>Bem-vindo ao Sistema Anjos da Rua!</h1>
+    <p>Este é o painel de controle do sistema. Use a navegação acima para gerenciar as diferentes seções.</p>
+{% endblock %}

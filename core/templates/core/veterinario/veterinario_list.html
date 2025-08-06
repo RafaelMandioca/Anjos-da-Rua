@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lista de Veterinários{% endblock %}
+
+{% block content %}
+    <h1>Veterinários</h1>
+    <a href="{% url 'veterinario-create' %}" class="btn">Adicionar Veterinário</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for veterinario in object_list %}
+            <tr>
+                <td>{{ veterinario.nome }}</td>
+                <td>{{ veterinario.email }}</td>
+                <td>{{ veterinario.telefone }}</td>
+                <td>
+                    <a href="{% url 'veterinario-detail' veterinario.pk %}">Ver</a>
+                    <a href="{% url 'veterinario-update' veterinario.pk %}">Editar</a>
+                    <a href="{% url 'veterinario-delete' veterinario.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Nenhum veterinário cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
