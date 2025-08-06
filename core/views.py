@@ -222,3 +222,8 @@ class AtendimentoVeterinarioUpdateView(UpdateView):
 class AtendimentoVeterinarioDeleteView(DeleteView):
   model = AtendimentoVeterinario
   success_url = reverse_lazy('atendimentoveterinario-list')
+
+######################################################################
+
+def index(request):
+  return render(request, 'core/index.html')

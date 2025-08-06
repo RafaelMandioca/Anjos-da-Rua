@@ -1,0 +1,39 @@
+# Environment
+# ----------------------------------------------------------------
+# Ignore the virtual environment folder
+venv/
+
+# Ignore the environment variables file, it contains secrets!
+.env
+
+# Python / Django
+# ----------------------------------------------------------------
+# Ignore Python's bytecode cache
+anjosdaruaproject\__pycache__
+*.pyc
+
+# Ignore the directory where Django collects static files for production
+staticfiles/
+
+# Ignore SQLite databases if you use one for local testing
+db.sqlite3
+*.sqlite3
+
+# Ignore log files
+*.log
+
+# Node.js / Frontend
+# ----------------------------------------------------------------
+# Ignore Node.js dependency folder
+node_modules/
+
+# Ignore npm log files
+npm-debug.log*
+
+# IDE / Editor
+# ----------------------------------------------------------------
+# Ignore common editor-specific folders and files
+.vscode/
+.idea/
+*.swp
+*.swo

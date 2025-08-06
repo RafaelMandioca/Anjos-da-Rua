@@ -1,0 +1,16 @@
+{
+  "name": "anjosdaruaproject",
+  "version": "1.0.0",
+  "scripts": {
+    "scss": "sass static/scss:static/css --watch",
+    "dev": "browser-sync start --proxy '127.0.0.1:8000' --files 'static/css/*.css, static/js/*.js, core/templates/**/*.html'",
+    "start": "npm-run-all --parallel scss dev"
+  },
+  "dependencies": {
+    "browser-sync": "^3.0.4",
+    "sass": "^1.77.8"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
