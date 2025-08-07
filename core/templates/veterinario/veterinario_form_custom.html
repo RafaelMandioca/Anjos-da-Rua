@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Adicionar Veterinário{% endblock %}
+
+{% block content %}
+    <h1>Adicionar Veterinário</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <fieldset>
+            <legend>Dados Pessoais</legend>
+            {{ veterinario_form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>CRMV</legend>
+            {# O management_form é essencial para o formset funcionar #}
+            {{ crmv_formset.management_form }}
+            {% for form in crmv_formset %}
+                {{ form.as_p }}
+            {% endfor %}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>Endereço</legend>
+            {# O management_form é essencial para o formset funcionar #}
+            {{ endereco_formset.management_form }}
+            {% for form in endereco_formset %}
+                {{ form.as_p }}
+            {% endfor %}
+        </fieldset>
+
+        <br>
+        <button type="submit" class="btn">Salvar</button>
+        <a href="{% url 'veterinario-list' %}" class="btn">Cancelar</a>
+    </form>
+{% endblock %}

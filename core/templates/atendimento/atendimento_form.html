@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ form_title }}</h1>
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <fieldset>
+            <legend>Dados do Atendimento</legend>
+            {{ form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>Itens Utilizados</legend>
+            {{ formset.management_form }}
+            {% for item_form in formset %}
+                <div class="item-form">
+                    {{ item_form.as_p }}
+                </div>
+            {% endfor %}
+        </fieldset>
+
+        <br>
+        <button type="submit" class="btn">Salvar Atendimento</button>
+        <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+    </form>
+{% endblock %}

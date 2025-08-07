@@ -4,7 +4,8 @@
   "scripts": {
     "scss": "sass static/scss:static/css --watch",
     "dev": "browser-sync start --proxy 127.0.0.1:8000 --files 'static/css/*.css, static/js/*.js, core/templates/**/*.html' --reload-delay 50",
-    "start": "npm-run-all --parallel scss dev"
+    "django-dev": "python manage.py runserver --settings=anjosdaruaproject.settings.development",
+    "start": "npm-run-all --parallel scss dev django-dev"
   },
   "dependencies": {
     "browser-sync": "^3.0.4",

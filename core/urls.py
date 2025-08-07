@@ -1,85 +1,77 @@
+# core/urls.py
+
 from django.urls import path
-from .views import (
-   VeterinarioListView, VeterinarioDetailView, VeterinarioCreateView, VeterinarioUpdateView, VeterinarioDeleteView,
-   AnimalListView, AnimalDetailView, AnimalCreateView, AnimalUpdateView, AnimalDeleteView,
-   EspecieListView, EspecieDetailView, EspecieCreateView, EspecieUpdateView, EspecieDeleteView,
-   ItemListView, ItemDetailView, ItemCreateView, ItemUpdateView, ItemDeleteView,
-   CidadeListView, CidadeDetailView, CidadeCreateView, CidadeUpdateView, CidadeDeleteView,
-   EnderecoListView, EnderecoDetailView, EnderecoCreateView, EnderecoUpdateView, EnderecoDeleteView,
-   AbrigoListView, AbrigoDetailView, AbrigoCreateView, AbrigoUpdateView, AbrigoDeleteView,
-   CrmvListView, CrmvDetailView, CrmvCreateView, CrmvUpdateView, CrmvDeleteView,
-   TipoConsultaListView, TipoConsultaDetailView, TipoConsultaCreateView, TipoConsultaUpdateView, TipoConsultaDeleteView,
-   AtendimentoVeterinarioListView, AtendimentoVeterinarioDetailView, AtendimentoVeterinarioCreateView, AtendimentoVeterinarioUpdateView, AtendimentoVeterinarioDeleteView,
-)
+
+# Import each view module from the views package directly
+from .views import animal, atendimento, cadastros_gerais, item, veterinario
 
 urlpatterns = [
    # Veterinario
-   path('veterinarios/', VeterinarioListView.as_view(), name='veterinario-list'),
-   path('veterinario/<int:pk>/', VeterinarioDetailView.as_view(), name='veterinario-detail'),
-   path('veterinario/add/', VeterinarioCreateView.as_view(), name='veterinario-create'),
-   path('veterinario/<int:pk>/edit/', VeterinarioUpdateView.as_view(), name='veterinario-update'),
-   path('veterinario/<int:pk>/delete/', VeterinarioDeleteView.as_view(), name='veterinario-delete'),
+   path('veterinarios/', veterinario.VeterinarioListView.as_view(), name='veterinario-list'),
+   path('veterinario/<int:pk>/', veterinario.VeterinarioDetailView.as_view(), name='veterinario-detail'),
+   path('veterinario/add/', veterinario.veterinario_create, name='veterinario-create'),
+   path('veterinario/<int:pk>/delete/', veterinario.VeterinarioDeleteView.as_view(), name='veterinario-delete'),
 
    # Animal
-   path('animais/', AnimalListView.as_view(), name='animal-list'),
-   path('animal/<int:pk>/', AnimalDetailView.as_view(), name='animal-detail'),
-   path('animal/add/', AnimalCreateView.as_view(), name='animal-create'),
-   path('animal/<int:pk>/edit/', AnimalUpdateView.as_view(), name='animal-update'),
-   path('animal/<int:pk>/delete/', AnimalDeleteView.as_view(), name='animal-delete'),
-   
-   # Especie
-   path('especies/', EspecieListView.as_view(), name='especie-list'),
-   path('especie/<int:pk>/', EspecieDetailView.as_view(), name='especie-detail'),
-   path('especie/add/', EspecieCreateView.as_view(), name='especie-create'),
-   path('especie/<int:pk>/edit/', EspecieUpdateView.as_view(), name='especie-update'),
-   path('especie/<int:pk>/delete/', EspecieDeleteView.as_view(), name='especie-delete'),
+   path('animais/', animal.AnimalListView.as_view(), name='animal-list'),
+   path('animal/<int:pk>/', animal.AnimalDetailView.as_view(), name='animal-detail'),
+   path('animal/add/', animal.animal_create, name='animal-create'),
+   path('animal/<int:pk>/edit/', animal.animal_update, name='animal-update'),
+   path('animal/<int:pk>/delete/', animal.AnimalDeleteView.as_view(), name='animal-delete'),
+
+   # Especie (Assuming these are in 'animal.py' or a new 'especie.py')
+   path('especies/', animal.EspecieListView.as_view(), name='especie-list'),
+   path('especie/<int:pk>/', animal.EspecieDetailView.as_view(), name='especie-detail'),
+   path('especie/add/', animal.especie_create, name='especie-create'),
+   path('especie/<int:pk>/edit/', animal.especie_update, name='especie-update'),
+   path('especie/<int:pk>/delete/', animal.EspecieDeleteView.as_view(), name='especie-delete'),
 
    # Item
-   path('itens/', ItemListView.as_view(), name='item-list'),
-   path('item/<int:pk>/', ItemDetailView.as_view(), name='item-detail'),
-   path('item/add/', ItemCreateView.as_view(), name='item-create'),
-   path('item/<int:pk>/edit/', ItemUpdateView.as_view(), name='item-update'),
-   path('item/<int:pk>/delete/', ItemDeleteView.as_view(), name='item-delete'),
+   path('itens/', item.ItemListView.as_view(), name='item-list'),
+   path('item/<int:pk>/', item.ItemDetailView.as_view(), name='item-detail'),
+   path('item/add/', item.item_create, name='item-create'),
+   path('item/<int:pk>/edit/', item.item_update, name='item-update'),
+   path('item/<int:pk>/delete/', item.ItemDeleteView.as_view(), name='item-delete'),
 
    # Cidade
-   path('cidades/', CidadeListView.as_view(), name='cidade-list'),
-   path('cidade/<int:pk>/', CidadeDetailView.as_view(), name='cidade-detail'),
-   path('cidade/add/', CidadeCreateView.as_view(), name='cidade-create'),
-   path('cidade/<int:pk>/edit/', CidadeUpdateView.as_view(), name='cidade-update'),
-   path('cidade/<int:pk>/delete/', CidadeDeleteView.as_view(), name='cidade-delete'),
+   path('cidades/', cadastros_gerais.CidadeListView.as_view(), name='cidade-list'),
+   path('cidade/<int:pk>/', cadastros_gerais.CidadeDetailView.as_view(), name='cidade-detail'),
+   path('cidade/add/', cadastros_gerais.cidade_create, name='cidade-create'),
+   path('cidade/<int:pk>/edit/', cadastros_gerais.cidade_update, name='cidade-update'),
+   path('cidade/<int:pk>/delete/', cadastros_gerais.CidadeDeleteView.as_view(), name='cidade-delete'),
 
    # Endereço
-   path('enderecos/', EnderecoListView.as_view(), name='endereco-list'),
-   path('endereco/<int:pk>/', EnderecoDetailView.as_view(), name='endereco-detail'),
-   path('endereco/add/', EnderecoCreateView.as_view(), name='endereco-create'),
-   path('endereco/<int:pk>/edit/', EnderecoUpdateView.as_view(), name='endereco-update'),
-   path('endereco/<int:pk>/delete/', EnderecoDeleteView.as_view(), name='endereco-delete'),
+   path('enderecos/', cadastros_gerais.EnderecoListView.as_view(), name='endereco-list'),
+   path('endereco/<int:pk>/', cadastros_gerais.EnderecoDetailView.as_view(), name='endereco-detail'),
+   path('endereco/add/', cadastros_gerais.endereco_create, name='endereco-create'),
+   path('endereco/<int:pk>/edit/', cadastros_gerais.endereco_update, name='endereco-update'),
+   path('endereco/<int:pk>/delete/', cadastros_gerais.EnderecoDeleteView.as_view(), name='endereco-delete'),
 
    # Abrigo
-   path('abrigos/', AbrigoListView.as_view(), name='abrigo-list'),
-   path('abrigo/<int:pk>/', AbrigoDetailView.as_view(), name='abrigo-detail'),
-   path('abrigo/add/', AbrigoCreateView.as_view(), name='abrigo-create'),
-   path('abrigo/<int:pk>/edit/', AbrigoUpdateView.as_view(), name='abrigo-update'),
-   path('abrigo/<int:pk>/delete/', AbrigoDeleteView.as_view(), name='abrigo-delete'),
+   path('abrigos/', cadastros_gerais.AbrigoListView.as_view(), name='abrigo-list'),
+   path('abrigo/<int:pk>/', cadastros_gerais.AbrigoDetailView.as_view(), name='abrigo-detail'),
+   path('abrigo/add/', cadastros_gerais.abrigo_create, name='abrigo-create'),
+   path('abrigo/<int:pk>/edit/', cadastros_gerais.abrigo_update, name='abrigo-update'),
+   path('abrigo/<int:pk>/delete/', cadastros_gerais.AbrigoDeleteView.as_view(), name='abrigo-delete'),
 
    # CRMV
-   path('crmvs/', CrmvListView.as_view(), name='crmv-list'),
-   path('crmv/<int:pk>/', CrmvDetailView.as_view(), name='crmv-detail'),
-   path('crmv/add/', CrmvCreateView.as_view(), name='crmv-create'),
-   path('crmv/<int:pk>/edit/', CrmvUpdateView.as_view(), name='crmv-update'),
-   path('crmv/<int:pk>/delete/', CrmvDeleteView.as_view(), name='crmv-delete'),
-   
+   path('crmvs/', veterinario.CrmvListView.as_view(), name='crmv-list'),
+   path('crmv/<int:pk>/', veterinario.CrmvDetailView.as_view(), name='crmv-detail'),
+   path('crmv/add/', veterinario.crmv_create, name='crmv-create'),
+   path('crmv/<int:pk>/edit/', veterinario.crmv_update, name='crmv-update'),
+   path('crmv/<int:pk>/delete/', veterinario.CrmvDeleteView.as_view(), name='crmv-delete'),
+
    # Tipo de Consulta
-   path('tiposconsulta/', TipoConsultaListView.as_view(), name='tipoconsulta-list'),
-   path('tipoconsulta/<int:pk>/', TipoConsultaDetailView.as_view(), name='tipoconsulta-detail'),
-   path('tipoconsulta/add/', TipoConsultaCreateView.as_view(), name='tipoconsulta-create'),
-   path('tipoconsulta/<int:pk>/edit/', TipoConsultaUpdateView.as_view(), name='tipoconsulta-update'),
-   path('tipoconsulta/<int:pk>/delete/', TipoConsultaDeleteView.as_view(), name='tipoconsulta-delete'),
-   
+   path('tiposconsulta/', atendimento.TipoConsultaListView.as_view(), name='tipoconsulta-list'),
+   path('tipoconsulta/<int:pk>/', atendimento.TipoConsultaDetailView.as_view(), name='tipoconsulta-detail'),
+   path('tipoconsulta/add/', atendimento.tipoconsulta_create, name='tipoconsulta-create'),
+   path('tipoconsulta/<int:pk>/edit/', atendimento.tipoconsulta_update, name='tipoconsulta-update'),
+   path('tipoconsulta/<int:pk>/delete/', atendimento.TipoConsultaDeleteView.as_view(), name='tipoconsulta-delete'),
+
    # Atendimento Veterinário
-   path('atendimentos/', AtendimentoVeterinarioListView.as_view(), name='atendimentoveterinario-list'),
-   path('atendimento/<int:pk>/', AtendimentoVeterinarioDetailView.as_view(), name='atendimentoveterinario-detail'),
-   path('atendimento/add/', AtendimentoVeterinarioCreateView.as_view(), name='atendimentoveterinario-create'),
-   path('atendimento/<int:pk>/edit/', AtendimentoVeterinarioUpdateView.as_view(), name='atendimentoveterinario-update'),
-   path('atendimento/<int:pk>/delete/', AtendimentoVeterinarioDeleteView.as_view(), name='atendimentoveterinario-delete'),
+   path('atendimentos/', atendimento.AtendimentoVeterinarioListView.as_view(), name='atendimentoveterinario-list'),
+   path('atendimento/<int:pk>/', atendimento.AtendimentoVeterinarioDetailView.as_view(), name='atendimentoveterinario-detail'),
+   path('atendimento/add/', atendimento.atendimento_veterinario_create_update, name='atendimentoveterinario-create'),
+   path('atendimento/<int:pk>/edit/', atendimento.atendimento_veterinario_create_update, name='atendimentoveterinario-update'),
+   path('atendimento/<int:pk>/delete/', atendimento.AtendimentoVeterinarioDeleteView.as_view(), name='atendimentoveterinario-delete'),
 ]
