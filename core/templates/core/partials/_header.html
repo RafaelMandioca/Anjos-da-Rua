@@ -11,7 +11,7 @@
                     <li><a class="nav-estoque" href="{% url 'item-list' %}">Estoque</a></li>
                 {% endif %}
 
-                <li><a href="#">Olá, {{ user.nome }}</a></li>
+                <li><a href="#" class="nav-perfil">Olá, {{ user.nome }}</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
