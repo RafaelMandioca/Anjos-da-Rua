@@ -4,18 +4,18 @@
         <ul>
             {% if user.is_authenticated %}
                 {% if user.is_superuser %}
-                    <li><a href="{% url 'gerenciamento' %}">Gerenciamento</a></li>
-                    <li><a href="{% url 'admin:index' %}">Dashboard</a></li>
+                    <li><a class="nav-gerenciamento" href="{% url 'gerenciamento' %}">Gerenciamento</a></li>
+                    <li><a class="nav-dashboard" href="{% url 'admin:index' %}">Dashboard</a></li>
                 {% else %}
-                    <li><a href="{% url 'abrigo-list' %}">Abrigos</a></li>
-                    <li><a href="{% url 'item-list' %}">Estoque</a></li>
+                    <li><a class="nav-abrigo" href="{% url 'abrigo-list' %}">Abrigos</a></li>
+                    <li><a class="nav-estoque" href="{% url 'item-list' %}">Estoque</a></li>
                 {% endif %}
 
                 <li><a href="#">Olá, {{ user.nome }}</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit">
+                        <button class="nav-sair" type="submit">
                             Sair
                         </button>
                     </form>

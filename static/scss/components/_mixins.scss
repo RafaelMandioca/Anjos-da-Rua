@@ -8,13 +8,51 @@
    background-color: var.$medium-green;
 }
 
-@mixin ar-obj($p-ns: 5px, $p-we: 10px, $color) {
+@mixin ar-border($side: all) {
+   border: 1px solid rgba(var.$white, .3);
+   @if $side == top {
+      border-bottom: 0;
+      border-left: 0;
+      border-right: 0;
+   } @else if $side == right {
+      border-top: 0;
+      border-left: 0;
+      border-bottom: 0;
+   } @else if $side == left {
+      border-top: 0;
+      border-bottom: 0;
+      border-right: 0;
+   } @else if $side == bottom {
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+   }
+}
+
+@mixin ar-obj($p-ns: 5px, $p-we: 10px, $color, $hover: 1) {
    @include transition();
    padding: $p-ns $p-we;
    background-color: var.$dark-green;
    border-radius: var.$round;
+   @if $hover == 1 {
+      &:hover {
+         @include hover($color);
+      }
+   }
+}
+
+@mixin ar-btn($p-ns: 5px, $p-we: 10px, $border: 1, $color: var.$medium-green, $hcolor: var.$light-green, $rvar: 1) {
+   user-select: none;
+   background-color: var.$dark-green;
+   @if $border == 1 {
+      @include ar-border;
+   }
+   border-radius: calc(var.$round / $rvar);
+   padding: $p-ns $p-we;
+   cursor: pointer;
+   @include transition;
    &:hover {
-      @include hover($color);
+      @include hover($hcolor);
    }
 }
 

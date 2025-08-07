@@ -44,6 +44,7 @@ body {
 .container {
 	margin: var.$sp-sm auto 0 auto;
 	max-width: var.$site-content-maxwidth;
+	min-width: 80vw;
 	padding-left: var.$sp-site;
 	padding-right: var.$sp-site;
 	flex-grow: 1;
@@ -77,6 +78,7 @@ header {
 			cursor: pointer;
 			padding: 0;
 		}
+
 		a, button {
 			@include mix.ar-obj($color: var.$dark-green);
 			text-transform: uppercase;
@@ -98,28 +100,70 @@ header {
 	}
 }
 
-// Formulários
-form {
-	
-	p {
-		margin-bottom: 10px;
-	}
+$nav-espacamento: 5px;
 
-	label {
-		display: block;
-		margin-bottom: 5px;
+.nav-gerenciamento {
+	&::before {
+		@include mix.ar-icon(var.$gerenciamento-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 2px, 0, 0, 0);
 	}
+}
 
-	input[type="text"],
-	input[type="email"],
-	input[type="password"],
-	input[type="number"],
-	select,
-	textarea {
-		width: 100%;
-		padding: 8px;
-		border: 1px solid #ccc;
-		border-radius: 4px;
+.nav-dashboard {
+	&::before {
+		@include mix.ar-icon(var.$dashboard-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-abrigo {
+	&::before {
+		@include mix.ar-icon(var.$abrigo-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-estoque {
+	&::before {
+		@include mix.ar-icon(var.$estoque-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-sair {
+	&::before {
+		@include mix.ar-icon(var.$sair-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 0, 0, 0, 0);
+	}
+}
+
+// Titulos e Afins
+h1 { font-size: var.$fs-600; font-family: var.$ff-head; }
+h2 { font-size: var.$fs-500; font-family: var.$ff-head; }
+h3 { font-size: var.$fs-400; font-family: var.$ff-head; }
+h4 { font-size: var.$fs-300; font-family: var.$ff-head; }
+h5 { font-size: var.$fs-200; font-family: var.$ff-head; }
+h6 { font-size: var.$fs-100; font-family: var.$ff-head; }
+
+// Grid de Management
+.management-grid {
+	@include mix.ar-obj($p-ns: 15px, $p-we: 20px, $color: var.$dark-green, $hover: 0);
+	margin-top: var.$sp-sm;
+
+	display: grid;
+	grid-auto-flow: row;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.management-card {
+	display: flex;
+	align-items: center;
+	margin-bottom: var.$sp-xxsm;
+	a {
+		&::before {
+			@include mix.ar-icon(var.$editar-ico, var.$csize-head, var.$white, -4px, 0, var.$sp-xxsm, 0, 0, 0);
+		}
+		@include mix.ar-btn($p-ns: 5px, $p-we: 10px);
+		width: 95%;
+		color: var.$white;
+		text-decoration: none;
+		font-weight: bold;
+		font-family: var.$ff-head;
 	}
 }
 
