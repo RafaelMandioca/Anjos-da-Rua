@@ -7,12 +7,23 @@ from ..forms.form_item import ItemForm
 from .cadastros_gerais import generic_create_update_view
 
 # --- Item Views ---
-class ItemListView(ListView): model = Item
-class ItemDetailView(DetailView): model = Item
-class ItemDeleteView(DeleteView): model = Item; success_url = reverse_lazy('item-list')
+class ItemListView(ListView): 
+    model = Item
+    template_name = 'core/item/item_list.html'
+
+class ItemDetailView(DetailView): 
+    model = Item
+    template_name = 'core/item/item_detail.html'
+
+class ItemDeleteView(DeleteView): 
+    model = Item
+    success_url = reverse_lazy('item-list')
+    template_name = 'core/item/item_confirm_delete.html'
 
 def item_create(request):
-    return generic_create_update_view(request, ItemForm, 'Item', 'core/basic_form.html', 'item-list')
+    # Corrigindo o caminho do template para o formulário
+    return generic_create_update_view(request, ItemForm, 'Item', 'core/item/item_form.html', 'item-list')
 
 def item_update(request, pk):
-    return generic_create_update_view(request, ItemForm, 'Item', 'core/basic_form.html', 'item-list', pk=pk)
+    # Corrigindo o caminho do template para o formulário
+    return generic_create_update_view(request, ItemForm, 'Item', 'core/item/item_form.html', 'item-list', pk=pk)

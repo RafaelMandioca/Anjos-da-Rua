@@ -1,9 +1,9 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Adicionar Veterinário{% endblock %}
+{% block title %}{{ form_title }}{% endblock %}
 
 {% block content %}
-    <h1>Adicionar Veterinário</h1>
+    <h1>{{ form_title }}</h1>
     <form method="post">
         {% csrf_token %}
 
@@ -16,22 +16,14 @@
 
         <fieldset>
             <legend>CRMV</legend>
-            {# O management_form é essencial para o formset funcionar #}
-            {{ crmv_formset.management_form }}
-            {% for form in crmv_formset %}
-                {{ form.as_p }}
-            {% endfor %}
+            {{ crmv_form.as_p }}
         </fieldset>
 
         <hr>
 
         <fieldset>
             <legend>Endereço</legend>
-            {# O management_form é essencial para o formset funcionar #}
-            {{ endereco_formset.management_form }}
-            {% for form in endereco_formset %}
-                {{ form.as_p }}
-            {% endfor %}
+            {{ endereco_form.as_p }}
         </fieldset>
 
         <br>

@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lista de Itens{% endblock %}
+
+{% block content %}
+    <h1>Itens</h1>
+    <a href="{% url 'item-create' %}" class="btn">Adicionar Item</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço Unitário</th>
+                <th>Data de Validade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.categoria }}</td>
+                <td>R$ {{ item.preco_unitario }}</td>
+                <td>{{ item.data_validade|date:"d/m/Y" }}</td>
+                <td>
+                    <a href="{% url 'item-detail' item.pk %}">Ver</a>
+                    <a href="{% url 'item-update' item.pk %}">Editar</a>
+                    <a href="{% url 'item-delete' item.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum item cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

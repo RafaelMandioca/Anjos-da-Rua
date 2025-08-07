@@ -6,8 +6,8 @@ from ..models import Veterinario, CRMV
 class VeterinarioForm(forms.ModelForm):
     class Meta:
         model = Veterinario
-        # O campo 'endereco' será selecionado, não criado aqui.
-        fields = ['nome', 'cpf', 'email', 'telefone', 'senha_hash', 'endereco']
+        # O campo 'endereco' foi removido, pois será criado por outro formulário.
+        fields = ['nome', 'cpf', 'email', 'telefone', 'senha_hash']
         widgets = {
             'senha_hash': forms.PasswordInput(),
         }

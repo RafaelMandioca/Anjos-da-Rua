@@ -1,0 +1,9 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes do Abrigo{% endblock %}
+
+{% block content %}
+    <h1>{{ object.nome }}</h1>
+    <p><strong>Endereço:</strong> {{ object.endereco }}</p>
+    <a href="{% url 'abrigo-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}

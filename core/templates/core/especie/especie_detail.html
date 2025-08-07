@@ -1,0 +1,10 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes de {{ object.nome_popular }}{% endblock %}
+
+{% block content %}
+    <h1>{{ object.nome_popular }} ({{ object.nome_cientifico }})</h1>
+    <p><strong>Raça:</strong> {{ object.raca }}</p>
+    <p><strong>Expectativa de Vida:</strong> {{ object.expectativa_de_vida }} anos</p>
+    <a href="{% url 'especie-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}

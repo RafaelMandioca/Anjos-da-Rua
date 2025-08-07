@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes do Atendimento{% endblock %}
+
+{% block content %}
+    <h1>Atendimento de {{ object.animal.nome }}</h1>
+    <p><strong>Veterinário:</strong> {{ object.veterinario.nome }}</p>
+    <p><strong>Data:</strong> {{ object.data_do_atendimento|date:"d/m/Y H:i" }}</p>
+    <p><strong>Tipo de Consulta:</strong> {{ object.tipo_consulta.descricao }}</p>
+    
+    <h2>Observações</h2>
+    <p>{{ object.observacoes|linebreaks }}</p>
+    
+    <h2>Itens Utilizados</h2>
+    <ul>
+        {% for item_atendimento in object.itemhasatendimentoveterinario_set.all %}
+            <li>{{ item_atendimento.quantidade }}x {{ item_atendimento.item.nome }}</li>
+        {% empty %}
+            <li>Nenhum item foi utilizado.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}

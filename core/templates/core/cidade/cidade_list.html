@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lista de Cidades{% endblock %}
+
+{% block content %}
+    <h1>Cidades</h1>
+    <a href="{% url 'cidade-create' %}" class="btn">Adicionar Cidade</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cidade in object_list %}
+            <tr>
+                <td>{{ cidade.cidade }}</td>
+                <td>{{ cidade.uf }}</td>
+                <td>
+                    <a href="{% url 'cidade-detail' cidade.pk %}">Ver</a>
+                    <a href="{% url 'cidade-update' cidade.pk %}">Editar</a>
+                    <a href="{% url 'cidade-delete' cidade.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Nenhuma cidade cadastrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

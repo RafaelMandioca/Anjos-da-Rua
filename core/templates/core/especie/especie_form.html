@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Espécie{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Espécie</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Salvar</button>
+        <a href="{% url 'especie-list' %}" class="btn">Cancelar</a>
+    </form>
+{% endblock %}

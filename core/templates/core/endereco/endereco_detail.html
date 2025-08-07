@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes do Endereço{% endblock %}
+
+{% block content %}
+    <h1>{{ object.logradouro }}, {{ object.numero }}</h1>
+    <p><strong>CEP:</strong> {{ object.cep }}</p>
+    <p><strong>Bairro:</strong> {{ object.bairro }}</p>
+    <p><strong>Cidade:</strong> {{ object.cidade }}</p>
+    <p><strong>Complemento:</strong> {{ object.complemento }}</p>
+    <p><strong>Ponto de Referência:</strong> {{ object.ponto_de_referencia }}</p>
+    <a href="{% url 'endereco-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}

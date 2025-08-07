@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes do Tipo de Consulta{% endblock %}
+
+{% block content %}
+    <h1>{{ object.descricao }}</h1>
+    <a href="{% url 'tipoconsulta-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}

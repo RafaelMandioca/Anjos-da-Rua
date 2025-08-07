@@ -1,0 +1,38 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lista de Atendimentos{% endblock %}
+
+{% block content %}
+    <h1>Atendimentos Veterinários</h1>
+    <a href="{% url 'atendimentoveterinario-create' %}" class="btn">Adicionar Atendimento</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Animal</th>
+                <th>Veterinário</th>
+                <th>Data</th>
+                <th>Tipo de Consulta</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atendimento in object_list %}
+            <tr>
+                <td>{{ atendimento.animal.nome }}</td>
+                <td>{{ atendimento.veterinario.nome }}</td>
+                <td>{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
+                <td>{{ atendimento.tipo_consulta.descricao }}</td>
+                <td>
+                    <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}">Ver</a>
+                    <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}">Editar</a>
+                    <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum atendimento cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

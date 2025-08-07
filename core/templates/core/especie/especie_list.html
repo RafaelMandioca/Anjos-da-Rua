@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Lista de Espécies{% endblock %}
+
+{% block content %}
+    <h1>Espécies</h1>
+    <a href="{% url 'especie-create' %}" class="btn">Adicionar Espécie</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome Popular</th>
+                <th>Nome Científico</th>
+                <th>Expectativa de Vida</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for especie in object_list %}
+            <tr>
+                <td>{{ especie.nome_popular }}</td>
+                <td>{{ especie.nome_cientifico }}</td>
+                <td>{{ especie.expectativa_de_vida }} anos</td>
+                <td>
+                    <a href="{% url 'especie-detail' especie.pk %}">Ver</a>
+                    <a href="{% url 'especie-update' especie.pk %}">Editar</a>
+                    <a href="{% url 'especie-delete' especie.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">Nenhuma espécie cadastrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

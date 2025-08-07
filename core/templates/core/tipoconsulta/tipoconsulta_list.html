@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Tipos de Consulta{% endblock %}
+
+{% block content %}
+    <h1>Tipos de Consulta</h1>
+    <a href="{% url 'tipoconsulta-create' %}" class="btn">Adicionar Tipo de Consulta</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipoconsulta in object_list %}
+            <tr>
+                <td>{{ tipoconsulta.descricao }}</td>
+                <td>
+                    <a href="{% url 'tipoconsulta-detail' tipoconsulta.pk %}">Ver</a>
+                    <a href="{% url 'tipoconsulta-update' tipoconsulta.pk %}">Editar</a>
+                    <a href="{% url 'tipoconsulta-delete' tipoconsulta.pk %}">Excluir</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">Nenhum tipo de consulta cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

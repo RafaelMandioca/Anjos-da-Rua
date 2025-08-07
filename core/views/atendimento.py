@@ -9,9 +9,18 @@ from ..forms.form_atendimento import AtendimentoVeterinarioForm, ItemAtendimento
 from .cadastros_gerais import generic_create_update_view
 
 # --- Atendimento Views ---
-class AtendimentoVeterinarioListView(ListView): model = AtendimentoVeterinario
-class AtendimentoVeterinarioDetailView(DetailView): model = AtendimentoVeterinario
-class AtendimentoVeterinarioDeleteView(DeleteView): model = AtendimentoVeterinario; success_url = reverse_lazy('atendimentoveterinario-list')
+class AtendimentoVeterinarioListView(ListView): 
+    model = AtendimentoVeterinario
+    template_name = 'core/atendimento/atendimento_list.html'
+
+class AtendimentoVeterinarioDetailView(DetailView): 
+    model = AtendimentoVeterinario
+    template_name = 'core/atendimento/atendimento_detail.html'
+
+class AtendimentoVeterinarioDeleteView(DeleteView): 
+    model = AtendimentoVeterinario
+    success_url = reverse_lazy('atendimentoveterinario-list')
+    template_name = 'core/atendimento/atendimento_confirm_delete.html'
 
 def atendimento_veterinario_create_update(request, pk=None):
     instance = None
@@ -39,12 +48,21 @@ def atendimento_veterinario_create_update(request, pk=None):
     return render(request, 'core/atendimento/atendimento_form.html', context)
 
 # --- TipoConsulta Views ---
-class TipoConsultaListView(ListView): model = TipoConsulta
-class TipoConsultaDetailView(DetailView): model = TipoConsulta
-class TipoConsultaDeleteView(DeleteView): model = TipoConsulta; success_url = reverse_lazy('tipoconsulta-list')
+class TipoConsultaListView(ListView): 
+    model = TipoConsulta
+    template_name = 'core/tipoconsulta/tipoconsulta_list.html'
+
+class TipoConsultaDetailView(DetailView): 
+    model = TipoConsulta
+    template_name = 'core/tipoconsulta/tipoconsulta_detail.html'
+
+class TipoConsultaDeleteView(DeleteView): 
+    model = TipoConsulta
+    success_url = reverse_lazy('tipoconsulta-list')
+    template_name = 'core/tipoconsulta/tipoconsulta_confirm_delete.html'
 
 def tipoconsulta_create(request):
-    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/basic_form.html', 'tipoconsulta-list')
+    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/tipoconsulta/tipoconsulta_form.html', 'tipoconsulta-list')
 
 def tipoconsulta_update(request, pk):
-    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/basic_form.html', 'tipoconsulta-list', pk=pk)
+    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/tipoconsulta/tipoconsulta_form.html', 'tipoconsulta-list', pk=pk)

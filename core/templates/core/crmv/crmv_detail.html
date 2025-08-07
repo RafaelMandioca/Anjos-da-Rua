@@ -1,0 +1,8 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Detalhes do CRMV{% endblock %}
+
+{% block content %}
+    <h1>CRMV: {{ object }}</h1>
+    <a href="{% url 'crmv-list' %}" class="btn">Voltar para a Lista</a>
+{% endblock %}
