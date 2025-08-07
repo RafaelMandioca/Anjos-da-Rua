@@ -1,33 +1,84 @@
-body {
-  font-family: sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Gelasio:ital,wght@0,400..700;1,400..700&display=swap");
+* {
+  user-select: none;
   margin: 0;
   padding: 0;
+  scrollbar-color: #221f1e #151312;
+  scrollbar-width: 8px;
+  box-sizing: border-box;
+}
+* ::-webkit-scrollbar {
+  background-color: #151312;
+  width: 8px;
+}
+* ::-webkit-scrollbar-thumb {
+  background-color: #221f1e;
+}
+
+html {
+  overflow-x: initial;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  font-family: "Gelasio", serif !important;
+  background-color: #151312;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
+  margin: 0.9rem auto 0 auto;
+  max-width: 1600px;
+  padding-left: 5%;
+  padding-right: 5%;
+  flex-grow: 1;
 }
 
 header, footer {
-  background-color: #333;
+  font-size: 16px;
+  font-family: "Archivo Black", sans-serif !important;
+  background-color: #042c21;
   color: #fff;
   padding: 10px 20px;
   text-align: center;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+}
 header nav {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-header nav a {
+header nav button {
+  font-size: 16px;
+  font-family: "Archivo Black", sans-serif !important;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+header nav a, header nav button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 5px 10px;
+  background-color: #042c21;
+  border-radius: 15px;
+  text-transform: uppercase;
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+}
+header nav a:hover, header nav button:hover {
+  background-color: #063a2c;
 }
 header nav ul {
   list-style: none;
@@ -36,29 +87,10 @@ header nav ul {
   display: flex;
 }
 header nav ul li {
-  margin-left: 20px;
+  display: flex;
+  align-items: center;
 }
 
-.btn {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #3498db;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
-.btn:hover {
-  opacity: 0.9;
-}
-.btn.btn-danger {
-  background-color: #e74c3c;
-}
-
-form {
-  margin-top: 20px;
-}
 form p {
   margin-bottom: 10px;
 }
@@ -89,7 +121,7 @@ table th, table td {
   text-align: left;
 }
 table th {
-  background-color: #f4f4f4;
+  background-color: #221f1e;
 }
 
 /*# sourceMappingURL=app.css.map */

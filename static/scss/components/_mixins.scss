@@ -1,0 +1,38 @@
+@use "./variaveis" as var;
+
+@mixin transition() {
+   transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@mixin hover($color) {
+   background-color: var.$medium-green;
+}
+
+@mixin ar-obj($p-ns: 5px, $p-we: 10px, $color) {
+   @include transition();
+   padding: $p-ns $p-we;
+   background-color: var.$dark-green;
+   border-radius: var.$round;
+   &:hover {
+      @include hover($color);
+   }
+}
+
+@mixin ar-icon($svg, $size, $color, $valign: middle, $margin-top, $margin-right, $margin-bottom, $margin-left, $fix: 1) {
+   vertical-align: $valign;
+
+   display: inline-flex;
+   content: '';
+   mask-image: url(
+      'data:image/svg+xml;charset=UTF-8,' + $svg
+   );
+   mask-size: $size $size;
+   background-color: $color;
+   height: $size;
+   width: $size;
+
+   margin: $margin-top $margin-right $margin-bottom $margin-left;
+   @if fix == 1 {
+      transform: $cfix;
+   }
+}
