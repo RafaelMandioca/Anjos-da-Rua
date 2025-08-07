@@ -44,7 +44,7 @@ class TipoConsultaDetailView(DetailView): model = TipoConsulta
 class TipoConsultaDeleteView(DeleteView): model = TipoConsulta; success_url = reverse_lazy('tipoconsulta-list')
 
 def tipoconsulta_create(request):
-    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/generic_form.html', 'tipoconsulta-list')
+    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/basic_form.html', 'tipoconsulta-list')
 
 def tipoconsulta_update(request, pk):
-    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/generic_form.html', 'tipoconsulta-list', pk=pk)
+    return generic_create_update_view(request, TipoConsultaForm, 'Tipo de Consulta', 'core/basic_form.html', 'tipoconsulta-list', pk=pk)

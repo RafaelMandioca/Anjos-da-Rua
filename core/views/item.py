@@ -12,7 +12,7 @@ class ItemDetailView(DetailView): model = Item
 class ItemDeleteView(DeleteView): model = Item; success_url = reverse_lazy('item-list')
 
 def item_create(request):
-    return generic_create_update_view(request, ItemForm, 'Item', 'core/generic_form.html', 'item-list')
+    return generic_create_update_view(request, ItemForm, 'Item', 'core/basic_form.html', 'item-list')
 
 def item_update(request, pk):
-    return generic_create_update_view(request, ItemForm, 'Item', 'core/generic_form.html', 'item-list', pk=pk)
+    return generic_create_update_view(request, ItemForm, 'Item', 'core/basic_form.html', 'item-list', pk=pk)

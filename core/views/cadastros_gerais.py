@@ -64,13 +64,13 @@ def cidade_create(request):
     """
     View para criar uma nova Cidade, utilizando a view genérica.
     """
-    return generic_create_update_view(request, CidadeForm, 'Cidade', 'core/generic_form.html', 'cidade-list')
+    return generic_create_update_view(request, CidadeForm, 'Cidade', 'core/basic_form.html', 'cidade-list')
 
 def cidade_update(request, pk):
     """
     View para editar uma Cidade existente, utilizando a view genérica.
     """
-    return generic_create_update_view(request, CidadeForm, 'Cidade', 'core/generic_form.html', 'cidade-list', pk=pk)
+    return generic_create_update_view(request, CidadeForm, 'Cidade', 'core/basic_form.html', 'cidade-list', pk=pk)
 
 # --- Views para o modelo Endereco ---
 
@@ -88,13 +88,13 @@ def endereco_create(request):
     """
     View para criar um novo Endereço, utilizando a view genérica.
     """
-    return generic_create_update_view(request, EnderecoForm, 'Endereço', 'core/generic_form.html', 'endereco-list')
+    return generic_create_update_view(request, EnderecoForm, 'Endereço', 'core/basic_form.html', 'endereco-list')
 
 def endereco_update(request, pk):
     """
     View para editar um Endereço existente, utilizando a view genérica.
     """
-    return generic_create_update_view(request, EnderecoForm, 'Endereço', 'core/generic_form.html', 'endereco-list', pk=pk)
+    return generic_create_update_view(request, EnderecoForm, 'Endereço', 'core/basic_form.html', 'endereco-list', pk=pk)
 
 # --- Views para o modelo Abrigo ---
 
@@ -112,10 +112,10 @@ def abrigo_create(request):
     """
     View para criar um novo Abrigo, utilizando a view genérica.
     """
-    return generic_create_update_view(request, AbrigoForm, 'Abrigo', 'core/generic_form.html', 'abrigo-list')
+    return generic_create_update_view(request, AbrigoForm, 'Abrigo', 'core/basic_form.html', 'abrigo-list')
 
 def abrigo_update(request, pk):
     """
     View para editar um Abrigo existente, utilizando a view genérica.
     """
-    return generic_create_update_view(request, AbrigoForm, 'Abrigo', 'core/generic_form.html', 'abrigo-list', pk=pk)
+    return generic_create_update_view(request, AbrigoForm, 'Abrigo', 'core/basic_form.html', 'abrigo-list', pk=pk)

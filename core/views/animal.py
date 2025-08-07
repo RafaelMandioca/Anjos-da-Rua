@@ -12,10 +12,10 @@ class AnimalDetailView(DetailView): model = Animal
 class AnimalDeleteView(DeleteView): model = Animal; success_url = reverse_lazy('animal-list')
 
 def animal_create(request):
-    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/generic_form.html', 'animal-list')
+    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/basic_form.html', 'animal-list')
 
 def animal_update(request, pk):
-    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/generic_form.html', 'animal-list', pk=pk)
+    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/basic_form.html', 'animal-list', pk=pk)
 
 
 # --- Especie Views ---
@@ -24,7 +24,7 @@ class EspecieDetailView(DetailView): model = Especie
 class EspecieDeleteView(DeleteView): model = Especie; success_url = reverse_lazy('especie-list')
 
 def especie_create(request):
-    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/generic_form.html', 'especie-list')
+    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/basic_form.html', 'especie-list')
 
 def especie_update(request, pk):
-    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/generic_form.html', 'especie-list', pk=pk)
+    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/basic_form.html', 'especie-list', pk=pk)

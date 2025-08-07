@@ -67,7 +67,7 @@ class CrmvDetailView(DetailView): model = CRMV
 class CrmvDeleteView(DeleteView): model = CRMV; success_url = reverse_lazy('crmv-list')
 
 def crmv_create(request):
-    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/generic_form.html', 'crmv-list')
+    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/basic_form.html', 'crmv-list')
 
 def crmv_update(request, pk):
-    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/generic_form.html', 'crmv-list', pk=pk)
+    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/basic_form.html', 'crmv-list', pk=pk)
