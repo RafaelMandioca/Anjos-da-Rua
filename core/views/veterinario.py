@@ -4,16 +4,27 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.db import transaction
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required, user_passes_test
 from ..models import Veterinario, CRMV, Endereco
 from ..forms.form_veterinario import VeterinarioForm, CrmvForm
-from ..forms.form_cadastros_gerais import EnderecoForm # Importar o EnderecoForm
-from .cadastros_gerais import generic_create_update_view
+from ..forms.form_cadastros_gerais import EnderecoForm
+from .cadastros_gerais import generic_create_update_view, AdminRequiredMixin, is_admin
+
+class VeterinarioOrAdminMixin(UserPassesTestMixin):
+    def test_func(self):
+        if self.request.user.is_superuser:
+            return True
+        veterinario = self.get_object()
+        return self.request.user == veterinario
 
 # --- Veterinario Views ---
-class VeterinarioListView(ListView): model = Veterinario; template_name = 'core/veterinario/veterinario_list.html'
-class VeterinarioDetailView(DetailView): model = Veterinario; template_name = 'core/veterinario/veterinario_detail.html'
-class VeterinarioDeleteView(DeleteView): model = Veterinario; success_url = reverse_lazy('veterinario-list'); template_name = 'core/veterinario/veterinario_confirm_delete.html'
+class VeterinarioListView(LoginRequiredMixin, ListView): model = Veterinario; template_name = 'core/veterinario/veterinario_list.html'
+class VeterinarioDetailView(LoginRequiredMixin, DetailView): model = Veterinario; template_name = 'core/veterinario/veterinario_detail.html'
+class VeterinarioDeleteView(LoginRequiredMixin, VeterinarioOrAdminMixin, DeleteView): model = Veterinario; success_url = reverse_lazy('veterinario-list'); template_name = 'core/veterinario/veterinario_confirm_delete.html'
 
+@login_required
+@user_passes_test(is_admin)
 def veterinario_create(request):
     if request.method == 'POST':
         veterinario_form = VeterinarioForm(request.POST, prefix='veterinario')
@@ -23,20 +34,14 @@ def veterinario_create(request):
         if veterinario_form.is_valid() and crmv_form.is_valid() and endereco_form.is_valid():
             try:
                 with transaction.atomic():
-                    # Salva o endereço e o crmv primeiro
                     endereco = endereco_form.save()
                     crmv = crmv_form.save()
-                    
-                    # Cria o veterinário, mas não salva ainda (commit=False)
                     veterinario = veterinario_form.save(commit=False)
-                    # Associa o crmv e o endereço criados
                     veterinario.crmv = crmv
                     veterinario.endereco = endereco
-                    # Salva o veterinário
                     veterinario.save()
                 return redirect('veterinario-list')
             except Exception as e:
-                # Em caso de erro, a transação é desfeita (rollback)
                 print(f"Ocorreu um erro: {e}")
     else:
         veterinario_form = VeterinarioForm(prefix='veterinario')
@@ -51,6 +56,7 @@ def veterinario_create(request):
     }
     return render(request, 'core/veterinario/veterinario_form_custom.html', context)
 
+@login_required
 def veterinario_update(request, pk):
     veterinario_instance = get_object_or_404(Veterinario, pk=pk)
     crmv_instance = veterinario_instance.crmv
@@ -81,12 +87,16 @@ def veterinario_update(request, pk):
     return render(request, 'core/veterinario/veterinario_form_custom.html', context)
 
 # --- CRMV Views ---
-class CrmvListView(ListView): model = CRMV
-class CrmvDetailView(DetailView): model = CRMV
-class CrmvDeleteView(DeleteView): model = CRMV; success_url = reverse_lazy('crmv-list')
+class CrmvListView(LoginRequiredMixin, AdminRequiredMixin, ListView): model = CRMV; template_name = 'core/crmv/crmv_list.html'
+class CrmvDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): model = CRMV; template_name = 'core/crmv/crmv_detail.html'
+class CrmvDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView): model = CRMV; success_url = reverse_lazy('crmv-list'); template_name = 'core/crmv/crmv_confirm_delete.html'
 
+@login_required
+@user_passes_test(is_admin)
 def crmv_create(request):
-    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/basic_form.html', 'crmv-list')
+    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/crmv/crmv_form.html', 'crmv-list')
 
+@login_required
+@user_passes_test(is_admin)
 def crmv_update(request, pk):
-    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/basic_form.html', 'crmv-list', pk=pk)
+    return generic_create_update_view(request, CrmvForm, 'CRMV', 'core/crmv/crmv_form.html', 'crmv-list', pk=pk)

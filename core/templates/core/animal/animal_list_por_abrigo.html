@@ -1,0 +1,37 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Animais no Abrigo {{ abrigo.nome }}{% endblock %}
+
+{% block content %}
+    <h1>Animais no Abrigo: {{ abrigo.nome }}</h1>
+    <a href="{% url 'abrigo-list' %}" class="btn">Voltar para a lista de abrigos</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nome do Animal</th>
+                <th>Espécie</th>
+                <th>Idade</th>
+                <th>Sexo</th>
+                <th>Ações de Atendimento</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for animal in animal_list %}
+            <tr>
+                <td>{{ animal.nome }}</td>
+                <td>{{ animal.especie }}</td>
+                <td>{{ animal.idade }} anos</td>
+                <td>{{ animal.get_sexo_display }}</td>
+                <td>
+                    <a href="{% url 'atendimentoveterinario-create' %}?animal_id={{ animal.pk }}" class="btn">Novo Atendimento</a>
+                    </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Nenhum animal encontrado neste abrigo.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

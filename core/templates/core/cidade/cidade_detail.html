@@ -3,6 +3,5 @@
 {% block title %}Detalhes da Cidade{% endblock %}
 
 {% block content %}
-    <h1>{{ object.cidade }}, {{ object.uf }}</h1>
-    <a href="{% url 'cidade-list' %}" class="btn">Voltar para a Lista</a>
+    <h1>{{ object.cidade }}, {{ object.uf.sigla }}</h1> <a href="{% url 'cidade-list' %}" class="btn">Voltar para a Lista</a>
 {% endblock %}

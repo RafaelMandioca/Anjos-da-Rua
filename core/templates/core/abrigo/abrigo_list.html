@@ -1,36 +1,38 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Lista de Atendimentos{% endblock %}
+{% block title %}Lista de Abrigos{% endblock %}
 
 {% block content %}
-    <h1>Atendimentos Veterinários</h1>
-    <a href="{% url 'atendimentoveterinario-create' %}" class="btn">Adicionar Atendimento</a>
+    <h1>Abrigos</h1>
+    {% if user.is_superuser %}
+    <a href="{% url 'abrigo-create' %}" class="btn">Adicionar Abrigo</a>
+    {% endif %}
     <table>
         <thead>
             <tr>
-                <th>Animal</th>
-                <th>Veterinário</th>
-                <th>Data</th>
-                <th>Tipo de Consulta</th>
+                <th>Nome do Abrigo</th>
+                <th>Endereço</th>
                 <th>Ações</th>
             </tr>
         </thead>
         <tbody>
-            {% for atendimento in object_list %}
+            {% for abrigo in object_list %}
             <tr>
-                <td>{{ atendimento.animal.nome }}</td>
-                <td>{{ atendimento.veterinario.nome }}</td>
-                <td>{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
-                <td>{{ atendimento.tipo_consulta.descricao }}</td>
+                <td>{{ abrigo.nome }}</td>
+                <td>{{ abrigo.endereco }}</td>
                 <td>
-                    <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}">Ver</a>
-                    <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}">Editar</a>
-                    <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}">Excluir</a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'abrigo-detail' abrigo.pk %}">Ver Detalhes</a>
+                        <a href="{% url 'abrigo-update' abrigo.pk %}">Editar</a>
+                        <a href="{% url 'abrigo-delete' abrigo.pk %}">Excluir</a>
+                    {% else %}
+                        <a href="{% url 'animais-por-abrigo' abrigo.pk %}" class="btn">Ver Animais</a>
+                    {% endif %}
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">Nenhum atendimento cadastrado.</td>
+                <td colspan="3">Nenhum abrigo cadastrado.</td>
             </tr>
             {% endfor %}
         </tbody>

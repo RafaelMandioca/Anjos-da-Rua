@@ -2,16 +2,27 @@
     <nav>
         <a href="{% url 'index' %}">Anjos da Rua</a>
         <ul>
-            <li><a href="{% url 'veterinario-list' %}">Veterinários</a></li>
-            <li><a href="{% url 'animal-list' %}">Animais</a></li>
-            <li><a href="{% url 'especie-list' %}">Espécies</a></li>
-            <li><a href="{% url 'item-list' %}">Itens</a></li>
-            <li><a href="{% url 'abrigo-list' %}">Abrigos</a></li>
             {% if user.is_authenticated %}
-                <li><a href="#">Olá, {{ user.username }}</a></li>
-                <li><a href="{% url 'logout' %}">Sair</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'gerenciamento' %}">Gerenciamento</a></li>
+                    <li><a href="{% url 'admin:index' %}">Dashboard</a></li>
+                {% else %}
+                    <li><a href="{% url 'abrigo-list' %}">Abrigos</a></li>
+                    <li><a href="{% url 'item-list' %}">Estoque</a></li>
+                {% endif %}
+
+                <li><a href="#">Olá, {{ user.email }}</a></li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background:none; border:none; color:white; font-weight:bold; cursor:pointer; padding:0; font-family: inherit; font-size: inherit;">
+                            Sair
+                        </button>
+                    </form>
+                </li>
             {% else %}
                 <li><a href="{% url 'login' %}">Entrar</a></li>
+                <li><a href="{% url 'registro_veterinario' %}">Registrar-se</a></li>
             {% endif %}
         </ul>
     </nav>

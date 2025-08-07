@@ -16,4 +16,4 @@ class EnderecoForm(forms.ModelForm):
 class AbrigoForm(forms.ModelForm):
     class Meta:
         model = Abrigo
-        fields = ['nome', 'endereco']
+        fields = ['nome']

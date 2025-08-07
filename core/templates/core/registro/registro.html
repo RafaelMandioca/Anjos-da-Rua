@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Registro de Veterinário{% endblock %}
+
+{% block content %}
+    <h2>Registro de Veterinário</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <fieldset>
+            <legend>Dados Pessoais</legend>
+            {{ vet_form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>CRMV</legend>
+            {{ crmv_form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>Endereço</legend>
+            {{ endereco_form.as_p }}
+        </fieldset>
+
+        <br>
+        <button type="submit" class="btn">Registrar</button>
+    </form>
+{% endblock %}

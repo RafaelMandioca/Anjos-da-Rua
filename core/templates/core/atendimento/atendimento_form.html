@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ form_title }}</h1>
-    <form method="post" novalidate>
+    <form method="post" novalidate id="atendimentoForm" data-animals-url="{% url 'ajax_load_animals' %}">
         {% csrf_token %}
 
         <fieldset>
@@ -17,15 +17,65 @@
         <fieldset>
             <legend>Itens Utilizados</legend>
             {{ formset.management_form }}
-            {% for item_form in formset %}
+            <div id="item-form-list">
+                {% for item_form in formset %}
+                    <div class="item-form">
+                        {{ item_form.as_p }}
+                        {% if item_form.instance.pk %}
+                            {{ item_form.DELETE }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="button" id="add-item-form" class="btn">Adicionar Outro Item</button>
+            <div id="empty-item-form" style="display: none;">
                 <div class="item-form">
-                    {{ item_form.as_p }}
+                    {{ formset.empty_form.as_p }}
                 </div>
-            {% endfor %}
+            </div>
         </fieldset>
 
         <br>
         <button type="submit" class="btn">Salvar Atendimento</button>
         <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
     </form>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Lógica para adicionar mais formulários de item
+    const addItemBtn = document.getElementById('add-item-form');
+    const formList = document.getElementById('item-form-list');
+    const emptyFormTemplate = document.getElementById('empty-item-form').innerHTML;
+    const totalForms = document.getElementById('id_itemhasatendimentoveterinario_set-TOTAL_FORMS');
+    
+    addItemBtn.addEventListener('click', function() {
+        let formNum = parseInt(totalForms.value);
+        let newForm = emptyFormTemplate.replace(/__prefix__/g, formNum);
+        formList.insertAdjacentHTML('beforeend', newForm);
+        totalForms.value = formNum + 1;
+    });
+
+    // Lógica para o dropdown de animais dependente do abrigo
+    const abrigoSelect = document.getElementById('id_abrigo');
+    const animalSelect = document.getElementById('id_animal');
+    const url = document.getElementById('atendimentoForm').dataset.animalsUrl;
+
+    abrigoSelect.addEventListener('change', function() {
+        const abrigoId = this.value;
+        fetch(`${url}?abrigo_id=${abrigoId}`)
+            .then(response => response.json())
+            .then(data => {
+                animalSelect.innerHTML = '<option value="">---------</option>';
+                data.forEach(animal => {
+                    let option = document.createElement('option');
+                    option.value = animal.id;
+                    option.textContent = animal.nome;
+                    animalSelect.appendChild(option);
+                });
+            });
+    });
+});
+</script>
 {% endblock %}

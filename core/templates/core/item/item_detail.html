@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ object.nome }}</h1>
-    <p><strong>Categoria:</strong> {{ object.categoria }}</p>
+    <p><strong>Descrição:</strong> {{ object.descricao }}</p>
     <p><strong>Preço Unitário:</strong> R$ {{ object.preco_unitario }}</p>
     <p><strong>Data de Validade:</strong> {{ object.data_validade|date:"d/m/Y" }}</p>
     <a href="{% url 'item-list' %}" class="btn">Voltar para a Lista</a>

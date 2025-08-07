@@ -3,7 +3,7 @@
 {% block title %}Lista de CRMVs{% endblock %}
 
 {% block content %}
-    <h1>CR शक्ति</h1>
+    <h1>CRMV</h1>
     <a href="{% url 'crmv-create' %}" class="btn">Adicionar CRMV</a>
     <table>
         <thead>
@@ -17,8 +17,7 @@
             {% for crmv in object_list %}
             <tr>
                 <td>{{ crmv.numero }}</td>
-                <td>{{ crmv.estado }}</td>
-                <td>
+                <td>{{ crmv.estado.sigla }}</td> <td>
                     <a href="{% url 'crmv-detail' crmv.pk %}">Ver</a>
                     <a href="{% url 'crmv-update' crmv.pk %}">Editar</a>
                     <a href="{% url 'crmv-delete' crmv.pk %}">Excluir</a>

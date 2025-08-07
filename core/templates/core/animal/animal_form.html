@@ -1,12 +1,25 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Animal{% endblock %}
+{% block title %}{{ form_title }}{% endblock %}
 
 {% block content %}
-    <h1>{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Animal</h1>
+    <h1>{{ form_title }}</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <fieldset>
+            <legend>Dados da Espécie</legend>
+            {{ especie_form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>Dados do Animal</legend>
+            {{ animal_form.as_p }}
+        </fieldset>
+        
+        <br>
         <button type="submit" class="btn">Salvar</button>
         <a href="{% url 'animal-list' %}" class="btn">Cancelar</a>
     </form>

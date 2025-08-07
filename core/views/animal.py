@@ -2,47 +2,73 @@
 
 from django.views.generic import ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
-from ..models import Animal, Especie
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404, render, redirect
+from django.db import transaction
+from ..models import Animal, Especie, Abrigo
 from ..forms.form_animal import AnimalForm, EspecieForm
-from .cadastros_gerais import generic_create_update_view
+
+class AdminRequiredMixin(UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user.is_superuser
 
 # --- Animal Views ---
-class AnimalListView(ListView): 
+class AnimalListView(LoginRequiredMixin, AdminRequiredMixin, ListView): 
     model = Animal
     template_name = 'core/animal/animal_list.html'
 
-class AnimalDetailView(DetailView): 
+class AnimalDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): 
     model = Animal
     template_name = 'core/animal/animal_detail.html'
 
-class AnimalDeleteView(DeleteView): 
+class AnimalDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView): 
     model = Animal
     success_url = reverse_lazy('animal-list')
     template_name = 'core/animal/animal_confirm_delete.html'
 
-def animal_create(request):
-    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/animal/animal_form.html', 'animal-list')
+def animal_create_update(request, pk=None):
+    instance = None
+    especie_instance = None
+    if pk:
+        instance = get_object_or_404(Animal, pk=pk)
+        especie_instance = instance.especie
 
-def animal_update(request, pk):
-    return generic_create_update_view(request, AnimalForm, 'Animal', 'core/animal/animal_form.html', 'animal-list', pk=pk)
+    if request.method == 'POST':
+        animal_form = AnimalForm(request.POST, instance=instance, prefix='animal')
+        especie_form = EspecieForm(request.POST, instance=especie_instance, prefix='especie')
+        
+        if animal_form.is_valid() and especie_form.is_valid():
+            with transaction.atomic():
+                especie = especie_form.save()
+                animal = animal_form.save(commit=False)
+                animal.especie = especie
+                animal.save()
+            return redirect('animal-list')
+    else:
+        animal_form = AnimalForm(instance=instance, prefix='animal')
+        especie_form = EspecieForm(instance=especie_instance, prefix='especie')
+
+    context = {
+        'animal_form': animal_form,
+        'especie_form': especie_form,
+        'form_title': f"{'Editar' if pk else 'Adicionar'} Animal e Espécie"
+    }
+    return render(request, 'core/animal/animal_form.html', context)
 
 
-# --- Especie Views ---
-class EspecieListView(ListView): 
-    model = Especie
-    template_name = 'core/especie/especie_list.html'
+# --- Especie Views Foram Removidas ---
 
-class EspecieDetailView(DetailView): 
-    model = Especie
-    template_name = 'core/especie/especie_detail.html'
 
-class EspecieDeleteView(DeleteView): 
-    model = Especie
-    success_url = reverse_lazy('especie-list')
-    template_name = 'core/especie/especie_confirm_delete.html'
+# --- AnimalPorAbrigo View ---
+class AnimalPorAbrigoListView(LoginRequiredMixin, ListView):
+    model = Animal
+    template_name = 'core/animal/animal_list_por_abrigo.html'
+    context_object_name = 'animal_list'
 
-def especie_create(request):
-    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/especie/especie_form.html', 'especie-list')
+    def get_queryset(self):
+        return Animal.objects.filter(abrigo_id=self.kwargs['abrigo_id'])
 
-def especie_update(request, pk):
-    return generic_create_update_view(request, EspecieForm, 'Espécie', 'core/especie/especie_form.html', 'especie-list', pk=pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['abrigo'] = get_object_or_404(Abrigo, pk=self.kwargs['abrigo_id'])
+        return context

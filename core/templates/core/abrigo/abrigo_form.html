@@ -1,12 +1,25 @@
 {% extends 'core/base.html' %}
 
-{% block title %}{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Abrigo{% endblock %}
+{% block title %}{{ form_title }}{% endblock %}
 
 {% block content %}
-    <h1>{% if form.instance.pk %}Editar{% else %}Adicionar{% endif %} Abrigo</h1>
+    <h1>{{ form_title }}</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <fieldset>
+            <legend>Dados do Abrigo</legend>
+            {{ abrigo_form.as_p }}
+        </fieldset>
+
+        <hr>
+
+        <fieldset>
+            <legend>Endereço</legend>
+            {{ endereco_form.as_p }}
+        </fieldset>
+        
+        <br>
         <button type="submit" class="btn">Salvar</button>
         <a href="{% url 'abrigo-list' %}" class="btn">Cancelar</a>
     </form>

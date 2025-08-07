@@ -1,11 +1,61 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+import uuid
+
+class CodigoAcesso(models.Model):
+    codigo = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    utilizado = models.BooleanField(default=False)
+
+    def __str__(self):
+        return str(self.codigo)
+
+class VeterinarioManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('O Email é obrigatório')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+
+class Veterinario(AbstractBaseUser, PermissionsMixin):
+    nome = models.CharField(max_length=100)
+    cpf = models.CharField(max_length=11, unique=True)
+    email = models.EmailField(unique=True)
+    telefone = models.CharField(max_length=11, blank=True, null=True)
+    crmv = models.OneToOneField('CRMV', on_delete=models.PROTECT, null=True, blank=True)
+    endereco = models.ForeignKey('Endereco', on_delete=models.SET_NULL, null=True)
+    codigo_acesso = models.OneToOneField(CodigoAcesso, on_delete=models.SET_NULL, null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    objects = VeterinarioManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['nome', 'cpf']
+
+    def __str__(self):
+        return self.nome
+
+# NOVO MODELO
+class UF(models.Model):
+    sigla = models.CharField(max_length=2, unique=True)
+    nome = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.sigla
 
 class Cidade(models.Model):
     cidade = models.CharField(max_length=100)
-    uf = models.CharField(max_length=2)
+    # CAMPO ALTERADO
+    uf = models.ForeignKey(UF, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f"{self.cidade}, {self.uf}"
+        return f"{self.cidade}, {self.uf.sigla}"
 
 class Endereco(models.Model):
     cidade = models.ForeignKey(Cidade, on_delete=models.PROTECT)
@@ -17,7 +67,7 @@ class Endereco(models.Model):
     ponto_de_referencia = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return f"{self.logradouro}, {self.numero} - {self.cidade.cidade}"
+        return f"{self.logradouro}, {self.numero} - {self.cidade}"
 
 class Abrigo(models.Model):
     nome = models.CharField(max_length=50)
@@ -28,23 +78,11 @@ class Abrigo(models.Model):
 
 class CRMV(models.Model):
     numero = models.CharField(max_length=20)
-    estado = models.CharField(max_length=2)
+    # CAMPO ALTERADO
+    estado = models.ForeignKey(UF, on_delete=models.PROTECT)
 
     def __str__(self):
-        return f"{self.numero}/{self.estado}"
-
-class Veterinario(models.Model):
-    nome = models.CharField(max_length=100)
-    cpf = models.CharField(max_length=11, unique=True)
-    email = models.EmailField(unique=True)
-    telefone = models.CharField(max_length=11, blank=True, null=True)
-    senha_hash = models.CharField(max_length=255)
-    crmv = models.OneToOneField(CRMV, on_delete=models.PROTECT)
-    endereco = models.ForeignKey(Endereco, on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return self.nome
-
+        return f"{self.numero}/{self.estado.sigla}"
 
 class Especie(models.Model):
     nome_cientifico = models.CharField(max_length=50)
@@ -57,14 +95,14 @@ class Especie(models.Model):
 
 class Animal(models.Model):
     nome = models.CharField(max_length=50)
-    especie = models.ForeignKey(Especie, on_delete=models.PROTECT)
+    especie = models.ForeignKey(Especie, on_delete=models.PROTECT, null=True, blank=True)
     abrigo = models.ForeignKey(Abrigo, on_delete=models.SET_NULL, blank=True, null=True)
     peso = models.FloatField(blank=True, null=True)
     idade = models.IntegerField()
     sexo = models.CharField(max_length=1, choices=[('M', 'Macho'), ('F', 'Fêmea')])
 
     def __str__(self):
-        return f"{self.nome} ({self.especie.nome_cientifico}, {self.especie.raca})"
+        return f"{self.nome} ({self.especie.nome_cientifico if self.especie else 'N/A'}, {self.especie.raca if self.especie else 'N/A'})"
 
 class TipoConsulta(models.Model):
     descricao = models.CharField(max_length=255)
@@ -74,7 +112,7 @@ class TipoConsulta(models.Model):
 
 class Item(models.Model):
     nome = models.CharField(max_length=50)
-    categoria = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=255)
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     data_validade = models.DateField()
 
@@ -101,10 +139,8 @@ class ItemHasAtendimentoVeterinario(models.Model):
     atendimento = models.ForeignKey(AtendimentoVeterinario, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
 
-    # Garante que um item só pode ser adicionado uma vez por atendimento
     class Meta:
       unique_together = ('item', 'atendimento')
 
     def __str__(self):
         return f"{self.quantidade}x {self.item.nome} em {self.atendimento}"
-

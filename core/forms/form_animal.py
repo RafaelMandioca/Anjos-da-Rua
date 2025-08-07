@@ -6,7 +6,7 @@ from ..models import Animal, Especie
 class AnimalForm(forms.ModelForm):
     class Meta:
         model = Animal
-        fields = ['nome', 'especie', 'abrigo', 'peso', 'idade', 'sexo']
+        fields = ['nome', 'abrigo', 'peso', 'idade', 'sexo']
 
 class EspecieForm(forms.ModelForm):
     class Meta:

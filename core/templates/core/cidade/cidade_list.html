@@ -17,8 +17,7 @@
             {% for cidade in object_list %}
             <tr>
                 <td>{{ cidade.cidade }}</td>
-                <td>{{ cidade.uf }}</td>
-                <td>
+                <td>{{ cidade.uf.sigla }}</td> <td>
                     <a href="{% url 'cidade-detail' cidade.pk %}">Ver</a>
                     <a href="{% url 'cidade-update' cidade.pk %}">Editar</a>
                     <a href="{% url 'cidade-delete' cidade.pk %}">Excluir</a>

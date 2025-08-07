@@ -1,30 +1,29 @@
 # core/urls.py
 
 from django.urls import path
-
-# Import each view module from the views package directly
 from .views import animal, atendimento, cadastros_gerais, item, veterinario
 
 urlpatterns = [
+   # URL para a página de gerenciamento do Admin
+   path('gerenciamento/', cadastros_gerais.gerenciamento, name='gerenciamento'),
+   # URL para a lista de animais por abrigo
+   path('abrigo/<int:abrigo_id>/animais/', animal.AnimalPorAbrigoListView.as_view(), name='animais-por-abrigo'),
+   # URL para o AJAX de carregar animais
+   path('ajax/load-animals/', atendimento.load_animals, name='ajax_load_animals'),
+
    # Veterinario
    path('veterinarios/', veterinario.VeterinarioListView.as_view(), name='veterinario-list'),
    path('veterinario/<int:pk>/', veterinario.VeterinarioDetailView.as_view(), name='veterinario-detail'),
    path('veterinario/add/', veterinario.veterinario_create, name='veterinario-create'),
+   path('veterinario/<int:pk>/edit/', veterinario.veterinario_update, name='veterinario-update'),
    path('veterinario/<int:pk>/delete/', veterinario.VeterinarioDeleteView.as_view(), name='veterinario-delete'),
 
-   # Animal
+   # Animal (e Especie aninhada)
    path('animais/', animal.AnimalListView.as_view(), name='animal-list'),
    path('animal/<int:pk>/', animal.AnimalDetailView.as_view(), name='animal-detail'),
-   path('animal/add/', animal.animal_create, name='animal-create'),
-   path('animal/<int:pk>/edit/', animal.animal_update, name='animal-update'),
+   path('animal/add/', animal.animal_create_update, name='animal-create'),
+   path('animal/<int:pk>/edit/', animal.animal_create_update, name='animal-update'),
    path('animal/<int:pk>/delete/', animal.AnimalDeleteView.as_view(), name='animal-delete'),
-
-   # Especie (Assuming these are in 'animal.py' or a new 'especie.py')
-   path('especies/', animal.EspecieListView.as_view(), name='especie-list'),
-   path('especie/<int:pk>/', animal.EspecieDetailView.as_view(), name='especie-detail'),
-   path('especie/add/', animal.especie_create, name='especie-create'),
-   path('especie/<int:pk>/edit/', animal.especie_update, name='especie-update'),
-   path('especie/<int:pk>/delete/', animal.EspecieDeleteView.as_view(), name='especie-delete'),
 
    # Item
    path('itens/', item.ItemListView.as_view(), name='item-list'),
@@ -33,25 +32,13 @@ urlpatterns = [
    path('item/<int:pk>/edit/', item.item_update, name='item-update'),
    path('item/<int:pk>/delete/', item.ItemDeleteView.as_view(), name='item-delete'),
 
-   # Cidade
-   path('cidades/', cadastros_gerais.CidadeListView.as_view(), name='cidade-list'),
-   path('cidade/<int:pk>/', cadastros_gerais.CidadeDetailView.as_view(), name='cidade-detail'),
-   path('cidade/add/', cadastros_gerais.cidade_create, name='cidade-create'),
-   path('cidade/<int:pk>/edit/', cadastros_gerais.cidade_update, name='cidade-update'),
-   path('cidade/<int:pk>/delete/', cadastros_gerais.CidadeDeleteView.as_view(), name='cidade-delete'),
+   # URLs de Cidade Foram Removidas
 
-   # Endereço
-   path('enderecos/', cadastros_gerais.EnderecoListView.as_view(), name='endereco-list'),
-   path('endereco/<int:pk>/', cadastros_gerais.EnderecoDetailView.as_view(), name='endereco-detail'),
-   path('endereco/add/', cadastros_gerais.endereco_create, name='endereco-create'),
-   path('endereco/<int:pk>/edit/', cadastros_gerais.endereco_update, name='endereco-update'),
-   path('endereco/<int:pk>/delete/', cadastros_gerais.EnderecoDeleteView.as_view(), name='endereco-delete'),
-
-   # Abrigo
+   # Abrigo (e Endereco aninhado)
    path('abrigos/', cadastros_gerais.AbrigoListView.as_view(), name='abrigo-list'),
    path('abrigo/<int:pk>/', cadastros_gerais.AbrigoDetailView.as_view(), name='abrigo-detail'),
-   path('abrigo/add/', cadastros_gerais.abrigo_create, name='abrigo-create'),
-   path('abrigo/<int:pk>/edit/', cadastros_gerais.abrigo_update, name='abrigo-update'),
+   path('abrigo/add/', cadastros_gerais.abrigo_create_update, name='abrigo-create'),
+   path('abrigo/<int:pk>/edit/', cadastros_gerais.abrigo_create_update, name='abrigo-update'),
    path('abrigo/<int:pk>/delete/', cadastros_gerais.AbrigoDeleteView.as_view(), name='abrigo-delete'),
 
    # CRMV
