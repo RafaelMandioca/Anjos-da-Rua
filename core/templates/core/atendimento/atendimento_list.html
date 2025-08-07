@@ -8,10 +8,10 @@
     <table>
         <thead>
             <tr>
-                <th>Animal</th>
-                <th>Veterinário</th>
-                <th>Data</th>
-                <th>Tipo de Consulta</th>
+                {% include 'core/partials/_sortable_header.html' with field_name="animal__nome" display_name="Animal" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="veterinario__nome" display_name="Veterinário" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="data_do_atendimento" display_name="Data" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="tipo_consulta__descricao" display_name="Tipo de Consulta" %}
                 <th>Ações</th>
             </tr>
         </thead>

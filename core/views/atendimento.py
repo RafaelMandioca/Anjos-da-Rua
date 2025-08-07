@@ -7,6 +7,7 @@ from django.db import transaction
 from django.db.models import F
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import SortableListViewMixin
 from ..models import AtendimentoVeterinario, TipoConsulta, Animal
 from ..forms.form_atendimento import (
     AtendimentoVeterinarioForm, 
@@ -17,7 +18,7 @@ from ..forms.form_atendimento import (
 from .cadastros_gerais import generic_create_update_view
 
 # --- Atendimento Views ---
-class AtendimentoVeterinarioListView(LoginRequiredMixin, ListView): 
+class AtendimentoVeterinarioListView(LoginRequiredMixin, SortableListViewMixin, ListView): 
     model = AtendimentoVeterinario
     template_name = 'core/atendimento/atendimento_list.html'
 
@@ -96,7 +97,9 @@ def atendimento_veterinario_create_update(request, pk=None):
     return render(request, 'core/atendimento/atendimento_form.html', context)
 
 # --- TipoConsulta Views ---
-class TipoConsultaListView(LoginRequiredMixin, ListView): model = TipoConsulta; template_name = 'core/tipoconsulta/tipoconsulta_list.html'
+class TipoConsultaListView(LoginRequiredMixin, SortableListViewMixin, ListView): 
+    model = TipoConsulta
+    template_name = 'core/tipoconsulta/tipoconsulta_list.html'
 class TipoConsultaDetailView(LoginRequiredMixin, DetailView): model = TipoConsulta; template_name = 'core/tipoconsulta/tipoconsulta_detail.html'
 class TipoConsultaDeleteView(LoginRequiredMixin, DeleteView): model = TipoConsulta; success_url = reverse_lazy('tipoconsulta-list'); template_name = 'core/tipoconsulta/tipoconsulta_confirm_delete.html'
 

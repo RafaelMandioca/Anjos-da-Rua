@@ -10,8 +10,8 @@
     <table>
         <thead>
             <tr>
-                <th>Nome do Abrigo</th>
-                <th>Endereço</th>
+                {% include 'core/partials/_sortable_header.html' with field_name="nome" display_name="Nome do Abrigo" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="endereco__logradouro" display_name="Endereço" %}
                 <th>Ações</th>
             </tr>
         </thead>

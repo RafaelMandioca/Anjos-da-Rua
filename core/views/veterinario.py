@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.db import transaction
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
+from .mixins import SortableListViewMixin
 from ..models import Veterinario, CRMV, Endereco
 from ..forms.form_veterinario import VeterinarioForm, CrmvForm
 from ..forms.form_cadastros_gerais import EnderecoForm
@@ -19,7 +20,9 @@ class VeterinarioOrAdminMixin(UserPassesTestMixin):
         return self.request.user == veterinario
 
 # --- Veterinario Views ---
-class VeterinarioListView(LoginRequiredMixin, ListView): model = Veterinario; template_name = 'core/veterinario/veterinario_list.html'
+class VeterinarioListView(LoginRequiredMixin, SortableListViewMixin, ListView): 
+    model = Veterinario
+    template_name = 'core/veterinario/veterinario_list.html'
 class VeterinarioDetailView(LoginRequiredMixin, DetailView): model = Veterinario; template_name = 'core/veterinario/veterinario_detail.html'
 class VeterinarioDeleteView(LoginRequiredMixin, VeterinarioOrAdminMixin, DeleteView): model = Veterinario; success_url = reverse_lazy('veterinario-list'); template_name = 'core/veterinario/veterinario_confirm_delete.html'
 
@@ -87,7 +90,9 @@ def veterinario_update(request, pk):
     return render(request, 'core/veterinario/veterinario_form_custom.html', context)
 
 # --- CRMV Views ---
-class CrmvListView(LoginRequiredMixin, AdminRequiredMixin, ListView): model = CRMV; template_name = 'core/crmv/crmv_list.html'
+class CrmvListView(LoginRequiredMixin, AdminRequiredMixin, SortableListViewMixin, ListView): 
+    model = CRMV
+    template_name = 'core/crmv/crmv_list.html'
 class CrmvDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): model = CRMV; template_name = 'core/crmv/crmv_detail.html'
 class CrmvDeleteView(LoginRequiredMixin, AdminRequiredMixin, DeleteView): model = CRMV; success_url = reverse_lazy('crmv-list'); template_name = 'core/crmv/crmv_confirm_delete.html'
 

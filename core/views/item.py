@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
+from .mixins import SortableListViewMixin
 from ..models import Item
 from ..forms.form_item import ItemForm
 from .cadastros_gerais import generic_create_update_view, AdminRequiredMixin, is_admin
@@ -11,7 +12,7 @@ from .cadastros_gerais import generic_create_update_view, AdminRequiredMixin, is
 # --- Item Views ---
 
 # Veterinários e Admins podem listar os itens
-class ItemListView(LoginRequiredMixin, ListView): 
+class ItemListView(LoginRequiredMixin, SortableListViewMixin, ListView): 
     model = Item
     template_name = 'core/item/item_list.html'
 

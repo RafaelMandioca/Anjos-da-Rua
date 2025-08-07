@@ -8,11 +8,11 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Espécie</th>
-                <th>Abrigo</th>
-                <th>Idade</th>
-                <th>Sexo</th>
+                {% include 'core/partials/_sortable_header.html' with field_name="nome" display_name="Nome" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="especie__nome_popular" display_name="Espécie" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="abrigo__nome" display_name="Abrigo" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="idade" display_name="Idade" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="sexo" display_name="Sexo" %}
                 <th>Ações</th>
             </tr>
         </thead>

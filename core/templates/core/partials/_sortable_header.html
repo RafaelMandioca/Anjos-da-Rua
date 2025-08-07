@@ -1,0 +1,16 @@
+{% comment %}
+    Template para criar um cabeçalho de tabela ordenável.
+
+    Uso:
+    {% include 'core/partials/_sortable_header.html' with field_name="nome_do_campo_no_modelo" display_name="Texto a Exibir" %}
+{% endcomment %}
+<th>
+    <a href="?sort={{ field_name }}&direction={% if current_sort == field_name and current_direction == 'asc' %}desc{% else %}asc{% endif %}">
+        {{ display_name }}
+        {% if current_sort == field_name %}
+            {% if current_direction == 'asc' %}
+                <span>&#9660;</span> {% else %}
+                <span>&#9650;</span> {% endif %}
+        {% endif %}
+    </a>
+</th>

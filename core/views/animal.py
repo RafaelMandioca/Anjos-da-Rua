@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db import transaction
+from .mixins import SortableListViewMixin
 from ..models import Animal, Especie, Abrigo
 from ..forms.form_animal import AnimalForm, EspecieForm
 
@@ -13,10 +14,10 @@ class AdminRequiredMixin(UserPassesTestMixin):
         return self.request.user.is_superuser
 
 # --- Animal Views ---
-class AnimalListView(LoginRequiredMixin, AdminRequiredMixin, ListView): 
+class AnimalListView(LoginRequiredMixin, AdminRequiredMixin, SortableListViewMixin, ListView): 
     model = Animal
     template_name = 'core/animal/animal_list.html'
-
+    
 class AnimalDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): 
     model = Animal
     template_name = 'core/animal/animal_detail.html'
@@ -60,7 +61,7 @@ def animal_create_update(request, pk=None):
 
 
 # --- AnimalPorAbrigo View ---
-class AnimalPorAbrigoListView(LoginRequiredMixin, ListView):
+class AnimalPorAbrigoListView(LoginRequiredMixin, SortableListViewMixin, ListView):
     model = Animal
     template_name = 'core/animal/animal_list_por_abrigo.html'
     context_object_name = 'animal_list'

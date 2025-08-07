@@ -17,7 +17,12 @@
 
     {% include 'core/partials/_footer.html' %}
 
+    <script src="https://unpkg.com/imask"></script>
+
     <script src="{% static 'js/main.js' %}"></script>
+    
+    <script src="{% static 'js/form_masks.js' %}"></script>
+    
     {% block extra_js %}{% endblock %}
 </body>
 </html>

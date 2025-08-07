@@ -8,9 +8,9 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Telefone</th>
+                {% include 'core/partials/_sortable_header.html' with field_name="nome" display_name="Nome" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="email" display_name="Email" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="telefone" display_name="Telefone" %}
                 <th>Ações</th>
             </tr>
         </thead>

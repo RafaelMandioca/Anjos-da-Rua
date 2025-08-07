@@ -14,10 +14,11 @@
     <table>
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Quantidade em Estoque</th> <th>Preço Unitário</th>
-                <th>Data de Validade</th>
+                {% include 'core/partials/_sortable_header.html' with field_name="nome" display_name="Nome" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="descricao" display_name="Descrição" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="quantidade" display_name="Quantidade em Estoque" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="preco_unitario" display_name="Preço Unitário" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="data_validade" display_name="Data de Validade" %}
                 {% if user.is_superuser %}
                 <th>Ações</th>
                 {% endif %}
@@ -28,7 +29,8 @@
             <tr>
                 <td>{{ item.nome }}</td>
                 <td>{{ item.descricao }}</td>
-                <td>{{ item.quantidade }}</td> <td>R$ {{ item.preco_unitario }}</td>
+                <td>{{ item.quantidade }}</td>
+                <td>R$ {{ item.preco_unitario }}</td>
                 <td>{{ item.data_validade|date:"d/m/Y" }}</td>
                 {% if user.is_superuser %}
                 <td>

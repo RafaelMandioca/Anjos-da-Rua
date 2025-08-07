@@ -7,19 +7,24 @@ from ..models import (
     Abrigo, Animal, Item
 )
 
-# --- Formulário de Atendimento Principal ---
-
 class AtendimentoVeterinarioForm(forms.ModelForm):
+    data_do_atendimento = forms.DateTimeField(
+        label="Data do Atendimento",
+        widget=forms.TextInput(attrs={'class': 'datetime-mask', 'placeholder': 'DD/MM/AAAA HH:mm'}),
+        input_formats=['%d/%m/%Y %H:%M', '%d/%m/%y %H:%M']
+    )
+
     class Meta:
         model = AtendimentoVeterinario
         fields = ['animal', 'veterinario', 'tipo_consulta', 'data_do_atendimento', 'observacoes']
-        widgets = {
-            'data_do_atendimento': forms.DateTimeInput(attrs={'type': 'datetime-local'}),
-        }
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['animal'].choices = self.get_animal_choices()
+        
+        # CORREÇÃO AQUI: Formata o valor inicial da data para o padrão brasileiro
+        if self.instance and self.instance.pk and self.instance.data_do_atendimento:
+            self.initial['data_do_atendimento'] = self.instance.data_do_atendimento.strftime('%d/%m/%Y %H:%M')
 
     def get_animal_choices(self):
         choices = [('', '---------')]
@@ -40,15 +45,10 @@ class TipoConsultaForm(forms.ModelForm):
         model = TipoConsulta
         fields = ['descricao']
 
-
-# --- Formulários de Itens com Validação de Estoque ---
-
-# 1. Campo de Seleção Customizado para mostrar o estoque
 class ItemChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return f"{obj.nome} (Estoque: {obj.quantidade})"
 
-# 2. Formulário para cada linha de item, usando o campo customizado
 class ItemAtendimentoForm(forms.ModelForm):
     item = ItemChoiceField(queryset=Item.objects.filter(quantidade__gt=0).order_by('nome'))
     
@@ -56,14 +56,10 @@ class ItemAtendimentoForm(forms.ModelForm):
         model = ItemHasAtendimentoVeterinario
         fields = ['item', 'quantidade']
 
-# 3. FormSet Base com a lógica de validação de estoque
 class BaseItemAtendimentoFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
-        
-        # Dicionário para rastrear o uso total de cada item neste formulário
         item_usage = {}
-
         for form in self.forms:
             if not form.is_valid() or form in self.deleted_forms:
                 continue
@@ -72,24 +68,20 @@ class BaseItemAtendimentoFormSet(BaseInlineFormSet):
             quantidade = form.cleaned_data.get('quantidade')
 
             if item and quantidade:
-                # Acumula a quantidade usada para cada item
                 item_usage[item] = item_usage.get(item, 0) + quantidade
         
-        # Valida o uso total de cada item contra o estoque disponível
         for item, total_quantidade_usada in item_usage.items():
             if total_quantidade_usada > item.quantidade:
-                # Adiciona um erro geral ao formset
                 raise forms.ValidationError(
                     f"Estoque insuficiente para o item '{item.nome}'. "
                     f"Solicitado: {total_quantidade_usada}, Disponível: {item.quantidade}."
                 )
 
-# 4. Factory que une o FormSet Base com o Formulário de Item
 ItemAtendimentoFormSet = forms.inlineformset_factory(
     AtendimentoVeterinario,
     ItemHasAtendimentoVeterinario,
-    form=ItemAtendimentoForm,       # Usa nosso formulário customizado
-    formset=BaseItemAtendimentoFormSet, # Usa nossa classe de validação
+    form=ItemAtendimentoForm,
+    formset=BaseItemAtendimentoFormSet,
     extra=1,
     can_delete=True
 )

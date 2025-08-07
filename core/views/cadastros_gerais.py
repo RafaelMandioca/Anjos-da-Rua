@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 
+from .mixins import SortableListViewMixin
 # O import de Cidade foi removido daqui, pois não é mais usado pelas views
 from ..models import Endereco, Abrigo
 # O import de CidadeForm foi removido daqui
@@ -51,7 +52,7 @@ def gerenciamento(request):
 # --- Views para o modelo Cidade Foram Removidas ---
 
 # --- Views para o modelo Abrigo ---
-class AbrigoListView(LoginRequiredMixin, ListView):
+class AbrigoListView(LoginRequiredMixin, SortableListViewMixin, ListView):
     model = Abrigo
     template_name = 'core/abrigo/abrigo_list.html'
 class AbrigoDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): model = Abrigo; template_name = 'core/abrigo/abrigo_detail.html'
