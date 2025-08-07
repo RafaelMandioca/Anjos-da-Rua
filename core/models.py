@@ -113,6 +113,7 @@ class TipoConsulta(models.Model):
 class Item(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=255)
+    quantidade = models.IntegerField(default=0)
     preco_unitario = models.DecimalField(max_digits=10, decimal_places=2)
     data_validade = models.DateField()
 

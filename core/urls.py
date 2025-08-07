@@ -4,13 +4,12 @@ from django.urls import path
 from .views import animal, atendimento, cadastros_gerais, item, veterinario
 
 urlpatterns = [
-   # URL para a página de gerenciamento do Admin
    path('gerenciamento/', cadastros_gerais.gerenciamento, name='gerenciamento'),
-   # URL para a lista de animais por abrigo
    path('abrigo/<int:abrigo_id>/animais/', animal.AnimalPorAbrigoListView.as_view(), name='animais-por-abrigo'),
-   # URL para o AJAX de carregar animais
-   path('ajax/load-animals/', atendimento.load_animals, name='ajax_load_animals'),
+   # A URL ABAIXO FOI REMOVIDA
+   # path('ajax/load-animals/', atendimento.load_animals, name='ajax_load_animals'),
 
+   # ... (resto das suas URLs continua igual) ...
    # Veterinario
    path('veterinarios/', veterinario.VeterinarioListView.as_view(), name='veterinario-list'),
    path('veterinario/<int:pk>/', veterinario.VeterinarioDetailView.as_view(), name='veterinario-detail'),
@@ -31,8 +30,6 @@ urlpatterns = [
    path('item/add/', item.item_create, name='item-create'),
    path('item/<int:pk>/edit/', item.item_update, name='item-update'),
    path('item/<int:pk>/delete/', item.ItemDeleteView.as_view(), name='item-delete'),
-
-   # URLs de Cidade Foram Removidas
 
    # Abrigo (e Endereco aninhado)
    path('abrigos/', cadastros_gerais.AbrigoListView.as_view(), name='abrigo-list'),
