@@ -6,7 +6,9 @@
     <h1>Tem certeza que deseja excluir o atendimento de "{{ object.animal.nome }}" em {{ object.data_do_atendimento|date:"d/m/Y" }}?</h1>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Sim, excluir</button>
-        <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn btn-danger">Sim, excluir</button>
+            <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+        </div>
     </form>
 {% endblock %}

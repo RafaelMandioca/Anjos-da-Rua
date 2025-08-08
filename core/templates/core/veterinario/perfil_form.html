@@ -16,6 +16,8 @@
     <form method="post" class="form-styled">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn">Salvar Alterações</button>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn">Salvar Alterações</button>
+        </div>
     </form>
 {% endblock %}

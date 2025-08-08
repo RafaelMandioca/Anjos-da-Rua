@@ -3,37 +3,6 @@
 {% block title %}{{ form_title }}{% endblock %}
 
 {% block content %}
-    <!-- <style>
-        .item-form {
-            display: flex;
-            align-items: flex-end;
-            gap: 15px;
-            padding: 15px;
-            border: 1px solid #eee;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            background-color: #f9f9f9;
-        }
-        .item-form > .form-group {
-            margin-bottom: 0;
-            flex-grow: 1;
-        }
-        .item-form .btn-danger {
-            margin-bottom: 15px;
-            height: 40px;
-        }
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.9em;
-            display: block;
-            margin-top: 5px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-    </style> -->
-
     <h1>{{ form_title }}</h1>
     <form method="post" novalidate id="atendimentoForm">
         {% csrf_token %}
@@ -87,8 +56,10 @@
         </fieldset>
 
         <br>
-        <button type="submit" class="btn" id="submit-button">Salvar Atendimento</button>
-        <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn" id="submit-button">Salvar Atendimento</button>
+            <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+        </div>
     </form>
 {% endblock %}
 

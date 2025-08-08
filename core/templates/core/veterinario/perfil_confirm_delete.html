@@ -7,7 +7,9 @@
     <p>Tem certeza de que deseja apagar sua conta? Esta ação não pode ser desfeita.</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Sim, tenho certeza</button>
-        <a href="{% url 'perfil' %}" class="btn">Cancelar</a>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn btn-danger">Sim, tenho certeza</button>
+            <a href="{% url 'perfil' %}" class="btn">Cancelar</a>
+        </div>
     </form>
 {% endblock %}

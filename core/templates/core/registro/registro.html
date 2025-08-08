@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% raw %}{% extends 'core/base.html' %}
 
 {% block title %}Registro de Veterinário{% endblock %}
 
@@ -27,6 +27,8 @@
         </fieldset>
 
         <br>
-        <button type="submit" class="btn">Registrar</button>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn">Registrar</button>
+        </div>
     </form>
-{% endblock %}
+{% endblock %}{% endraw %}

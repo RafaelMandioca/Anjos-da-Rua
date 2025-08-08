@@ -22,7 +22,9 @@ form {
       border: 0;
       padding: var.$sp-xsm;
       @include mix.ar-sec();
-      margin-bottom: var.$sp-md;
+      &:not(:last-of-type) {
+         margin-bottom: var.$sp-md;
+      }
       legend {
          float: left;
          width: 100%;
@@ -54,13 +56,33 @@ form {
       }
    }
 
-   .btn:nth-of-type(1) {
+   .form-btn-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: var.$sp-sm;
+   }
+
+   button.btn {
+      all: unset;
+      cursor: pointer;
+      @include mix.ar-obj($color: var.$dark-green, $border: 0);
+      justify-content: center;
+      color: var.$white;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      font-family: var.$ff-head;
+      width: 20%;
+   }
+
+   a.btn {
       all: unset;
       cursor: pointer;
       @include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
+      justify-content: center;
       color: var.$white;
-      margin-top: 1rem;
+      margin-bottom: 1rem;
       text-decoration: none;
       font-family: var.$ff-head;
+      width: 20%;
    }
 }
