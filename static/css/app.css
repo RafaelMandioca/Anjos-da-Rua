@@ -6,11 +6,11 @@
   scrollbar-width: 8px;
   box-sizing: border-box;
 }
-* ::-webkit-scrollbar {
+*::-webkit-scrollbar {
   background-color: #151312;
   width: 8px;
 }
-* ::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   background-color: #221f1e;
 }
 
@@ -38,16 +38,91 @@ body {
   flex-grow: 1;
 }
 
-header, footer {
+h1 {
+  font-size: clamp(1.44rem, 1.5vw, 2.08rem);
+  font-family: "Archivo+Black", sans-serif;
+}
+
+h2 {
+  font-size: clamp(1.14rem, 1.125vw, 1.68rem);
+  font-family: "Archivo+Black", sans-serif;
+}
+
+h3 {
+  font-size: clamp(1.08rem, 0.9375vw, 1.6rem);
+  font-family: "Archivo+Black", sans-serif;
+}
+
+h4 {
+  font-size: clamp(1.02rem, 1.05vw, 1.44rem);
+  font-family: "Archivo+Black", sans-serif;
+}
+
+h5 {
+  font-size: clamp(0.9rem, 1.05vw, 1.28rem);
+  font-family: "Archivo+Black", sans-serif;
+}
+
+h6 {
+  font-size: 0.75rem;
+  font-family: "Archivo+Black", sans-serif;
+}
+
+.management-card {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.management-card a {
+  user-select: none;
+  background-color: #042c21;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 95%;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-family: "Archivo+Black", sans-serif;
+}
+.management-card a::before {
+  vertical-align: -4px;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M14.36 5.65L15.84 4.17C16.62 3.39 17.89 3.39 18.67 4.17L20.09 5.59C20.87 6.37 20.87 7.63 20.09 8.41L18.61 9.89M14.36 5.65L4.75 15.27C4.42 15.6 4.21 16.04 4.17 16.51L3.93 19.25C3.87 19.87 4.39 20.38 5.01 20.33L7.75 20.09C8.22 20.05 8.66 19.84 8.99 19.51L18.61 9.89M14.36 5.65L18.61 9.89" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #fff;
+  height: 20px;
+  width: 20px;
+  margin: 0 0.3rem 0 0;
+}
+.management-card a:hover {
+  background-color: #063a2c;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+table th {
+  background-color: #221f1e;
+}
+
+header {
   font-size: 16px;
   font-family: "Archivo+Black", sans-serif;
   background-color: #042c21;
   color: #fff;
   padding: 10px 20px;
   text-align: center;
-}
-
-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -118,42 +193,6 @@ header nav ul li {
   transition: all 0.3s ease-in-out;
 }
 
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: -250px;
-  width: 250px;
-  height: 100%;
-  background-color: #042c21;
-  padding-top: 60px;
-  transition: right 0.3s ease-in-out;
-  z-index: 5;
-}
-.sidebar.active {
-  right: 0;
-}
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-.sidebar ul li {
-  padding: 15px 20px;
-}
-.sidebar ul li a, .sidebar ul li button {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  padding: 5px 10px;
-  background-color: #042c21;
-  border-radius: 15px;
-  text-transform: uppercase;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-}
-.sidebar ul li a:hover, .sidebar ul li button:hover {
-  background-color: #063a2c;
-}
-
 @media (max-width: 880px) {
   .nav-desktop {
     display: none;
@@ -222,34 +261,40 @@ header nav ul li {
   margin: 0 0 0 0;
 }
 
-h1 {
-  font-size: clamp(1.44rem, 1.5vw, 2.08rem);
-  font-family: "Archivo+Black", sans-serif;
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  background-color: #042c21;
+  padding-top: 60px;
+  transition: right 0.3s ease-in-out;
+  z-index: 5;
 }
-
-h2 {
-  font-size: clamp(1.14rem, 1.125vw, 1.68rem);
-  font-family: "Archivo+Black", sans-serif;
+.sidebar.active {
+  right: 0;
 }
-
-h3 {
-  font-size: clamp(1.08rem, 0.9375vw, 1.6rem);
-  font-family: "Archivo+Black", sans-serif;
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-
-h4 {
-  font-size: clamp(1.02rem, 1.05vw, 1.44rem);
-  font-family: "Archivo+Black", sans-serif;
+.sidebar ul li {
+  padding: 15px 20px;
 }
-
-h5 {
-  font-size: clamp(0.9rem, 1.05vw, 1.28rem);
-  font-family: "Archivo+Black", sans-serif;
+.sidebar ul li a, .sidebar ul li button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 5px 10px;
+  background-color: #042c21;
+  border-radius: 15px;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
 }
-
-h6 {
-  font-size: 0.75rem;
-  font-family: "Archivo+Black", sans-serif;
+.sidebar ul li a:hover, .sidebar ul li button:hover {
+  background-color: #063a2c;
 }
 
 .management-grid {
@@ -263,52 +308,13 @@ h6 {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
-.management-card {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.3rem;
-}
-.management-card a {
-  user-select: none;
-  background-color: #042c21;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  padding: 5px 10px;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  width: 95%;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
+footer {
+  font-size: 16px;
   font-family: "Archivo+Black", sans-serif;
-}
-.management-card a::before {
-  vertical-align: -4px;
-  display: inline-flex;
-  content: "";
-  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M14.36 5.65L15.84 4.17C16.62 3.39 17.89 3.39 18.67 4.17L20.09 5.59C20.87 6.37 20.87 7.63 20.09 8.41L18.61 9.89M14.36 5.65L4.75 15.27C4.42 15.6 4.21 16.04 4.17 16.51L3.93 19.25C3.87 19.87 4.39 20.38 5.01 20.33L7.75 20.09C8.22 20.05 8.66 19.84 8.99 19.51L18.61 9.89M14.36 5.65L18.61 9.89" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
-  mask-size: 20px 20px;
-  background-color: #fff;
-  height: 20px;
-  width: 20px;
-  margin: 0 0.3rem 0 0;
-}
-.management-card a:hover {
-  background-color: #063a2c;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
-}
-table th {
-  background-color: #221f1e;
+  background-color: #042c21;
+  color: #fff;
+  padding: 10px 20px;
+  text-align: center;
 }
 
 /*# sourceMappingURL=app.css.map */

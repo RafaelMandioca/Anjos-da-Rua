@@ -1,0 +1,12 @@
+// layout/_footer.scss
+
+@use '../base/variables' as var;
+
+footer {
+	font-size: var.$fs-f300;
+	font-family: var.$ff-head;
+	background-color: var.$dark-green;
+	color: var.$white;
+	padding: 10px 20px;
+	text-align: center;
+}

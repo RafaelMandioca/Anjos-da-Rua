@@ -1,0 +1,18 @@
+// main.scss
+
+// 1. Base e Variáveis
+@use 'base/variables' as var;
+@use 'base/reset';
+@use 'base/typography';
+
+// 2. Mixins e Componentes
+@use 'components/mixins' as mix;
+@use 'components/buttons';
+@use 'components/cards';
+@use 'components/tables';
+
+// 3. Layout
+@use 'layout/header';
+@use 'layout/sidebar';
+@use 'layout/grid';
+@use 'layout/footer';

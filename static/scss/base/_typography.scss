@@ -1,0 +1,10 @@
+// base/_typography.scss
+
+@use 'variables' as var;
+
+h1 { font-size: var.$fs-600; font-family: var.$ff-head; }
+h2 { font-size: var.$fs-500; font-family: var.$ff-head; }
+h3 { font-size: var.$fs-400; font-family: var.$ff-head; }
+h4 { font-size: var.$fs-300; font-family: var.$ff-head; }
+h5 { font-size: var.$fs-200; font-family: var.$ff-head; }
+h6 { font-size: var.$fs-100; font-family: var.$ff-head; }

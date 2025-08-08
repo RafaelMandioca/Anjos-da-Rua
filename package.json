@@ -2,7 +2,7 @@
   "name": "anjosdaruaproject",
   "version": "1.0.0",
   "scripts": {
-    "scss": "sass static/scss:static/css --watch",
+    "scss": "sass static/scss/main.scss:static/css/app.css --watch",
     "dev": "browser-sync start --proxy 127.0.0.1:8000 --files 'static/css/*.css, static/js/*.js, core/templates/**/*.html' --reload-delay 50 --port 3000",
     "django-dev": "python manage.py runserver --settings=anjosdaruaproject.settings.development",
     "start": "npm-run-all --parallel scss dev django-dev"

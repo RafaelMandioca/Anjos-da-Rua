@@ -1,0 +1,122 @@
+// layout/_header.scss
+
+@use '../base/variables' as var;
+@use '../components/mixins' as mix;
+
+header {
+	font-size: var.$fs-f300;
+	font-family: var.$ff-head;
+	background-color: var.$dark-green;
+	color: var.$white;
+	padding: 10px 20px;
+	text-align: center;
+    display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 50px;
+	position: relative;
+
+	& nav {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		button {
+			font-size: var.$fs-f300;
+			font-family: var.$ff-head;
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 0;
+		}
+
+		a, button {
+			@include mix.ar-obj($color: var.$dark-green);
+			text-transform: uppercase;
+			color: var.$white;
+			text-decoration: none;
+			font-weight: bold;
+		}
+
+		ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			li {
+				display: flex;
+				align-items: center;
+                margin: 0 5px;
+			}
+		}
+	}
+}
+
+.nav-mobile {
+	z-index: 99;
+	display: none;
+}
+
+.hamburger-btn {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 30px;
+	height: 25px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+
+	span {
+		display: block;
+		width: 100%;
+		height: 3px;
+		background-color: var.$white;
+		border-radius: 3px;
+		transition: all 0.3s ease-in-out;
+	}
+}
+
+
+@media (max-width: #{var.$desktop}) {
+	.nav-desktop {
+		display: none;
+	}
+	.nav-mobile {
+		display: block;
+	}
+}
+
+$nav-espacamento: 5px;
+
+.nav-gerenciamento {
+	&::before {
+		@include mix.ar-icon(var.$gerenciamento-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 2px, 0, 0, 0);
+	}
+}
+
+.nav-dashboard {
+	&::before {
+		@include mix.ar-icon(var.$dashboard-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-abrigo {
+	&::before {
+		@include mix.ar-icon(var.$abrigo-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-estoque {
+	&::before {
+		@include mix.ar-icon(var.$estoque-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+	}
+}
+
+.nav-sair {
+	&::before {
+		@include mix.ar-icon(var.$sair-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 0, 0, 0, 0);
+	}
+}

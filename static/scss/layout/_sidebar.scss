@@ -1,0 +1,36 @@
+// layout/_sidebar.scss
+
+@use '../base/variables' as var;
+@use '../components/mixins' as mix;
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	right: -250px;
+	width: 250px;
+	height: 100%;
+	background-color: var.$dark-green;
+	padding-top: 60px;
+	transition: right 0.3s ease-in-out;
+	z-index: 5;
+
+	&.active {
+		right: 0;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		li {
+			padding: 15px 20px;
+			a, button {
+				@include mix.ar-obj($color: var.$dark-green);
+				text-transform: uppercase;
+				color: var.$white;
+				text-decoration: none;
+				font-weight: bold;
+			}
+		}
+	}
+}
