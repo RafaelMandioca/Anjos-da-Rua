@@ -19,12 +19,12 @@
         <tbody>
             {% for animal in object_list %}
             <tr>
-                <td>{{ animal.nome }}</td>
-                <td>{{ animal.especie }}</td>
-                <td>{{ animal.abrigo }}</td>
-                <td>{{ animal.idade }}</td>
-                <td>{{ animal.get_sexo_display }}</td>
-                <td>
+                <td data-label="Nome">{{ animal.nome }}</td>
+                <td data-label="Espécie">{{ animal.especie }}</td>
+                <td data-label="Abrigo">{{ animal.abrigo }}</td>
+                <td data-label="Idade">{{ animal.idade }}</td>
+                <td data-label="Sexo">{{ animal.get_sexo_display }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'animal-detail' animal.pk %}" class="btn-see"></a>
                     <a href="{% url 'animal-update' animal.pk %}" class="btn-edit"></a>
                     <a href="{% url 'animal-delete' animal.pk %}" class="btn-trash"></a>

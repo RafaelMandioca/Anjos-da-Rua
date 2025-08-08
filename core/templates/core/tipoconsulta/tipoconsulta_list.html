@@ -15,8 +15,8 @@
         <tbody>
             {% for tipoconsulta in object_list %}
             <tr>
-                <td>{{ tipoconsulta.descricao }}</td>
-                <td>
+                <td data-label="Descrição">{{ tipoconsulta.descricao }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'tipoconsulta-detail' tipoconsulta.pk %}" class="btn-see"></a>
                     <a href="{% url 'tipoconsulta-update' tipoconsulta.pk %}" class="btn-edit"></a>
                     <a href="{% url 'tipoconsulta-delete' tipoconsulta.pk %}" class="btn-trash"></a>

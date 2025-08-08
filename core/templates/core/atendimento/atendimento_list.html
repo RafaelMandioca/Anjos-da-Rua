@@ -18,11 +18,11 @@
         <tbody>
             {% for atendimento in object_list %}
             <tr>
-                <td>{{ atendimento.animal.nome }}</td>
-                <td>{{ atendimento.veterinario.nome }}</td>
-                <td>{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
-                <td>{{ atendimento.tipo_consulta.descricao }}</td>
-                <td>
+                <td data-label="Animal">{{ atendimento.animal.nome }}</td>
+                <td data-label="Veterinário">{{ atendimento.veterinario.nome }}</td>
+                <td data-label="Data">{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
+                <td data-label="Tipo de Consulta">{{ atendimento.tipo_consulta.descricao }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}" class="btn-see"></a>
                     <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}" class="btn-edit"></a>
                     <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}" class="btn-trash"></a>

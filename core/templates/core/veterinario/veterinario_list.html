@@ -17,10 +17,10 @@
         <tbody>
             {% for veterinario in object_list %}
             <tr>
-                <td>{{ veterinario.nome }}</td>
-                <td>{{ veterinario.email }}</td>
-                <td>{{ veterinario.telefone }}</td>
-                <td>
+                <td data-label="Nome">{{ veterinario.nome }}</td>
+                <td data-label="Email">{{ veterinario.email }}</td>
+                <td data-label="Telefone">{{ veterinario.telefone }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'veterinario-detail' veterinario.pk %}" class="btn-see"></a>
                     <a href="{% url 'veterinario-update' veterinario.pk %}" class="btn-edit"></a>
                     <a href="{% url 'veterinario-delete' veterinario.pk %}" class="btn-trash"></a>

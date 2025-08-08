@@ -1,9 +1,9 @@
-{% raw %}{% extends 'core/base.html' %}
+{% extends 'core/base.html' %}
 
 {% block title %}Registro de Veterinário{% endblock %}
 
 {% block content %}
-    <h2>Registro de Veterinário</h2>
+    <h1>Registro de Veterinário</h1>
     <form method="post">
         {% csrf_token %}
 
@@ -26,9 +26,8 @@
             {{ endereco_form.as_p }}
         </fieldset>
 
-        <br>
         <div class="form-btn-wrapper">
             <button type="submit" class="btn">Registrar</button>
         </div>
     </form>
-{% endblock %}{% endraw %}
+{% endblock %}

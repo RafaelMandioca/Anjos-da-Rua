@@ -48,7 +48,7 @@
                     <li><a class="nav-estoque" href="{% url 'item-list' %}">Estoque</a></li>
                 {% endif %}
 
-                <li><a href="#" class="nav-perfil">Olá, {{ user.nome }}</a></li>
+                <li><a href="{% url 'perfil' %}" class="nav-perfil">Perfil</a></li>
                 <li>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}

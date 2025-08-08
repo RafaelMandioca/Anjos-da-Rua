@@ -27,13 +27,13 @@
         <tbody>
             {% for item in object_list %}
             <tr>
-                <td>{{ item.nome }}</td>
-                <td>{{ item.descricao }}</td>
-                <td>{{ item.quantidade }}</td>
-                <td>R$ {{ item.preco_unitario }}</td>
-                <td>{{ item.data_validade|date:"d/m/Y" }}</td>
+                <td data-label="Nome">{{ item.nome }}</td>
+                <td data-label="Descrição">{{ item.descricao }}</td>
+                <td data-label="Quantidade em Estoque">{{ item.quantidade }}</td>
+                <td data-label="Preço Unitário">R$ {{ item.preco_unitario }}</td>
+                <td data-label="Data de Validade">{{ item.data_validade|date:"d/m/Y" }}</td>
                 {% if user.is_superuser %}
-                <td>
+                <td data-label="Ações">
                     <a href="{% url 'item-detail' item.pk %}" class="btn-see"></a>
                     <a href="{% url 'item-update' item.pk %}" class="btn-edit"></a>
                     <a href="{% url 'item-delete' item.pk %}" class="btn-trash"></a>

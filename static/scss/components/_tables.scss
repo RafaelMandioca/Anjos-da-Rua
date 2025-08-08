@@ -8,23 +8,6 @@ table {
 	margin-top: var.$sp-md;
 	margin-bottom: var.$sp-md;
 
-	& tr:last-child td:first-child {
-		border-bottom-left-radius: var.$round;
-	}
-
-	& tr:last-child td:last-child {
-		border-bottom-right-radius: var.$round;
-	}
-
-
-	& thead th:first-child {
-		border-top-left-radius: var.$round;
-	}
-
-	& thead th:last-child {
-		border-top-right-radius: var.$round;
-	}
-
 	th, td {
 		color: var.$white;
 		font-family: var.$ff-head;
@@ -49,6 +32,86 @@ table {
 		@include mix.transition();
 		&:hover {
 			@include mix.hover($color: var.$light-green);
+		}
+	}
+}
+
+@media (min-width: var.$desktop) {
+	table {
+		& tr:last-child td:first-child {
+			border-bottom-left-radius: var.$round;
+		}
+
+		& tr:last-child td:last-child {
+			border-bottom-right-radius: var.$round;
+		}
+
+
+		& thead th:first-child {
+			border-top-left-radius: var.$round;
+		}
+
+		& thead th:last-child {
+			border-top-right-radius: var.$round;
+		}
+	}
+}
+
+@media (max-width: var.$desktop) {
+	table {
+		border-radius: 0;
+
+		thead {
+			display: none;
+		}
+
+		tr {
+			display: block;
+			margin-bottom: var.$sp-sm;
+			border-radius: var.$round;
+			overflow: hidden;
+		}
+		
+		td {
+			display: block;
+			text-align: right;
+			position: relative;
+			padding-left: 50%;
+
+			@include mix.ar-border($color: black);
+
+			&::before {
+				content: attr(data-label);
+				position: absolute;
+				left: 10px;
+				width: calc(50% - 20px);
+				padding-right: 10px;
+				white-space: nowrap;
+				text-align: left;
+				font-weight: bold;
+				color: var.$light-gray;
+			}
+
+			&:last-child {
+				display: flex;
+				justify-content: flex-end;
+
+				.btn-see, .btn-edit, .btn-trash {
+					margin-top: 0;
+					&:not(:last-of-type) {
+						margin-right: var.$sp-xxsm;
+					}
+				}
+
+				border-bottom-right-radius: 0;
+
+				&::before {
+					top: 33%;
+				}
+			}
+				&:first-child {
+				border-bottom-left-radius: 0;
+			}
 		}
 	}
 }

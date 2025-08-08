@@ -34,6 +34,10 @@ class AtendimentoVeterinarioDeleteView(LoginRequiredMixin, DeleteView):
 def atendimento_veterinario_create_update(request, pk=None):
     instance = get_object_or_404(AtendimentoVeterinario, pk=pk) if pk else None
     
+    # Pega o animal da URL, se existir
+    animal_id = request.GET.get('animal_id')
+    initial_animal = get_object_or_404(Animal, pk=animal_id) if animal_id else None
+
     quantidades_antigas = {
         item.item.id: item.quantidade 
         for item in instance.itemhasatendimentoveterinario_set.all()
@@ -42,13 +46,20 @@ def atendimento_veterinario_create_update(request, pk=None):
     FormClass = AtendimentoVeterinarioForm if request.user.is_superuser else VeterinarioAtendimentoForm
 
     if request.method == 'POST':
-        form = FormClass(request.POST, instance=instance)
+        # Passa o animal inicial para o formulário para manter o campo desabilitado
+        form = FormClass(request.POST, instance=instance, initial_animal=initial_animal)
         formset = ItemAtendimentoFormSet(request.POST, instance=instance)
         
         if form.is_valid() and formset.is_valid():
             try:
                 with transaction.atomic():
                     atendimento = form.save(commit=False)
+
+                    # Se o campo animal foi desabilitado, seu valor não é enviado no POST.
+                    # Por isso, precisamos reatribuí-lo manualmente aqui.
+                    if initial_animal:
+                        atendimento.animal = initial_animal
+
                     if not request.user.is_superuser:
                         atendimento.veterinario = request.user
                     atendimento.save()
@@ -86,7 +97,8 @@ def atendimento_veterinario_create_update(request, pk=None):
             except transaction.TransactionManagementError:
                 pass
     else:
-        form = FormClass(instance=instance)
+        # Passa o animal inicial para o formulário desabilitar o campo
+        form = FormClass(instance=instance, initial_animal=initial_animal)
         formset = ItemAtendimentoFormSet(instance=instance)
 
     context = {

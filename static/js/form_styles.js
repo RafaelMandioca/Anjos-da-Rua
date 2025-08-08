@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const trigger = document.createElement('div');
         trigger.className = 'custom-select-trigger';
         wrapper.appendChild(trigger);
+        
+        // --- ADIÇÃO INICIA AQUI ---
+        // Verifica se o select original está desabilitado
+        if (selectElement.disabled) {
+            wrapper.classList.add('is-disabled');
+        }
+        // --- ADIÇÃO TERMINA AQUI ---
 
         const selectedDisplay = document.createElement('span');
         trigger.appendChild(selectedDisplay);
@@ -63,6 +70,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Lógica para abrir/fechar e posicionar
         trigger.addEventListener('click', (e) => {
+            // --- ADIÇÃO INICIA AQUI ---
+            // Impede a abertura se o campo estiver desabilitado
+            if (wrapper.classList.contains('is-disabled')) {
+                return;
+            }
+            // --- ADIÇÃO TERMINA AQUI ---
+
             e.stopPropagation();
             // Fecha outros dropdowns abertos
             document.querySelectorAll('.custom-select-wrapper.open').forEach(openWrapper => {

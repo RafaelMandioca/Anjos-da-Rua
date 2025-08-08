@@ -110,18 +110,6 @@ table {
   margin-top: 1.2rem;
   margin-bottom: 1.2rem;
 }
-table tr:last-child td:first-child {
-  border-bottom-left-radius: 10px;
-}
-table tr:last-child td:last-child {
-  border-bottom-right-radius: 10px;
-}
-table thead th:first-child {
-  border-top-left-radius: 10px;
-}
-table thead th:last-child {
-  border-top-right-radius: 10px;
-}
 table th, table td {
   color: #f2f8f7;
   font-family: "Archivo+Black", sans-serif;
@@ -146,6 +134,69 @@ table th a:hover {
   background-color: #0d614a;
 }
 
+@media (min-width: 800px) {
+  table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+  }
+  table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+  }
+  table thead th:first-child {
+    border-top-left-radius: 10px;
+  }
+  table thead th:last-child {
+    border-top-right-radius: 10px;
+  }
+}
+@media (max-width: 800px) {
+  table {
+    border-radius: 0;
+  }
+  table thead {
+    display: none;
+  }
+  table tr {
+    display: block;
+    margin-bottom: 0.9rem;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  table td {
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+  table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    width: calc(50% - 20px);
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #a4c2b4;
+  }
+  table td:last-child {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom-right-radius: 0;
+  }
+  table td:last-child .btn-see, table td:last-child .btn-edit, table td:last-child .btn-trash {
+    margin-top: 0;
+  }
+  table td:last-child .btn-see:not(:last-of-type), table td:last-child .btn-edit:not(:last-of-type), table td:last-child .btn-trash:not(:last-of-type) {
+    margin-right: 0.3rem;
+  }
+  table td:last-child::before {
+    top: 33%;
+  }
+  table td:first-child {
+    border-bottom-left-radius: 0;
+  }
+}
 form .form-group {
   margin-bottom: 1rem;
 }
@@ -191,8 +242,8 @@ form #id_new_password2 {
 form input, form select, form textarea {
   width: 100%;
   padding: 0.75rem;
-  color: #151312;
-  background-color: #f2f8f7;
+  color: #f2f8f7;
+  background-color: #09503d;
   border-radius: 10px;
   border: none;
   font-family: "Gelasio", serif;
@@ -201,20 +252,31 @@ form input, form select, form textarea {
 form input:focus, form select:focus, form textarea:focus {
   outline: 2px solid #0d614a;
 }
+form input::placeholder, form select::placeholder, form textarea::placeholder {
+  color: #a4c2b4;
+}
 form select {
   display: none;
 }
 form .custom-select-wrapper {
   position: relative;
   width: 100%;
-  color: #151312;
+  color: #f2f8f7;
+}
+form .custom-select-wrapper.is-disabled .custom-select-trigger {
+  background-color: #221f1e;
+  color: #f2f8f7;
+  cursor: not-allowed;
+}
+form .custom-select-wrapper.is-disabled .custom-arrow {
+  display: none;
 }
 form .custom-select-trigger {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem;
-  background-color: #f2f8f7;
+  background-color: #09503d;
   border-radius: 10px;
   cursor: pointer;
   font-family: "Gelasio", serif;
@@ -259,7 +321,7 @@ form .custom-arrow {
   content: "";
   mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
   mask-size: 20px 20px;
-  background-color: #151312;
+  background-color: #f2f8f7;
   height: 20px;
   width: 20px;
   margin: 0 0 0 0;
@@ -282,8 +344,9 @@ form .form-btn-wrapper {
   display: flex;
   justify-content: center;
   gap: 0.9rem;
+  margin-top: 1.2rem;
 }
-form button.btn:not(.btn-partial) {
+form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form) {
   all: unset;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -301,7 +364,7 @@ form button.btn:not(.btn-partial) {
   font-family: "Archivo+Black", sans-serif;
   width: 20%;
 }
-form button.btn:not(.btn-partial):hover {
+form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form):hover {
   background-color: #0d614a;
 }
 form a.btn {
@@ -330,7 +393,7 @@ form .btn-partial {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.75rem 0.75rem;
-  background-color: #0d614a;
+  background-color: #09503d;
   border-radius: 10px;
   text-decoration: none;
   display: inline-flex;
@@ -344,15 +407,14 @@ form .btn-partial {
   width: 20%;
 }
 form .btn-partial:hover {
-  background-color: #09503d;
+  background-color: #0d614a;
 }
-
-.btn-add {
+form .remove-item-form {
   all: unset;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.75rem 0.75rem;
-  background-color: #0d614a;
+  background-color: #770505;
   border-radius: 10px;
   text-decoration: none;
   display: inline-flex;
@@ -360,18 +422,112 @@ form .btn-partial:hover {
   height: 100%;
   justify-content: center;
   color: #f2f8f7;
-  margin-top: 0.6rem;
+  text-decoration: none;
+  font-family: "Archivo+Black", sans-serif;
+}
+form .remove-item-form:hover {
+  background-color: #891313;
+}
+form .remove-item-form::before {
+  vertical-align: -36%;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M9 13H12H15M3.04 4.29C3.01 4.11 3.08 3.92 3.23 3.81C3.93 3.32 6.31 2 12 2C17.69 2 20.07 3.32 20.77 3.81C20.92 3.92 20.99 4.11 20.96 4.29L19.26 17.04C19.1 18.27 18.36 19.36 17.28 19.98L16.96 20.16C13.89 21.92 10.11 21.92 7.04 20.16L6.72 19.98C5.64 19.36 4.9 18.27 4.74 17.04L3.04 4.29ZM3 5C5.57 7.67 18.43 7.67 21 5" stroke="%23ffffff" stroke-width="2"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #f2f8f7;
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 0 0;
+  transform: translate(0, -1px);
+}
+form #add-item-form {
+  all: unset;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.75rem 0.75rem;
+  background-color: #09503d;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  color: #f2f8f7;
+  text-decoration: none;
+  font-family: "Archivo+Black", sans-serif;
+}
+form #add-item-form:hover {
+  background-color: #0d614a;
+}
+form #add-item-form::before {
+  vertical-align: -36%;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M6 12H12M18 12H12M12 12V6M12 12V18" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #f2f8f7;
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 0 0;
+  transform: translate(0, -1px);
+}
+
+.btn-add {
+  all: unset;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.75rem 0.75rem;
+  background-color: #09503d;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  color: #f2f8f7;
   text-decoration: none;
   font-family: "Archivo+Black", sans-serif;
 }
 .btn-add:hover {
-  background-color: #09503d;
+  background-color: #0d614a;
 }
 .btn-add::before {
   vertical-align: -36%;
   display: inline-flex;
   content: "";
   mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M6 12H12M18 12H12M12 12V6M12 12V18" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #f2f8f7;
+  height: 20px;
+  width: 20px;
+  margin: 0 0 0 0;
+  transform: translate(0, -1px);
+}
+
+.btn-back {
+  all: unset;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.75rem 0.75rem;
+  background-color: #09503d;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  color: #f2f8f7;
+  text-decoration: none;
+  font-family: "Archivo+Black", sans-serif;
+}
+.btn-back:hover {
+  background-color: #0d614a;
+}
+.btn-back::before {
+  vertical-align: -36%;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cline x1="19" y1="12" x2="5" y2="12"%3E%3C/line%3E%3Cpolyline points="12 19 5 12 12 5"%3E%3C/polyline%3E%3C/svg%3E');
   mask-size: 20px 20px;
   background-color: #f2f8f7;
   height: 20px;
@@ -440,6 +596,39 @@ form .btn-partial:hover {
   display: inline-flex;
   content: "";
   mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M14.36 5.65L15.84 4.17C16.62 3.39 17.89 3.39 18.67 4.17L20.09 5.59C20.87 6.37 20.87 7.63 20.09 8.41L18.61 9.89M14.36 5.65L4.75 15.27C4.42 15.6 4.21 16.04 4.17 16.51L3.93 19.25C3.87 19.87 4.39 20.38 5.01 20.33L7.75 20.09C8.22 20.05 8.66 19.84 8.99 19.51L18.61 9.89M14.36 5.65L18.61 9.89" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #f2f8f7;
+  height: 20px;
+  width: 20px;
+  margin: 0 0 0 0;
+  transform: translate(0, -1px);
+}
+
+.btn-mini-add {
+  all: unset;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.5rem 0.4rem;
+  background-color: #003f2e;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  color: #f2f8f7;
+  text-decoration: none;
+  font-family: "Archivo+Black", sans-serif;
+  width: 20px;
+}
+.btn-mini-add:hover {
+  background-color: #0d614a;
+}
+.btn-mini-add::before {
+  vertical-align: -36%;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M6 12H12M18 12H12M12 12V6M12 12V18" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E');
   mask-size: 20px 20px;
   background-color: #f2f8f7;
   height: 20px;

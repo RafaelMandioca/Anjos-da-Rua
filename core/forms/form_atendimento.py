@@ -19,10 +19,20 @@ class AtendimentoVeterinarioForm(forms.ModelForm):
         fields = ['animal', 'veterinario', 'tipo_consulta', 'data_do_atendimento', 'observacoes']
     
     def __init__(self, *args, **kwargs):
+        # Remove 'initial_animal' dos kwargs para não ser passado ao ModelForm
+        initial_animal = kwargs.pop('initial_animal', None)
         super().__init__(*args, **kwargs)
-        self.fields['animal'].choices = self.get_animal_choices()
+
+        if initial_animal:
+            # Se um animal foi passado, limita o queryset a ele e desabilita o campo
+            self.fields['animal'].queryset = Animal.objects.filter(pk=initial_animal.pk)
+            self.initial['animal'] = initial_animal
+            self.fields['animal'].disabled = True
+        else:
+            # Caso contrário, mostra a lista agrupada por abrigo
+            self.fields['animal'].choices = self.get_animal_choices()
         
-        # CORREÇÃO AQUI: Formata o valor inicial da data para o padrão brasileiro
+        # Formata o valor inicial da data para o padrão brasileiro
         if self.instance and self.instance.pk and self.instance.data_do_atendimento:
             self.initial['data_do_atendimento'] = self.instance.data_do_atendimento.strftime('%d/%m/%Y %H:%M')
 

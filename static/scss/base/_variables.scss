@@ -28,7 +28,6 @@ $red: #891313;
 // 3. TIPOGRAFIA
 //=================================================================
 // --- 3.1. Tamanho de Fonte Fluido (Recomendado) ---
-// Usa clamp() para escalar a fonte suavemente entre o mínimo e o máximo.
 $alpha-font-min: 1.2;
 $alpha-font-max: 1.6;
 $alpha-font-inc: .75;
@@ -46,7 +45,6 @@ $fs-200: clamp(0.75rem*$alpha-font-min, 1.4vw*$alpha-font-inc, 0.8rem*$alpha-fon
 $fs-100: clamp(0.5rem*$alpha-font-min, 1rem*$alpha-font-inc, 0.6rem*$alpha-font-max);
 
 // --- 3.2. Tamanho de Fonte Fixo ---
-// Para elementos que não devem escalar.
 $fs-f100: 12px;
 $fs-f200: 14px;
 $fs-f300: 16px;
@@ -64,7 +62,6 @@ $fw-light: 300;
 // 4. ESPAÇAMENTOS (SPACING)
 //=================================================================
 // --- 4.1. Espaçamento Fluido (REM) ---
-// Use para margens e paddings gerais que devem escalar com a tela.
 $alpha-sp: 0.6;
 $sp-xxl: 4rem * $alpha-sp;
 $sp-xl: 3rem * $alpha-sp;
@@ -75,7 +72,6 @@ $sp-xsm: 1rem * $alpha-sp;
 $sp-xxsm: .5rem * $alpha-sp;
 
 // --- 4.2. Espaçamento Fixo (PX) ---
-// Use para espaçamentos que precisam de precisão em pixels.
 $sppx-lg: 22px;
 $sppx-md: 20px;
 $sppx-sm: 15px;
@@ -85,8 +81,8 @@ $sppx-xxxsm: 6px;
 $sppx-xxxxsm: 3px;
 
 // --- 4.3. Espaçamento Específico de Layout ---
-$sp-site: 5%; // Espaçamento lateral principal do site
-$nav-espacamento: 5px; // Espaçamento para ícones de navegação
+$sp-site: 5%;
+$nav-espacamento: 5px;
 
 //=================================================================
 // 5. LAYOUT & GRID
@@ -104,15 +100,14 @@ $round: 10px;
 // 6. ÍCONES (SVG URL-ENCODED)
 //=================================================================
 // --- 6.1. Configurações de Ícones ---
-$default-valign: -36%; // Alinhamento vertical padrão
-$cfix: translate(0, 0); // Correção de posicionamento
-$csize-ico: 25px; // Tamanho padrão de ícone
+$default-valign: -36%;
+$cfix: translate(0, 0);
+$csize-ico: 25px;
 $csize-head: 20px;
 $csize-body: 12px;
 $csize-big: 32px;
 
 // --- 6.2. Biblioteca de Ícones ---
-// Para adicionar um novo, use um encoder online (ex: https://yoksel.github.io/url-encoder/)
 $proximo-ico: '%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cline x1="5" y1="12" x2="19" y2="12"%3E%3C/line%3E%3Cpolyline points="12 5 19 12 12 19"%3E%3C/polyline%3E%3C/svg%3E';
 $anterior-ico: '%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3Cline x1="19" y1="12" x2="5" y2="12"%3E%3C/line%3E%3Cpolyline points="12 19 5 12 12 5"%3E%3C/polyline%3E%3C/svg%3E';
 $usuario-ico: '%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="%23ffffff" viewBox="0 0 256 256"%3E%3Cpath d="M234.38,210a123.36,123.36,0,0,0-60.78-53.23,76,76,0,1,0-91.2,0A123.36,123.36,0,0,0,21.62,210a12,12,0,1,0,20.77,12c18.12-31.32,50.12-50,85.61-50s67.49,18.69,85.61,50a12,12,0,0,0,20.77-12ZM76,96a52,52,0,1,1,52,52A52.06,52.06,0,0,1,76,96Z"%3E%3C/path%3E%3C/svg%3E';

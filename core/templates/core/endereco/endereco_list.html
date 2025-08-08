@@ -17,10 +17,10 @@
         <tbody>
             {% for endereco in object_list %}
             <tr>
-                <td>{{ endereco.logradouro }}</td>
-                <td>{{ endereco.bairro }}</td>
-                <td>{{ endereco.cidade }}</td>
-                <td>
+                <td data-label="Logradouro">{{ endereco.logradouro }}</td>
+                <td data-label="Bairro">{{ endereco.bairro }}</td>
+                <td data-label="Cidade">{{ endereco.cidade }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'endereco-detail' endereco.pk %}" class="btn-see"></a>
                     <a href="{% url 'endereco-update' endereco.pk %}" class="btn-edit"></a>
                     <a href="{% url 'endereco-delete' endereco.pk %}" class="btn-trash"></a>

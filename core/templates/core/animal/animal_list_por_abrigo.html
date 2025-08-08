@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Animais no Abrigo: {{ abrigo.nome }}</h1>
-    <a href="{% url 'abrigo-list' %}" class="btn">Voltar para a lista de abrigos</a>
+    <a href="{% url 'abrigo-list' %}" class="btn btn-back">Voltar para a lista de abrigos</a>
     
     <table>
         <thead>
@@ -19,12 +19,12 @@
         <tbody>
             {% for animal in animal_list %}
             <tr>
-                <td>{{ animal.nome }}</td>
-                <td>{{ animal.especie }}</td>
-                <td>{{ animal.idade }} anos</td>
-                <td>{{ animal.get_sexo_display }}</td>
-                <td>
-                    <a href="{% url 'atendimentoveterinario-create' %}?animal_id={{ animal.pk }}" class="btn">Novo Atendimento</a>
+                <td data-label="Nome do Animal">{{ animal.nome }}</td>
+                <td data-label="Espécie">{{ animal.especie }}</td>
+                <td data-label="Idade">{{ animal.idade }} anos</td>
+                <td data-label="Sexo">{{ animal.get_sexo_display }}</td>
+                <td data-label="Ações">
+                    <a href="{% url 'atendimentoveterinario-create' %}?animal_id={{ animal.pk }}" class="btn btn-mini-add"></a>
                 </td>
             </tr>
             {% empty %}

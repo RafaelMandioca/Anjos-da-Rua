@@ -16,9 +16,9 @@
         <tbody>
             {% for crmv in object_list %}
             <tr>
-                <td>{{ crmv.numero }}</td>
-                <td>{{ crmv.estado.sigla }}</td>
-                <td>
+                <td data-label="Número">{{ crmv.numero }}</td>
+                <td data-label="Estado">{{ crmv.estado.sigla }}</td>
+                <td data-label="Ações">
                     <a href="{% url 'crmv-detail' crmv.pk %}" class="btn-see"></a>
                     <a href="{% url 'crmv-update' crmv.pk %}" class="btn-edit"></a>
                     <a href="{% url 'crmv-delete' crmv.pk %}" class="btn-trash"></a>

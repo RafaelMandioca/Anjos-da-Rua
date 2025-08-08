@@ -17,10 +17,10 @@
         <tbody>
             {% for especie in object_list %}
             <tr>
-                <td>{{ especie.nome_popular }}</td>
-                <td>{{ especie.nome_cientifico }}</td>
-                <td>{{ especie.expectativa_de_vida }} anos</td>
-                <td>
+                <td data-label="Nome Popular">{{ especie.nome_popular }}</td>
+                <td data-label="Nome Científico">{{ especie.nome_cientifico }}</td>
+                <td data-label="Expectativa de Vida">{{ especie.expectativa_de_vida }} anos</td>
+                <td data-label="Ações">
                     <a href="{% url 'especie-detail' especie.pk %}" class="btn-see"></a>
                     <a href="{% url 'especie-update' especie.pk %}" class="btn-edit"></a>
                     <a href="{% url 'especie-delete' especie.pk %}" class="btn-trash"></a>
