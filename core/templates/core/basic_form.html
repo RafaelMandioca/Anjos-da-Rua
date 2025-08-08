@@ -8,7 +8,9 @@
         {% csrf_token %}
         {{ form.as_p }}
         <br>
-        <button type="submit" class="btn">Salvar</button>
-        <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn">Cancelar</a>
+        <div class="form-btn-wrapper">
+            <button type="submit" class="btn">Salvar</button>
+            <a href="{{ request.META.HTTP_REFERER|default:'/' }}" class="btn">Cancelar</a>
+        </div>
     </form>
 {% endblock %}

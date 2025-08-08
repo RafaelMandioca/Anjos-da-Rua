@@ -1,0 +1,6 @@
+@use '../base/variables' as var;
+@use '../components/mixins' as mix;
+
+h1 {
+   margin-bottom: var.$sp-sm;
+}

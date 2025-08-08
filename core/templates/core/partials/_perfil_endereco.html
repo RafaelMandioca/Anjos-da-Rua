@@ -1,0 +1,37 @@
+<h2>> Alterar Endereço</h2>
+<form method="post" action="{% url 'perfil' %}?section=endereco" class="form-styled">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ endereco_form.cep.label_tag }}
+        {{ endereco_form.cep }}
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            {{ endereco_form.cidade.label_tag }}
+            {{ endereco_form.cidade }}
+        </div>
+        <div class="form-group">
+            {{ endereco_form.bairro.label_tag }}
+            {{ endereco_form.bairro }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ endereco_form.logradouro.label_tag }}
+        {{ endereco_form.logradouro }}
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            {{ endereco_form.complemento.label_tag }}
+            {{ endereco_form.complemento }}
+        </div>
+        <div class="form-group">
+            {{ endereco_form.numero.label_tag }}
+            {{ endereco_form.numero }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ endereco_form.ponto_de_referencia.label_tag }}
+        {{ endereco_form.ponto_de_referencia }}
+    </div>
+    <button type="submit" class="btn">Salvar Alterações</button>
+</form>

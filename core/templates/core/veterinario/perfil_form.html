@@ -1,0 +1,21 @@
+{% extends 'core/veterinario/perfil.html' %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block profile_content %}
+    <h2>> {{ form_title }}</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post" class="form-styled">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn">Salvar Alterações</button>
+    </form>
+{% endblock %}

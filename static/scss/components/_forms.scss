@@ -1,0 +1,66 @@
+// components/_forms.scss
+@use '../base/variables' as var;
+@use 'mixins' as mix;
+
+form {
+   .form-group {
+      margin-bottom: 1rem;
+   }
+
+   .form-row {
+      display: flex;
+      gap: 1rem;
+
+      .form-group {
+         flex: 1;
+      }
+   }
+
+   hr { display: none; }
+
+   fieldset {
+      border: 0;
+      padding: var.$sp-xsm;
+      @include mix.ar-sec();
+      margin-bottom: var.$sp-md;
+      legend {
+         float: left;
+         width: 100%;
+         font-family: var.$ff-head;
+         font-weight: var.$fw-heavy;
+         margin-bottom: var.$sp-md;
+      }
+   }
+
+   label {
+      font-family: var.$ff-head;
+      display: block;
+      margin: var.$sp-md 0 var.$sp-xxsm ;
+      color: var.$light-gray;
+   }
+
+   input, select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      color: var.$dark-gray;
+      background-color: var.$white;
+      border-radius: var.$round;
+      border: none;
+      font-family: var.$ff-body;
+      font-size: var.$fs-f300;
+
+      &:focus {
+         outline: 2px solid var.$light-green;
+      }
+   }
+
+   .btn:nth-of-type(1) {
+      all: unset;
+      cursor: pointer;
+      @include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
+      color: var.$white;
+      margin-top: 1rem;
+      text-decoration: none;
+      font-family: var.$ff-head;
+   }
+}

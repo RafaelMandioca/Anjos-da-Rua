@@ -13,7 +13,7 @@ header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	height: 50px;
+	height: 60px;
 	position: relative;
 
 	& nav {
@@ -50,7 +50,7 @@ header {
 			li {
 				display: flex;
 				align-items: center;
-				margin: 0 5px;
+				margin: 0 4px;
 			}
 		}
 	}
@@ -59,18 +59,14 @@ header {
 .nav-desktop {
 	a {
 		@include mix.ar-obj($color: var.$dark-green, $border: 0);
-		text-transform: uppercase;
 		color: var.$white;
 		text-decoration: none;
-		font-weight: var.$fw-heavy;
 	}
 
 	button {
 		@include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
-		text-transform: uppercase;
 		color: var.$white;
 		text-decoration: none;
-		font-weight: var.$fw-heavy;
 	}
 }
 

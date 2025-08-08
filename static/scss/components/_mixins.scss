@@ -31,11 +31,13 @@
    }
 }
 
-@mixin ar-obj($color: var.$medium-green, $p-ns: 5px, $p-we: 10px, $hcolor: var.$light-green, $border: 1, $hover: 1) {
+@mixin ar-obj($color: var.$medium-green, $p-ns: 0.75rem, $p-we: .75rem, $hcolor: var.$light-green, $border: 1, $hover: 1) {
    @include transition();
    padding: $p-ns $p-we;
    background-color: $color;
    border-radius: var.$round;
+
+   text-decoration: none;
    
    display: inline-flex;
    align-items: center;
@@ -50,6 +52,12 @@
          @include hover($hcolor);
       }
    }
+}
+
+@mixin ar-sec($padding: var.$sp-sm, $color: var.$dark-green) {
+   padding: $padding;
+   background-color: $color;
+   border-radius: var.$round;
 }
 
 @mixin ar-btn($p-ns: 5px, $p-we: 10px, $border: 1, $color: var.$medium-green, $hcolor: var.$light-green, $rvar: 1) {

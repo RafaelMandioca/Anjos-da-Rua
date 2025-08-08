@@ -9,9 +9,12 @@
 @use 'components/mixins' as mix;
 @use 'components/cards';
 @use 'components/tables';
+@use 'components/forms';
 
 // 3. Layout
 @use 'layout/header';
 @use 'layout/sidebar';
+@use 'layout/content';
 @use 'layout/grid';
+@use 'layout/perfil';
 @use 'layout/footer';

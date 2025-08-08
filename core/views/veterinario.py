@@ -4,11 +4,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
 from django.db import transaction
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .mixins import SortableListViewMixin
 from ..models import Veterinario, CRMV, Endereco
-from ..forms.form_veterinario import VeterinarioForm, CrmvForm
+from ..forms.form_veterinario import VeterinarioForm, CrmvForm, VeterinarioUpdateForm
 from ..forms.form_cadastros_gerais import EnderecoForm
 from .cadastros_gerais import generic_create_update_view, AdminRequiredMixin, is_admin
 
@@ -18,6 +21,87 @@ class VeterinarioOrAdminMixin(UserPassesTestMixin):
             return True
         veterinario = self.get_object()
         return self.request.user == veterinario
+
+@login_required
+def perfil_view(request):
+    section = request.GET.get('section', 'info') 
+    context = {'section': section}
+    return render(request, 'core/veterinario/perfil.html', context)
+
+@login_required
+def perfil_alterar_endereco(request):
+    veterinario = get_object_or_404(Veterinario, pk=request.user.pk)
+    endereco_instance = veterinario.endereco or None
+
+    if request.method == 'POST':
+        form = EnderecoForm(request.POST, instance=endereco_instance)
+        if form.is_valid():
+            endereco = form.save()
+            if not veterinario.endereco:
+                veterinario.endereco = endereco
+                veterinario.save()
+            messages.success(request, 'Endereço atualizado com sucesso!')
+            return redirect('perfil_alterar_endereco')
+    else:
+        form = EnderecoForm(instance=endereco_instance)
+
+    context = {
+        'form': form,
+        'form_title': 'Alterar Endereço',
+        'section': 'endereco'
+    }
+    return render(request, 'core/veterinario/perfil_form.html', context)
+
+@login_required
+def perfil_alterar_informacoes(request):
+    veterinario = get_object_or_404(Veterinario, pk=request.user.pk)
+    if request.method == 'POST':
+        form = VeterinarioUpdateForm(request.POST, instance=veterinario)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Informações atualizadas com sucesso!')
+            return redirect('perfil_alterar_informacoes')
+    else:
+        form = VeterinarioUpdateForm(instance=veterinario)
+    
+    context = {
+        'form': form,
+        'form_title': 'Alterar Informações',
+        'section': 'info'
+    }
+    return render(request, 'core/veterinario/perfil_form.html', context)
+
+@login_required
+def perfil_alterar_senha(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Sua senha foi alterada com sucesso!')
+            return redirect('perfil_alterar_senha')
+    else:
+        form = PasswordChangeForm(request.user)
+
+    context = {
+        'form': form,
+        'form_title': 'Alterar Senha',
+        'section': 'senha'
+    }
+    return render(request, 'core/veterinario/perfil_form.html', context)
+
+class PerfilDeleteView(LoginRequiredMixin, DeleteView):
+    model = Veterinario
+    success_url = reverse_lazy('login')
+    template_name = 'core/veterinario/perfil_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = 'apagar'
+        return context
 
 # --- Veterinario Views ---
 class VeterinarioListView(LoginRequiredMixin, SortableListViewMixin, ListView): 

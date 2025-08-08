@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Meu Perfil{% endblock %}
+
+{% block content %}
+<h1>Meu Perfil</h1>
+<div class="profile-container">
+    <div class="profile-sidebar">
+        <div class="profile-header">
+            <div class="profile-pic"></div>
+            <h3>{{ user.nome }}</h3>
+            <p>Veterinário</p>
+        </div>
+        <ul class="profile-nav">
+            <li><a href="{% url 'perfil_alterar_informacoes' %}" class="nav-link nav-info">Alterar Informações</a></li>
+            <li><a href="{% url 'perfil_alterar_endereco' %}" class="nav-link nav-address">Alterar Endereço</a></li>
+            <li><a href="{% url 'perfil_alterar_senha' %}" class="nav-link nav-password">Alterar Senha</a></li>
+            <li><a href="{% url 'perfil_apagar_conta' %}" class="nav-link nav-link-delete nav-delete">Apagar Conta</a></li>
+        </ul>
+    </div>
+    <div class="profile-content">
+        {% block profile_content %}
+            <h2>Bem-vindo ao seu perfil!</h2>
+            <p>Selecione uma das opções ao lado para gerenciar sua conta.</p>
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

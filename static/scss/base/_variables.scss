@@ -12,13 +12,13 @@ $ff-head: 'Archivo+Black', sans-serif;
 // Paleta Principal
 $light-green: #0d614a;
 $medium-green: #09503d;
-$dark-green: #023628; // Principal
+$dark-green: #003f2e; // Principal
 
 // Tons de Cinza e Neutros
 $light-gray: #a4c2b4;
 $gray: #221f1e;
 $dark-gray: #151312; // Fundo
-$white: #fff;
+$white: #f2f8f7;
 
 // Cor de Destaque / Erro
 $dark-red: #770505;
@@ -82,6 +82,7 @@ $sppx-sm: 15px;
 $sppx-xsm: 12px;
 $sppx-xxsm: 9px;
 $sppx-xxxsm: 6px;
+$sppx-xxxxsm: 3px;
 
 // --- 4.3. Espaçamento Específico de Layout ---
 $sp-site: 5%; // Espaçamento lateral principal do site
@@ -91,13 +92,13 @@ $nav-espacamento: 5px; // Espaçamento para ícones de navegação
 // 5. LAYOUT & GRID
 //=================================================================
 // --- 5.1. Breakpoints ---
-$desktop: 756px;
+$desktop: 800px;
 
 // --- 5.2. Dimensões ---
 $site-content-maxwidth: 1600px;
 
 // --- 5.3. Bordas ---
-$round: 15px;
+$round: 10px;
 
 //=================================================================
 // 6. ÍCONES (SVG URL-ENCODED)
@@ -127,3 +128,4 @@ $dashboard-ico: '%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 
 $gerenciamento-ico: '%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M5 12V18C5 18 5 21 12 21C19 21 19 18 19 18V12M5 6V12C5 12 5 15 12 15C19 15 19 12 19 12V6M12 3C19 3 19 6 19 6C19 6 19 9 12 9C5 9 5 6 5 6C5 6 5 3 12 3Z" stroke="%23ffffff" stroke-width="2"%3E%3C/path%3E%3C/svg%3E';
 $login-ico: '%3C%3Fxml version="1.0" encoding="UTF-8"%3F%3E%3Csvg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff" data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-ffffff, %23e8e6e3);"%3E%3Cpath d="M19 12H12M12 12L15 15M12 12L15 9" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3Cpath d="M19 6V5C19 3.89543 18.1046 3 17 3H7C5.89543 3 5 3.89543 5 5V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V18" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3C/svg%3E';
 $registrar-ico: '%3C%3Fxml version="1.0" encoding="UTF-8"%3F%3E%3Csvg width="24px" height="24px" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff" data-darkreader-inline-color="" style="--darkreader-inline-color: var(--darkreader-text-ffffff, %23e8e6e3);"%3E%3Cpath d="M18 18H20M22 18H20M20 18V16M20 18V20" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3Cpath d="M2 11L20 11" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3Cpath d="M2 17L14 17" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3Cpath d="M2 5L20 5" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-darkreader-inline-stroke="" style="--darkreader-inline-stroke: %23ffffff;"%3E%3C/path%3E%3C/svg%3E';
+$lock-ico: '%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M16 12H17.4C17.7314 12 18 12.2686 18 12.6V20.4C18 20.7314 17.7314 21 17.4 21H6.6C6.26863 21 6 20.7314 6 20.4V12.6C6 12.2686 6.26863 12 6.6 12H8M16 12V8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8V12M16 12H8" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3E%3C/path%3E%3C/svg%3E';

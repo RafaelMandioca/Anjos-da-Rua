@@ -6,10 +6,14 @@ from .views import animal, atendimento, cadastros_gerais, item, veterinario
 urlpatterns = [
    path('gerenciamento/', cadastros_gerais.gerenciamento, name='gerenciamento'),
    path('abrigo/<int:abrigo_id>/animais/', animal.AnimalPorAbrigoListView.as_view(), name='animais-por-abrigo'),
-   # A URL ABAIXO FOI REMOVIDA
-   # path('ajax/load-animals/', atendimento.load_animals, name='ajax_load_animals'),
 
-   # ... (resto das suas URLs continua igual) ...
+   # URLs do Perfil
+   path('perfil/', veterinario.perfil_view, name='perfil'),
+   path('perfil/endereco/', veterinario.perfil_alterar_endereco, name='perfil_alterar_endereco'),
+   path('perfil/informacoes/', veterinario.perfil_alterar_informacoes, name='perfil_alterar_informacoes'),
+   path('perfil/senha/', veterinario.perfil_alterar_senha, name='perfil_alterar_senha'),
+   path('perfil/apagar/', veterinario.PerfilDeleteView.as_view(), name='perfil_apagar_conta'),
+
    # Veterinario
    path('veterinarios/', veterinario.VeterinarioListView.as_view(), name='veterinario-list'),
    path('veterinario/<int:pk>/', veterinario.VeterinarioDetailView.as_view(), name='veterinario-detail'),
