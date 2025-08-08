@@ -132,7 +132,7 @@ table th {
   background-color: #003f2e;
 }
 table td {
-  background-color: #003f2e;
+  background-color: #09503d;
 }
 table th a {
   all: unset;
@@ -385,7 +385,7 @@ form .btn-partial:hover {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.5rem 0.4rem;
-  background-color: #0d614a;
+  background-color: #003f2e;
   border-radius: 10px;
   text-decoration: none;
   display: inline-flex;
@@ -399,7 +399,7 @@ form .btn-partial:hover {
   width: 20px;
 }
 .btn-see:hover {
-  background-color: #09503d;
+  background-color: #0d614a;
 }
 .btn-see::before {
   vertical-align: -36%;
@@ -419,7 +419,7 @@ form .btn-partial:hover {
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.5rem 0.4rem;
-  background-color: #0d614a;
+  background-color: #003f2e;
   border-radius: 10px;
   text-decoration: none;
   display: inline-flex;
@@ -433,7 +433,7 @@ form .btn-partial:hover {
   width: 20px;
 }
 .btn-edit:hover {
-  background-color: #09503d;
+  background-color: #0d614a;
 }
 .btn-edit::before {
   vertical-align: -36%;

@@ -21,7 +21,7 @@ $btn-espacamento: 0;
 .btn-see {
    all: unset;
    cursor: pointer;
-   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$dark-green, $hcolor: var.$light-green, $border: 0);
    justify-content: center;
    color: var.$white;
    margin-top: var.$sp-xsm;
@@ -36,7 +36,7 @@ $btn-espacamento: 0;
 .btn-edit {
    all: unset;
    cursor: pointer;
-   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$dark-green, $hcolor: var.$light-green, $border: 0);
    justify-content: center;
    color: var.$white;
    margin-top: var.$sp-xsm;
