@@ -36,7 +36,7 @@ header {
 			color: var.$white;
 			font-family: var.$ff-head;
 			text-decoration: none;
-			font-weight: var.$fw-black;
+			font-weight: var.$fw-heavy;
 
 			display: inline-flex;
 			align-items: center;
@@ -57,12 +57,20 @@ header {
 }
 
 .nav-desktop {
-	a, button {
+	a {
 		@include mix.ar-obj($color: var.$dark-green, $border: 0);
 		text-transform: uppercase;
 		color: var.$white;
 		text-decoration: none;
-		font-weight: bold;
+		font-weight: var.$fw-heavy;
+	}
+
+	button {
+		@include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
+		text-transform: uppercase;
+		color: var.$white;
+		text-decoration: none;
+		font-weight: var.$fw-heavy;
 	}
 }
 

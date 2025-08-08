@@ -149,7 +149,7 @@ header nav .nav-brand {
   color: #fff;
   font-family: "Archivo+Black", sans-serif;
   text-decoration: none;
-  font-weight: 900;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
 }
@@ -165,7 +165,7 @@ header nav ul li {
   margin: 0 5px;
 }
 
-.nav-desktop a, .nav-desktop button {
+.nav-desktop a {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 5px 10px;
   background-color: #023628;
@@ -176,10 +176,26 @@ header nav ul li {
   text-transform: uppercase;
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
 }
-.nav-desktop a:hover, .nav-desktop button:hover {
+.nav-desktop a:hover {
   background-color: #0d614a;
+}
+.nav-desktop button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 5px 10px;
+  background-color: #770505;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+.nav-desktop button:hover {
+  background-color: #891313;
 }
 
 .nav-mobile {
@@ -339,9 +355,9 @@ header nav ul li {
   margin: 0;
 }
 .sidebar ul li {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.6rem;
 }
-.sidebar ul li a, .sidebar ul li form button {
+.sidebar ul li a {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 10px 10px;
   background-color: #023628;
@@ -354,8 +370,24 @@ header nav ul li {
   text-decoration: none;
   font-weight: bold;
 }
-.sidebar ul li a:hover, .sidebar ul li form button:hover {
+.sidebar ul li a:hover {
   background-color: #0d614a;
+}
+.sidebar ul li form button {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 10px 10px;
+  background-color: #770505;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.sidebar ul li form button:hover {
+  background-color: #891313;
 }
 .sidebar ul li button {
   font-size: 16px;
