@@ -13,7 +13,7 @@
                         <li><a class="nav-estoque" href="{% url 'item-list' %}">Estoque</a></li>
                     {% endif %}
 
-                    <li><a href="#" class="nav-perfil">Olá, {{ user.nome }}</a></li>
+                    <li><a href="#" class="nav-perfil">Perfil</a></li>
                     <li>
                         <form action="{% url 'logout' %}" method="post" style="display: inline;">
                             {% csrf_token %}
@@ -23,8 +23,8 @@
                         </form>
                     </li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Entrar</a></li>
-                    <li><a href="{% url 'registro_veterinario' %}">Registrar-se</a></li>
+                    <li><a href="{% url 'login' %}" class="nav-login">Entrar</a></li>
+                    <li><a href="{% url 'registro_veterinario' %}" class="nav-registrar">Registrar-se</a></li>
                 {% endif %}
             </ul>
         </div>

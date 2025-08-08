@@ -10,7 +10,7 @@ header {
 	color: var.$white;
 	padding: 10px 20px;
 	text-align: center;
-    display: flex;
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: 50px;
@@ -31,12 +31,15 @@ header {
 			padding: 0;
 		}
 
-		a, button {
-			@include mix.ar-obj($color: var.$dark-green);
+		.nav-brand {
 			text-transform: uppercase;
 			color: var.$white;
+			font-family: var.$ff-head;
 			text-decoration: none;
-			font-weight: bold;
+			font-weight: var.$fw-black;
+
+			display: inline-flex;
+			align-items: center;
 		}
 
 		ul {
@@ -47,9 +50,19 @@ header {
 			li {
 				display: flex;
 				align-items: center;
-                margin: 0 5px;
+				margin: 0 5px;
 			}
 		}
+	}
+}
+
+.nav-desktop {
+	a, button {
+		@include mix.ar-obj($color: var.$dark-green, $border: 0);
+		text-transform: uppercase;
+		color: var.$white;
+		text-decoration: none;
+		font-weight: bold;
 	}
 }
 
@@ -93,30 +106,48 @@ $nav-espacamento: 5px;
 
 .nav-gerenciamento {
 	&::before {
-		@include mix.ar-icon(var.$gerenciamento-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 2px, 0, 0, 0);
+		@include mix.ar-icon(var.$gerenciamento-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
 	}
 }
 
 .nav-dashboard {
 	&::before {
-		@include mix.ar-icon(var.$dashboard-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+		@include mix.ar-icon(var.$dashboard-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
 	}
 }
 
 .nav-abrigo {
 	&::before {
-		@include mix.ar-icon(var.$abrigo-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+		@include mix.ar-icon(var.$abrigo-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
 	}
 }
 
 .nav-estoque {
 	&::before {
-		@include mix.ar-icon(var.$estoque-ico, var.$csize-ico, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, 0);
+		@include mix.ar-icon(var.$estoque-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
+	}
+}
+
+.nav-perfil {
+	&::before {
+		@include mix.ar-icon(var.$usuario-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
 	}
 }
 
 .nav-sair {
 	&::before {
-		@include mix.ar-icon(var.$sair-ico, var.$csize-ico, var.$white, var.$default-valign, 0, 0, 0, 0, 0);
+		@include mix.ar-icon(var.$sair-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
+	}
+}
+
+.nav-login {
+	&::before {
+		@include mix.ar-icon(var.$login-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
+	}
+}
+
+.nav-registrar {
+	&::before {
+		@include mix.ar-icon(var.$registrar-ico, var.$csize-head, var.$white, var.$default-valign, 0, $nav-espacamento, 0, 0, -1px);
 	}
 }

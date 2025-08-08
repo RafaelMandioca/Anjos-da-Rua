@@ -3,10 +3,37 @@
 @use '../base/variables' as var;
 
 footer {
+	z-index: 0;
+   height: 112px;
 	font-size: var.$fs-f300;
 	font-family: var.$ff-head;
-	background-color: var.$dark-green;
 	color: var.$white;
-	padding: 10px 20px;
+	padding: 10px 0;
 	text-align: center;
+
+	.footer-bg {
+		height: 112px;
+		width: 100%;
+		position: relative;
+		z-index: 1;
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			
+			// Aplica a imagem de fundo
+			background-image: url('../img/wolf-bg.png');
+			background-repeat: repeat;
+			background-position: center;
+			
+			// Ajuste a opacidade aqui (0.3 = 30%)
+			opacity: 0.1; 
+			
+			// Coloca o fundo atrás do texto
+			z-index: -1;
+		}
+	}
 }

@@ -6,8 +6,8 @@
    transition: all .3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-@mixin hover($color) {
-   background-color: var.$medium-green;
+@mixin hover($color: var.$medium-green) {
+   background-color: $color;
 }
 
 @mixin ar-border($side: all) {
@@ -31,14 +31,23 @@
    }
 }
 
-@mixin ar-obj($p-ns: 5px, $p-we: 10px, $color, $hover: 1) {
+@mixin ar-obj($color: var.$medium-green, $p-ns: 5px, $p-we: 10px, $hcolor: var.$light-green, $border: 1, $hover: 1) {
    @include transition();
    padding: $p-ns $p-we;
-   background-color: var.$dark-green;
+   background-color: $color;
    border-radius: var.$round;
+   
+   display: inline-flex;
+   align-items: center;
+
+   height: 100%;
+   
+   @if $border == 1 {
+      @include ar-border;
+   }
    @if $hover == 1 {
       &:hover {
-         @include hover($color);
+         @include hover($hcolor);
       }
    }
 }
@@ -58,7 +67,7 @@
    }
 }
 
-@mixin ar-icon($svg, $size, $color, $valign: middle, $margin-top, $margin-right, $margin-bottom, $margin-left, $fix: 1) {
+@mixin ar-icon($svg, $size, $color, $valign: middle, $margin-top, $margin-right, $margin-bottom, $margin-left, $fix: 0) {
    vertical-align: $valign;
 
    display: inline-flex;
@@ -72,7 +81,5 @@
    width: $size;
 
    margin: $margin-top $margin-right $margin-bottom $margin-left;
-   @if fix == 1 {
-      transform: $cfix;
-   }
+   transform: translate(0, $fix);
 }

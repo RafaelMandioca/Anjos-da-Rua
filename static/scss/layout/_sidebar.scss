@@ -23,13 +23,21 @@
 		padding: 0;
 		margin: 0;
 		li {
-			padding: 15px 20px;
-			a, button {
-				@include mix.ar-obj($color: var.$dark-green);
+			margin-bottom: var.$sp-xxsm;
+			a, form button {
+				@include mix.ar-obj($p-ns: 10px, $p-we: 10px, $color: var.$dark-green, $border: 0);
 				text-transform: uppercase;
 				color: var.$white;
 				text-decoration: none;
 				font-weight: bold;
+			}
+			button {
+				font-size: var.$fs-f300;
+				font-family: var.$ff-head;
+				background: none;
+				border: none;
+				cursor: pointer;
+				padding: 0;
 			}
 		}
 	}
