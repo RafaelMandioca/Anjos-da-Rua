@@ -11,8 +11,8 @@
 		&::before {
 			@include mix.ar-icon(var.$editar-ico, var.$csize-head, var.$white, -4px, 0, var.$sp-xxsm, 0, 0, 0);
 		}
-		@include mix.ar-btn($p-ns: 5px, $p-we: 10px);
-		width: 95%;
+		@include mix.ar-obj($color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+		width: 100%;
 		color: var.$white;
 		text-decoration: none;
 		font-weight: bold;

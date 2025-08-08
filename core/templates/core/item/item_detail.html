@@ -7,5 +7,5 @@
     <p><strong>Descrição:</strong> {{ object.descricao }}</p>
     <p><strong>Quantidade em Estoque:</strong> {{ object.quantidade }}</p> <p><strong>Preço Unitário:</strong> R$ {{ object.preco_unitario }}</p>
     <p><strong>Data de Validade:</strong> {{ object.data_validade|date:"d/m/Y" }}</p>
-    <a href="{% url 'item-list' %}" class="btn">Voltar para a Lista</a>
+    <a href="{% url 'item-list' %}" class="btn btn-back">Voltar para a Lista</a>
 {% endblock %}

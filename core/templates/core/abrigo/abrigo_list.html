@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Abrigos</h1>
     {% if user.is_superuser %}
-    <a href="{% url 'abrigo-create' %}" class="btn">Adicionar Abrigo</a>
+    <a href="{% url 'abrigo-create' %}" class="btn btn-add">Adicionar Abrigo</a>
     {% endif %}
     <table>
         <thead>
@@ -22,11 +22,11 @@
                 <td>{{ abrigo.endereco }}</td>
                 <td>
                     {% if user.is_superuser %}
-                        <a href="{% url 'abrigo-detail' abrigo.pk %}">Ver Detalhes</a>
-                        <a href="{% url 'abrigo-update' abrigo.pk %}">Editar</a>
-                        <a href="{% url 'abrigo-delete' abrigo.pk %}">Excluir</a>
+                        <a href="{% url 'abrigo-detail' abrigo.pk %}" class="btn-see"></a>
+                        <a href="{% url 'abrigo-update' abrigo.pk %}" class="btn-edit"></a>
+                r       <a href="{% url 'abrigo-delete' abrigo.pk %}" class="btn-trash"></a>
                     {% else %}
-                        <a href="{% url 'animais-por-abrigo' abrigo.pk %}" class="btn">Ver Animais</a>
+                        <a href="{% url 'animais-por-abrigo' abrigo.pk %}" class="btn btn-see">Ver Animais</a>
                     {% endif %}
                 </td>
             </tr>

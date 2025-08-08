@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Tipos de Consulta</h1>
-    <a href="{% url 'tipoconsulta-create' %}" class="btn">Adicionar Tipo de Consulta</a>
+    <a href="{% url 'tipoconsulta-create' %}" class="btn btn-add">Adicionar Tipo de Consulta</a>
     <table>
         <thead>
             <tr>
@@ -17,9 +17,9 @@
             <tr>
                 <td>{{ tipoconsulta.descricao }}</td>
                 <td>
-                    <a href="{% url 'tipoconsulta-detail' tipoconsulta.pk %}">Ver</a>
-                    <a href="{% url 'tipoconsulta-update' tipoconsulta.pk %}">Editar</a>
-                    <a href="{% url 'tipoconsulta-delete' tipoconsulta.pk %}">Excluir</a>
+                    <a href="{% url 'tipoconsulta-detail' tipoconsulta.pk %}" class="btn-see"></a>
+                    <a href="{% url 'tipoconsulta-update' tipoconsulta.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'tipoconsulta-delete' tipoconsulta.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

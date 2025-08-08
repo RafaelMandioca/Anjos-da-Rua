@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Cidades</h1>
-    <a href="{% url 'cidade-create' %}" class="btn">Adicionar Cidade</a>
+    <a href="{% url 'cidade-create' %}" class="btn btn-add">Adicionar Cidade</a>
     <table>
         <thead>
             <tr>
@@ -18,9 +18,9 @@
             <tr>
                 <td>{{ cidade.cidade }}</td>
                 <td>{{ cidade.uf.sigla }}</td> <td>
-                    <a href="{% url 'cidade-detail' cidade.pk %}">Ver</a>
-                    <a href="{% url 'cidade-update' cidade.pk %}">Editar</a>
-                    <a href="{% url 'cidade-delete' cidade.pk %}">Excluir</a>
+                    <a href="{% url 'cidade-detail' cidade.pk %}" class="btn-see"></a>
+                    <a href="{% url 'cidade-update' cidade.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'cidade-delete' cidade.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

@@ -1,0 +1,64 @@
+// components/_buttons.scss
+@use '../base/variables' as var;
+@use 'mixins' as mix;
+
+$btn-espacamento: 0;
+
+.btn-add {
+   all: unset;
+   cursor: pointer;
+   @include mix.ar-obj($color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+   justify-content: center;
+   color: var.$white;
+   margin-top: var.$sp-xsm;
+   text-decoration: none;
+   font-family: var.$ff-head;
+   &::before {
+      @include mix.ar-icon(var.$mais-ico, var.$csize-head, var.$white, var.$default-valign, 0, $btn-espacamento, 0, 0, -1px);
+   }
+}
+
+.btn-see {
+   all: unset;
+   cursor: pointer;
+   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+   justify-content: center;
+   color: var.$white;
+   margin-top: var.$sp-xsm;
+   text-decoration: none;
+   font-family: var.$ff-head;
+   width: var.$csize-head;
+   &::before {
+      @include mix.ar-icon(var.$see-ico, var.$csize-head, var.$white, var.$default-valign, 0, $btn-espacamento, 0, 0, -1px);
+   }
+}
+
+.btn-edit {
+   all: unset;
+   cursor: pointer;
+   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+   justify-content: center;
+   color: var.$white;
+   margin-top: var.$sp-xsm;
+   text-decoration: none;
+   font-family: var.$ff-head;
+   width: var.$csize-head;
+   &::before {
+      @include mix.ar-icon(var.$editar-ico, var.$csize-head, var.$white, var.$default-valign, 0, $btn-espacamento, 0, 0, -1px);
+   }
+}
+
+.btn-trash {
+   all: unset;
+   cursor: pointer;
+   @include mix.ar-obj($p-ns: .5rem, $p-we: .4rem, $color: var.$dark-red, $hcolor: var.$red, $border: 0);
+   justify-content: center;
+   color: var.$white;
+   margin-top: var.$sp-xsm;
+   text-decoration: none;
+   font-family: var.$ff-head;
+   width: var.$csize-head;
+   &::before {
+      @include mix.ar-icon(var.$lixo-ico, var.$csize-head, var.$white, var.$default-valign, 0, $btn-espacamento, 0, 0, -1px);
+   }
+}

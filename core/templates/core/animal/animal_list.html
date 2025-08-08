@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Animais</h1>
-    <a href="{% url 'animal-create' %}" class="btn">Adicionar Animal</a>
+    <a href="{% url 'animal-create' %}" class="btn btn-add">Adicionar Animal</a>
     <table>
         <thead>
             <tr>
@@ -25,9 +25,9 @@
                 <td>{{ animal.idade }}</td>
                 <td>{{ animal.get_sexo_display }}</td>
                 <td>
-                    <a href="{% url 'animal-detail' animal.pk %}">Ver</a>
-                    <a href="{% url 'animal-update' animal.pk %}">Editar</a>
-                    <a href="{% url 'animal-delete' animal.pk %}">Excluir</a>
+                    <a href="{% url 'animal-detail' animal.pk %}" class="btn-see"></a>
+                    <a href="{% url 'animal-update' animal.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'animal-delete' animal.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

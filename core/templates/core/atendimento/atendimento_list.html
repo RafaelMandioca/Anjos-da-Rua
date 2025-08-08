@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Atendimentos Veterinários</h1>
-    <a href="{% url 'atendimentoveterinario-create' %}" class="btn">Adicionar Atendimento</a>
+    <a href="{% url 'atendimentoveterinario-create' %}" class="btn btn-add">Adicionar Atendimento</a>
     <table>
         <thead>
             <tr>
@@ -23,9 +23,9 @@
                 <td>{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
                 <td>{{ atendimento.tipo_consulta.descricao }}</td>
                 <td>
-                    <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}">Ver</a>
-                    <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}">Editar</a>
-                    <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}">Excluir</a>
+                    <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}" class="btn-see"></a>
+                    <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

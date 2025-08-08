@@ -6,7 +6,7 @@
     <h1>Itens (Estoque)</h1>
     
     {% if user.is_superuser %}
-    <a href="{% url 'item-create' %}" class="btn">Adicionar Item</a>
+    <a href="{% url 'item-create' %}" class="btn btn-add">Adicionar Item</a>
     {% else %}
     <p>Para solicitar novos itens ou alterações, entre em contato com um administrador.</p>
     {% endif %}
@@ -34,9 +34,9 @@
                 <td>{{ item.data_validade|date:"d/m/Y" }}</td>
                 {% if user.is_superuser %}
                 <td>
-                    <a href="{% url 'item-detail' item.pk %}">Ver</a>
-                    <a href="{% url 'item-update' item.pk %}">Editar</a>
-                    <a href="{% url 'item-delete' item.pk %}">Excluir</a>
+                    <a href="{% url 'item-detail' item.pk %}" class="btn-see"></a>
+                    <a href="{% url 'item-update' item.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'item-delete' item.pk %}" class="btn-trash"></a>
                 </td>
                 {% endif %}
             </tr>

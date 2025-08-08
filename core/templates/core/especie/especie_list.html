@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Espécies</h1>
-    <a href="{% url 'especie-create' %}" class="btn">Adicionar Espécie</a>
+    <a href="{% url 'especie-create' %}" class="btn btn-add">Adicionar Espécie</a>
     <table>
         <thead>
             <tr>
@@ -21,9 +21,9 @@
                 <td>{{ especie.nome_cientifico }}</td>
                 <td>{{ especie.expectativa_de_vida }} anos</td>
                 <td>
-                    <a href="{% url 'especie-detail' especie.pk %}">Ver</a>
-                    <a href="{% url 'especie-update' especie.pk %}">Editar</a>
-                    <a href="{% url 'especie-delete' especie.pk %}">Excluir</a>
+                    <a href="{% url 'especie-detail' especie.pk %}" class="btn-see"></a>
+                    <a href="{% url 'especie-update' especie.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'especie-delete' especie.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

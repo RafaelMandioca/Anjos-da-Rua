@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>CRMV</h1>
-    <a href="{% url 'crmv-create' %}" class="btn">Adicionar CRMV</a>
+    <a href="{% url 'crmv-create' %}" class="btn btn-add">Adicionar CRMV</a>
     <table>
         <thead>
             <tr>
@@ -19,9 +19,9 @@
                 <td>{{ crmv.numero }}</td>
                 <td>{{ crmv.estado.sigla }}</td>
                 <td>
-                    <a href="{% url 'crmv-detail' crmv.pk %}">Ver</a>
-                    <a href="{% url 'crmv-update' crmv.pk %}">Editar</a>
-                    <a href="{% url 'crmv-delete' crmv.pk %}">Excluir</a>
+                    <a href="{% url 'crmv-detail' crmv.pk %}" class="btn-see"></a>
+                    <a href="{% url 'crmv-update' crmv.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'crmv-delete' crmv.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}

@@ -4,10 +4,13 @@
 @use '../components/mixins' as mix;
 
 .management-grid {
-	@include mix.ar-obj($p-ns: 15px, $p-we: 20px, $color: var.$dark-green, $hover: 0);
+	padding: var.$sp-xsm;
+	@include mix.ar-sec();
 	margin-top: var.$sp-sm;
 
 	display: grid;
+	row-gap: var.$sp-xxsm;
+	column-gap: var.$sp-xsm;
 	grid-auto-flow: row;
 	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }

@@ -41,6 +41,15 @@ form {
       color: var.$light-gray;
    }
 
+   ul {
+      margin-top: var.$sp-sm;
+   }
+
+   #id_new_password2 {
+      margin-bottom: var.$sp-xxsm;
+   }
+
+   // Estilo base para todos os campos
    input, select, textarea {
       width: 100%;
       padding: 0.75rem;
@@ -56,19 +65,104 @@ form {
       }
    }
 
+   // --- NOVOS ESTILOS PARA DROPDOWN CUSTOMIZADO ---
+
+   // Esconde o <select> original
+   select {
+      display: none;
+   }
+
+   // Container principal do novo dropdown
+   .custom-select-wrapper {
+      position: relative;
+      width: 100%;
+      color: var.$dark-gray;
+   }
+
+   // O campo clicável que parece um input
+   .custom-select-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      background-color: var.$white;
+      border-radius: var.$round;
+      cursor: pointer;
+      font-family: var.$ff-body;
+      font-size: var.$fs-f300;
+   }
+
+   .custom-options {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background-color: var.$dark-gray;
+      color: var.$white;
+      border-radius: var.$round;
+      z-index: 10;
+      max-height: 200px;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      @include mix.transition();
+      @include mix.ar-border();
+
+      // Estilo da barra de rolagem
+      &::-webkit-scrollbar {
+         width: 8px;
+         background-color: var.$dark-green;
+      }
+      &::-webkit-scrollbar-thumb {
+         background-color: var.$medium-green;
+         border-radius: var.$round;
+      }
+   }
+
+   .custom-option {
+      padding: 0.75rem;
+      cursor: pointer;
+      &:hover, &.selected {
+         background-color: var.$light-green;
+         color: var.$white;
+      }
+   }
+   
+   .custom-arrow {
+      @include mix.ar-icon(var.$chevron-down-ico, 20px, var.$dark-gray, 0, 0, 0, 0, 0);
+      transition: transform 0.2s ease-in-out;
+   }
+
+   .custom-select-wrapper.open {
+      .custom-options {
+         opacity: 1;
+         visibility: visible;
+         pointer-events: auto;
+      }
+      .custom-arrow {
+         transform: rotate(180deg);
+      }
+      // Lógica para abrir para cima
+      .custom-options.open-upward {
+         top: auto;
+         bottom: calc(100% + 4px);
+      }
+   }
+
    .form-btn-wrapper {
       display: flex;
       justify-content: center;
       gap: var.$sp-sm;
    }
 
-   button.btn {
+   button.btn:not(.btn-partial) {
       all: unset;
       cursor: pointer;
       @include mix.ar-obj($color: var.$dark-green, $border: 0);
       justify-content: center;
       color: var.$white;
-      margin-bottom: 1rem;
+      margin-bottom: var.$sp-xsm;
       text-decoration: none;
       font-family: var.$ff-head;
       width: 20%;
@@ -80,7 +174,19 @@ form {
       @include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
       justify-content: center;
       color: var.$white;
-      margin-bottom: 1rem;
+      margin-bottom: var.$sp-xsm;
+      text-decoration: none;
+      font-family: var.$ff-head;
+      width: 20%;
+   }
+
+   .btn-partial {
+      all: unset;
+      cursor: pointer;
+      @include mix.ar-obj($color: var.$light-green, $hcolor: var.$medium-green, $border: 0);
+      justify-content: center;
+      color: var.$white;
+      margin-top: var.$sp-xsm;
       text-decoration: none;
       font-family: var.$ff-head;
       width: 20%;

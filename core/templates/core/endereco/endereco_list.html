@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>Endereços</h1>
-    <a href="{% url 'endereco-create' %}" class="btn">Adicionar Endereço</a>
+    <a href="{% url 'endereco-create' %}" class="btn btn-add">Adicionar Endereço</a>
     <table>
         <thead>
             <tr>
@@ -21,9 +21,9 @@
                 <td>{{ endereco.bairro }}</td>
                 <td>{{ endereco.cidade }}</td>
                 <td>
-                    <a href="{% url 'endereco-detail' endereco.pk %}">Ver</a>
-                    <a href="{% url 'endereco-update' endereco.pk %}">Editar</a>
-                    <a href="{% url 'endereco-delete' endereco.pk %}">Excluir</a>
+                    <a href="{% url 'endereco-detail' endereco.pk %}" class="btn-see"></a>
+                    <a href="{% url 'endereco-update' endereco.pk %}" class="btn-edit"></a>
+                    <a href="{% url 'endereco-delete' endereco.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}
