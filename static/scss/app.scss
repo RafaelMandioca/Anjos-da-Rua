@@ -65,6 +65,7 @@ header {
 	align-items: center;
 	justify-content: space-between;
 	height: 50px;
+	position: relative;
 	& nav {
 		width: 100%;
 		display: flex;
@@ -95,8 +96,77 @@ header {
 			li {
 				display: flex;
 				align-items: center;
+                margin: 0 5px;
 			}
 		}
+	}
+}
+
+.nav-mobile {
+	z-index: 99;
+	display: none;
+}
+
+.hamburger-btn {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 30px;
+	height: 25px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+
+	span {
+		display: block;
+		width: 100%;
+		height: 3px;
+		background-color: var.$white;
+		border-radius: 3px;
+		transition: all 0.3s ease-in-out;
+	}
+}
+
+.sidebar {
+	position: fixed;
+	top: 0;
+	right: -250px;
+	width: 250px;
+	height: 100%;
+	background-color: var.$dark-green;
+	padding-top: 60px;
+	transition: right 0.3s ease-in-out;
+	z-index: 5;
+
+	&.active {
+		right: 0;
+	}
+
+	ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		li {
+			padding: 15px 20px;
+			a, button {
+				@include mix.ar-obj($color: var.$dark-green);
+				text-transform: uppercase;
+				color: var.$white;
+				text-decoration: none;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+
+@media (max-width: #{var.$desktop}) {
+	.nav-desktop {
+		display: none;
+	}
+	.nav-mobile {
+		display: block;
 	}
 }
 
