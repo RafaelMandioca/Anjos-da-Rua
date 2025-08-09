@@ -3,8 +3,16 @@
 {% block title %}Detalhes de {{ object.nome_popular }}{% endblock %}
 
 {% block content %}
-    <h1>{{ object.nome_popular }} ({{ object.nome_cientifico }})</h1>
-    <p><strong>Raça:</strong> {{ object.raca }}</p>
-    <p><strong>Expectativa de Vida:</strong> {{ object.expectativa_de_vida }} anos</p>
-    <a href="{% url 'especie-list' %}" class="btn btn-back">Voltar para a Lista</a>
+<div class="view-container">
+    <div class="view-header">
+        <h1>{{ object.nome_popular }} ({{ object.nome_cientifico }})</h1>
+    </div>
+    <div class="view-content">
+        <p class="view-item"><strong>Raça:</strong> {{ object.raca }}</p>
+        <p class="view-item"><strong>Expectativa de Vida:</strong> {{ object.expectativa_de_vida }} anos</p>
+    </div>
+    <div class="view-footer">
+        <a href="{% url 'especie-list' %}" class="btn btn-back">Voltar para a Lista</a>
+    </div>
+</div>
 {% endblock %}

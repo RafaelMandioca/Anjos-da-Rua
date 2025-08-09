@@ -3,6 +3,15 @@
 {% block title %}Detalhes do Tipo de Consulta{% endblock %}
 
 {% block content %}
-    <h1>{{ object.descricao }}</h1>
-    <a href="{% url 'tipoconsulta-list' %}" class="btn btn-back">Voltar para a Lista</a>
+<div class="view-container">
+    <div class="view-header">
+        <h1>Tipo de Consulta</h1>
+    </div>
+    <div class="view-content">
+        <p class="view-item"><strong>Descrição:</strong> {{ object.descricao }}</p>
+    </div>
+    <div class="view-footer">
+        <a href="{% url 'tipoconsulta-list' %}" class="btn btn-back">Voltar para a Lista</a>
+    </div>
+</div>
 {% endblock %}

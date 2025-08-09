@@ -88,3 +88,16 @@ $btn-espacamento: 0;
       @include mix.ar-icon(var.$lixo-ico, var.$csize-head, var.$white, var.$default-valign, 0, $btn-espacamento, 0, 0, -1px);
    }
 }
+
+.btn-acc-delete {
+   all: unset;
+   cursor: pointer;
+   @include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);
+   justify-content: center;
+   color: var.$white;
+   text-decoration: none;
+   font-family: var.$ff-head;
+   &::before {
+      @include mix.ar-icon(var.$lixo-ico, var.$csize-head, var.$white, var.$default-valign, 0, 5px, 0, 0, -1px);
+   }
+}

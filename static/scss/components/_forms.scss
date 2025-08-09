@@ -71,18 +71,15 @@ form {
 
    // --- NOVOS ESTILOS PARA DROPDOWN CUSTOMIZADO ---
 
-   // Esconde o <select> original
    select {
       display: none;
    }
 
-   // Container principal do novo dropdown
    .custom-select-wrapper {
       position: relative;
       width: 100%;
       color: var.$white;
 
-      // Estilos para o estado desabilitado
       &.is-disabled {
          .custom-select-trigger {
             background-color: var.$gray;
@@ -90,7 +87,7 @@ form {
             cursor: not-allowed;
          }
          .custom-arrow {
-            display: none; // Opcional: esconde a seta
+            display: none;
          }
       }
    }
@@ -106,6 +103,23 @@ form {
       cursor: pointer;
       font-family: var.$ff-body;
       font-size: var.$fs-f300;
+   }
+
+   .custom-select-search {
+      flex-grow: 1;
+      width: 100%;
+      background: none;
+      border: none;
+      outline: none;
+      padding: 0;
+      color: var.$white;
+      font-family: var.$ff-body;
+      font-size: var.$fs-f300;
+
+      &::placeholder {
+          color: var.$light-gray;
+          opacity: 0.7;
+      }
    }
 
    .custom-options {
@@ -173,7 +187,7 @@ form {
       margin-top: var.$sp-md;
    }
 
-   button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form) {
+   button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form):not(.btn-acc-delete) {
       all: unset;
       cursor: pointer;
       @include mix.ar-obj($color: var.$dark-green, $border: 0);
@@ -185,7 +199,7 @@ form {
       width: 20%;
    }
 
-   a.btn {
+   a.btn:not(.btn-acc-back) {
       all: unset;
       cursor: pointer;
       @include mix.ar-obj($color: var.$dark-red, $hcolor: var.$red, $border: 0);

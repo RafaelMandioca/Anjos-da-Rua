@@ -282,6 +282,21 @@ form .custom-select-trigger {
   font-family: "Gelasio", serif;
   font-size: 16px;
 }
+form .custom-select-search {
+  flex-grow: 1;
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 0;
+  color: #f2f8f7;
+  font-family: "Gelasio", serif;
+  font-size: 16px;
+}
+form .custom-select-search::placeholder {
+  color: #a4c2b4;
+  opacity: 0.7;
+}
 form .custom-options {
   position: absolute;
   top: calc(100% + 4px);
@@ -346,7 +361,7 @@ form .form-btn-wrapper {
   gap: 0.9rem;
   margin-top: 1.2rem;
 }
-form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form) {
+form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form):not(.btn-acc-delete) {
   all: unset;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -364,10 +379,10 @@ form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form) {
   font-family: "Archivo+Black", sans-serif;
   width: 20%;
 }
-form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form):hover {
+form button.btn:not(.btn-partial):not(.remove-item-form):not(#add-item-form):not(.btn-acc-delete):hover {
   background-color: #0d614a;
 }
-form a.btn {
+form a.btn:not(.btn-acc-back) {
   all: unset;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -385,7 +400,7 @@ form a.btn {
   font-family: "Archivo+Black", sans-serif;
   width: 20%;
 }
-form a.btn:hover {
+form a.btn:not(.btn-acc-back):hover {
   background-color: #891313;
 }
 form .btn-partial {
@@ -669,6 +684,90 @@ form #add-item-form::before {
   width: 20px;
   margin: 0 0 0 0;
   transform: translate(0, -1px);
+}
+
+.btn-acc-delete {
+  all: unset;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.75rem 0.75rem;
+  background-color: #770505;
+  border-radius: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+  color: #f2f8f7;
+  text-decoration: none;
+  font-family: "Archivo+Black", sans-serif;
+}
+.btn-acc-delete:hover {
+  background-color: #891313;
+}
+.btn-acc-delete::before {
+  vertical-align: -36%;
+  display: inline-flex;
+  content: "";
+  mask-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="%23ffffff"%3E%3Cpath d="M9 13H12H15M3.04 4.29C3.01 4.11 3.08 3.92 3.23 3.81C3.93 3.32 6.31 2 12 2C17.69 2 20.07 3.32 20.77 3.81C20.92 3.92 20.99 4.11 20.96 4.29L19.26 17.04C19.1 18.27 18.36 19.36 17.28 19.98L16.96 20.16C13.89 21.92 10.11 21.92 7.04 20.16L6.72 19.98C5.64 19.36 4.9 18.27 4.74 17.04L3.04 4.29ZM3 5C5.57 7.67 18.43 7.67 21 5" stroke="%23ffffff" stroke-width="2"%3E%3C/path%3E%3C/svg%3E');
+  mask-size: 20px 20px;
+  background-color: #f2f8f7;
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 0 0;
+  transform: translate(0, -1px);
+}
+
+.view-container {
+  padding: 0.9rem;
+  background-color: #003f2e;
+  border-radius: 10px;
+  margin-top: 0.9rem;
+  display: flex;
+  flex-direction: column;
+}
+.view-container .view-header {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(242, 248, 247, 0.1);
+}
+.view-container .view-header h1 {
+  margin-bottom: 0;
+}
+.view-container .view-content {
+  flex-grow: 1;
+}
+.view-container .view-content .view-item {
+  font-size: 18px;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+.view-container .view-content .view-item strong {
+  font-family: "Archivo+Black", sans-serif;
+  color: #a4c2b4;
+  margin-right: 0.3rem;
+}
+.view-container .view-content h2 {
+  font-family: "Archivo+Black", sans-serif;
+  margin-top: 1.5rem;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid rgba(242, 248, 247, 0.1);
+}
+.view-container .view-content ul {
+  list-style-position: inside;
+  padding-left: 0.6rem;
+  margin-top: 0.9rem;
+}
+.view-container .view-content ul li {
+  margin-bottom: 0.3rem;
+}
+.view-container .view-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(242, 248, 247, 0.1);
 }
 
 header {

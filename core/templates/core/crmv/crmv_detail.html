@@ -1,7 +1,17 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Detalhes do CRMV{% endblock %}
+{% block title %}Detalhes do Abrigo{% endblock %}
 
 {% block content %}
-    <h1>CRMV: {{ object }}</h1> <a href="{% url 'crmv-list' %}" class="btn btn-back">Voltar para a Lista</a>
+<div class="view-container">
+    <div class="view-header">
+        <h1>{{ object.nome }}</h1>
+    </div>
+    <div class="view-content">
+        <p class="view-item"><strong>Endereço:</strong> {{ object.endereco }}</p>
+    </div>
+    <div class="view-footer">
+        <a href="{% url 'abrigo-list' %}" class="btn btn-back">Voltar para a Lista</a>
+    </div>
+</div>
 {% endblock %}

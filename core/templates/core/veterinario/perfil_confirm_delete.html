@@ -8,8 +8,8 @@
     <form method="post">
         {% csrf_token %}
         <div class="form-btn-wrapper">
-            <button type="submit" class="btn btn-danger">Sim, tenho certeza</button>
-            <a href="{% url 'perfil' %}" class="btn">Cancelar</a>
+            <a href="{% url 'perfil' %}" class="btn btn-acc-back btn-back">Cancelar</a>
+            <button type="submit" class="btn btn-acc-delete">Sim</button>
         </div>
     </form>
 {% endblock %}

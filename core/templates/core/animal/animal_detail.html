@@ -3,12 +3,20 @@
 {% block title %}Detalhes de {{ object.nome }}{% endblock %}
 
 {% block content %}
-    <h1>{{ object.nome }}</h1>
-    <p><strong>Espécie:</strong> {{ object.especie }}</p>
-    <p><strong>Raça:</strong> {{ object.especie.raca }}</p>
-    <p><strong>Abrigo:</strong> {{ object.abrigo }}</p>
-    <p><strong>Peso:</strong> {{ object.peso }} kg</p>
-    <p><strong>Idade:</strong> {{ object.idade }} anos</p>
-    <p><strong>Sexo:</strong> {{ object.get_sexo_display }}</p>
-    <a href="{% url 'animal-list' %}" class="btn btn-back">Voltar para a Lista</a>
+<div class="view-container">
+    <div class="view-header">
+        <h1>{{ object.nome }}</h1>
+    </div>
+    <div class="view-content">
+        <p class="view-item"><strong>Espécie:</strong> {{ object.especie }}</p>
+        <p class="view-item"><strong>Raça:</strong> {{ object.especie.raca }}</p>
+        <p class="view-item"><strong>Abrigo:</strong> {{ object.abrigo }}</p>
+        <p class="view-item"><strong>Peso:</strong> {{ object.peso }} kg</p>
+        <p class="view-item"><strong>Idade:</strong> {{ object.idade }} anos</p>
+        <p class="view-item"><strong>Sexo:</strong> {{ object.get_sexo_display }}</p>
+    </div>
+    <div class="view-footer">
+        <a href="{% url 'animal-list' %}" class="btn btn-back">Voltar para a Lista</a>
+    </div>
+</div>
 {% endblock %}

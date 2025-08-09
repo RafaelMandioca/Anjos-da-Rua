@@ -1,0 +1,61 @@
+// components/_views.scss
+@use '../base/variables' as var;
+@use 'mixins' as mix;
+
+.view-container {
+   @include mix.ar-sec();
+   margin-top: var.$sp-sm;
+   display: flex;
+   flex-direction: column;
+
+   .view-header {
+      margin-bottom: var.$sp-sm;
+      padding-bottom: var.$sp-sm;
+      border-bottom: 1px solid rgba(var.$white, 0.1);
+
+      h1 {
+         margin-bottom: 0;
+      }
+   }
+
+   .view-content {
+      flex-grow: 1;
+
+      .view-item {
+         font-size: var.$fs-f400;
+         margin-bottom: var.$sp-xsm;
+         line-height: 1.6;
+
+         strong {
+               font-family: var.$ff-head;
+               color: var.$light-gray;
+               margin-right: var.$sp-xxsm;
+         }
+      }
+
+      h2 {
+         font-family: var.$ff-head;
+         margin-top: var.$sp-lg;
+         margin-bottom: var.$sp-xsm;
+         padding-bottom: var.$sp-xxsm;
+         border-bottom: 1px solid rgba(var.$white, 0.1);
+      }
+
+      ul {
+         list-style-position: inside;
+         padding-left: var.$sp-xsm;
+         margin-top: var.$sp-sm;
+         li {
+               margin-bottom: var.$sp-xxsm;
+         }
+      }
+   }
+
+   .view-footer {
+      display: flex;
+      justify-content: center;
+      margin-top: var.$sp-lg;
+      padding-top: var.$sp-md;
+      border-top: 1px solid rgba(var.$white, 0.1);
+   }
+}

@@ -19,16 +19,18 @@ document.addEventListener('DOMContentLoaded', function() {
         trigger.className = 'custom-select-trigger';
         wrapper.appendChild(trigger);
         
-        // --- ADIÇÃO INICIA AQUI ---
-        // Verifica se o select original está desabilitado
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.className = 'custom-select-search';
+        const label = document.querySelector(`label[for="${selectElement.id}"]`);
+        searchInput.placeholder = `Buscar ${label ? label.textContent.toLowerCase() : 'opção'}...`;
+        trigger.appendChild(searchInput);
+
         if (selectElement.disabled) {
             wrapper.classList.add('is-disabled');
+            searchInput.disabled = true;
         }
-        // --- ADIÇÃO TERMINA AQUI ---
 
-        const selectedDisplay = document.createElement('span');
-        trigger.appendChild(selectedDisplay);
-        
         const arrow = document.createElement('span');
         arrow.className = 'custom-arrow';
         trigger.appendChild(arrow);
@@ -37,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
         optionsContainer.className = 'custom-options';
         wrapper.appendChild(optionsContainer);
 
-        // Popula as opções customizadas e define o texto inicial
         Array.from(selectElement.options).forEach(option => {
             const optionDiv = document.createElement('div');
             optionDiv.className = 'custom-option';
@@ -45,47 +46,58 @@ document.addEventListener('DOMContentLoaded', function() {
             optionDiv.dataset.value = option.value;
             optionsContainer.appendChild(optionDiv);
 
-            if (option.selected) {
-                selectedDisplay.textContent = option.textContent;
+            if (option.selected && option.value) {
+                searchInput.value = option.textContent;
                 optionDiv.classList.add('selected');
             }
 
-            optionDiv.addEventListener('click', () => {
-                // Atualiza o valor do <select> original
+            optionDiv.addEventListener('click', (e) => {
+                e.stopPropagation();
                 selectElement.value = option.value;
-                // Dispara um evento de change para compatibilidade
                 selectElement.dispatchEvent(new Event('change'));
 
-                // Atualiza o texto visível
-                selectedDisplay.textContent = option.textContent;
+                searchInput.value = option.textContent;
                 
-                // Atualiza a classe 'selected'
                 optionsContainer.querySelectorAll('.custom-option').forEach(opt => opt.classList.remove('selected'));
                 optionDiv.classList.add('selected');
 
-                // Fecha o dropdown
                 wrapper.classList.remove('open');
+                optionsContainer.querySelectorAll('.custom-option').forEach(opt => {
+                    opt.style.display = '';
+                });
             });
         });
-        
-        // Lógica para abrir/fechar e posicionar
-        trigger.addEventListener('click', (e) => {
-            // --- ADIÇÃO INICIA AQUI ---
-            // Impede a abertura se o campo estiver desabilitado
-            if (wrapper.classList.contains('is-disabled')) {
-                return;
-            }
-            // --- ADIÇÃO TERMINA AQUI ---
 
+        searchInput.addEventListener('input', () => {
+            const filter = searchInput.value.toLowerCase();
+            optionsContainer.querySelectorAll('.custom-option').forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(filter) ? '' : 'none';
+            });
+            if (!wrapper.classList.contains('open')) {
+                wrapper.classList.add('open');
+            }
+        });
+
+        searchInput.addEventListener('blur', () => {
+            setTimeout(() => {
+                const selectedOption = selectElement.options[selectElement.selectedIndex];
+                if (searchInput.value !== selectedOption.textContent) {
+                    searchInput.value = selectedOption.textContent;
+                }
+            }, 150);
+        });
+        
+        trigger.addEventListener('click', (e) => {
+            if (wrapper.classList.contains('is-disabled')) return;
             e.stopPropagation();
-            // Fecha outros dropdowns abertos
+
             document.querySelectorAll('.custom-select-wrapper.open').forEach(openWrapper => {
                 if (openWrapper !== wrapper) {
                     openWrapper.classList.remove('open');
                 }
             });
 
-            // Lógica de posicionamento (abrir para cima ou para baixo)
             const rect = wrapper.getBoundingClientRect();
             const spaceBelow = window.innerHeight - rect.bottom;
             const optionsHeight = optionsContainer.scrollHeight;
@@ -97,16 +109,31 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             wrapper.classList.toggle('open');
+            if (wrapper.classList.contains('open')) {
+                searchInput.focus();
+                searchInput.select();
+            }
+        });
+
+        searchInput.addEventListener('click', (e) => {
+            e.stopPropagation();
         });
     }
 
-    // Aplica a customização a todos os selects
     document.querySelectorAll('form select').forEach(createCustomSelect);
 
-    // Fecha o dropdown se clicar fora dele
     window.addEventListener('click', () => {
         document.querySelectorAll('.custom-select-wrapper.open').forEach(wrapper => {
             wrapper.classList.remove('open');
+            
+            const select = wrapper.querySelector('select');
+            const search = wrapper.querySelector('.custom-select-search');
+            if (select && search) {
+                const selectedOption = select.options[select.selectedIndex];
+                if (selectedOption) {
+                    search.value = selectedOption.textContent;
+                }
+            }
         });
     });
 });

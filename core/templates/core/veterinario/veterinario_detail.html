@@ -3,11 +3,19 @@
 {% block title %}Detalhes de {{ object.nome }}{% endblock %}
 
 {% block content %}
-    <h1>{{ object.nome }}</h1>
-    <p><strong>CPF:</strong> {{ object.cpf }}</p>
-    <p><strong>Email:</strong> {{ object.email }}</p>
-    <p><strong>Telefone:</strong> {{ object.telefone }}</p>
-    <p><strong>CRMV:</strong> {{ object.crmv }}</p>
-    <p><strong>Endereço:</strong> {{ object.endereco }}</p>
-    <a href="{% url 'veterinario-list' %}" class="btn btn-back">Voltar para a Lista</a>
+<div class="view-container">
+    <div class="view-header">
+        <h1>{{ object.nome }}</h1>
+    </div>
+    <div class="view-content">
+        <p class="view-item"><strong>CPF:</strong> {{ object.cpf }}</p>
+        <p class="view-item"><strong>Email:</strong> {{ object.email }}</p>
+        <p class="view-item"><strong>Telefone:</strong> {{ object.telefone }}</p>
+        <p class="view-item"><strong>CRMV:</strong> {{ object.crmv }}</p>
+        <p class="view-item"><strong>Endereço:</strong> {{ object.endereco }}</p>
+    </div>
+    <div class="view-footer">
+        <a href="{% url 'veterinario-list' %}" class="btn btn-back">Voltar para a Lista</a>
+    </div>
+</div>
 {% endblock %}
