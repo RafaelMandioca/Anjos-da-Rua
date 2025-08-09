@@ -22,7 +22,10 @@ class AdminRequiredMixin(UserPassesTestMixin):
 
 @login_required
 def index(request):
-    return render(request, 'core/index.html')
+    if request.user.is_superuser:
+        return redirect('gerenciamento')
+    else:
+        return redirect('abrigo-list')
 
 def generic_create_update_view(request, model_form, title, template, redirect_url, pk=None):
     instance = None

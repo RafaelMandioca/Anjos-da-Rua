@@ -76,11 +76,10 @@
    width: 100%;
 }
 
-// Implementação dos ícones com o mixin ar-icon
-.nav-info::before      { @include mix.ar-icon(var.$consulta-ico, 20px, var.$white, -5px, 0, .75rem, 0, 0); }
-.nav-address::before   { @include mix.ar-icon(var.$abrigo-ico, 20px, var.$white, -5px, 0, .75rem, 0, 0); }
-.nav-password::before  { @include mix.ar-icon(var.$lock-ico, 20px, var.$white, -5px, 0, .75rem, 0, 0); }
-.nav-delete::before    { @include mix.ar-icon(var.$lixo-ico, 20px, currentColor, -5px, 0, .75rem, 0, 0); }
+.nav-info::before      { @include mix.ar-icon(var.$consulta-ico, var.$csize-head, var.$white, -5px, 0, 5px, 0, 0, -1px); }
+.nav-address::before   { @include mix.ar-icon(var.$abrigo-ico, var.$csize-head, var.$white, -5px, 0, 5px, 0, 0, -1px); }
+.nav-password::before  { @include mix.ar-icon(var.$lock-ico, var.$csize-head, var.$white, -5px, 0, 5px, 0, 0, -1px); }
+.nav-delete::before    { @include mix.ar-icon(var.$lixo-ico, var.$csize-head, var.$white, -5px, 0, 5px, 0, 0, -1px); }
 
 .profile-content {
    flex: 1 1 500px;

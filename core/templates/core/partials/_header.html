@@ -1,6 +1,9 @@
+{% load static %}
 <header>
     <nav>
-        <a href="{% url 'index' %}" class="nav-brand">Anjos da Rua</a>
+        <a href="{% url 'index' %}" class="nav-brand">
+            <img src="{% static 'img/logo.png' %}" alt="Logo Anjos da Rua">
+        </a>
 
         <div class="nav-desktop">
             <ul>

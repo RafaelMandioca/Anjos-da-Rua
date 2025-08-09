@@ -40,6 +40,12 @@ header {
 
 			display: inline-flex;
 			align-items: center;
+
+			img {
+				margin-left: 5px;
+				height: 40px;
+				width: auto;
+			}
 		}
 
 		ul {
@@ -93,6 +99,18 @@ header {
 		background-color: var.$white;
 		border-radius: 3px;
 		transition: all 0.3s ease-in-out;
+	}
+
+	&.active {
+		span:nth-child(1) {
+			transform: translateY(8.5px) rotate(45deg);
+		}
+		span:nth-child(2) {
+			opacity: 0;
+		}
+		span:nth-child(3) {
+			transform: translateY(-8.5px) rotate(-45deg);
+		}
 	}
 }
 

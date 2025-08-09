@@ -12,9 +12,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('login/', auth_views.LoginView.as_view(template_name='core/auth/login.html'), name='login'),
-    # Adicione next_page='login' abaixo
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('registro/', registro.registro_veterinario, name='registro_veterinario'),
     
-    path('core/', include('core.urls')), 
+    # A linha abaixo foi alterada para remover o prefixo 'core/'
+    path('', include('core.urls')), 
 ]
