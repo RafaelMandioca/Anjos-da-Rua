@@ -8,9 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db import transaction
 
 from .mixins import SortableListViewMixin
-# O import de Cidade foi removido daqui, pois não é mais usado pelas views
 from ..models import Endereco, Abrigo
-# O import de CidadeForm foi removido daqui
 from ..forms.form_cadastros_gerais import EnderecoForm, AbrigoForm
 
 def is_admin(user):
@@ -51,8 +49,6 @@ def generic_create_update_view(request, model_form, title, template, redirect_ur
 @user_passes_test(is_admin)
 def gerenciamento(request):
     return render(request, 'core/gerenciamento.html')
-
-# --- Views para o modelo Cidade Foram Removidas ---
 
 # --- Views para o modelo Abrigo ---
 class AbrigoListView(LoginRequiredMixin, SortableListViewMixin, ListView):

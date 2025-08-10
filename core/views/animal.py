@@ -56,10 +56,6 @@ def animal_create_update(request, pk=None):
     }
     return render(request, 'core/animal/animal_form.html', context)
 
-
-# --- Especie Views Foram Removidas ---
-
-
 # --- AnimalPorAbrigo View ---
 class AnimalPorAbrigoListView(LoginRequiredMixin, SortableListViewMixin, ListView):
     model = Animal

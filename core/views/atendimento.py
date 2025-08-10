@@ -34,7 +34,6 @@ class AtendimentoVeterinarioDeleteView(LoginRequiredMixin, DeleteView):
 def atendimento_veterinario_create_update(request, pk=None):
     instance = get_object_or_404(AtendimentoVeterinario, pk=pk) if pk else None
     
-    # Pega o animal da URL, se existir
     animal_id = request.GET.get('animal_id')
     initial_animal = get_object_or_404(Animal, pk=animal_id) if animal_id else None
 
@@ -46,7 +45,6 @@ def atendimento_veterinario_create_update(request, pk=None):
     FormClass = AtendimentoVeterinarioForm if request.user.is_superuser else VeterinarioAtendimentoForm
 
     if request.method == 'POST':
-        # Passa o animal inicial para o formulário para manter o campo desabilitado
         form = FormClass(request.POST, instance=instance, initial_animal=initial_animal)
         formset = ItemAtendimentoFormSet(request.POST, instance=instance)
         
@@ -55,8 +53,6 @@ def atendimento_veterinario_create_update(request, pk=None):
                 with transaction.atomic():
                     atendimento = form.save(commit=False)
 
-                    # Se o campo animal foi desabilitado, seu valor não é enviado no POST.
-                    # Por isso, precisamos reatribuí-lo manualmente aqui.
                     if initial_animal:
                         atendimento.animal = initial_animal
 
@@ -64,14 +60,12 @@ def atendimento_veterinario_create_update(request, pk=None):
                         atendimento.veterinario = request.user
                     atendimento.save()
 
-                    # Devolve o estoque dos itens removidos
                     for form_deletado in formset.deleted_forms:
                         item_instancia = form_deletado.instance
                         if item_instancia.pk: 
                             item_instancia.item.quantidade = F('quantidade') + item_instancia.quantidade
                             item_instancia.item.save()
 
-                    # Processa os itens novos ou modificados
                     for item_form in formset.cleaned_data:
                         if not item_form or item_form.get('DELETE'):
                             continue
@@ -97,7 +91,6 @@ def atendimento_veterinario_create_update(request, pk=None):
             except transaction.TransactionManagementError:
                 pass
     else:
-        # Passa o animal inicial para o formulário desabilitar o campo
         form = FormClass(instance=instance, initial_animal=initial_animal)
         formset = ItemAtendimentoFormSet(instance=instance)
 
