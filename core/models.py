@@ -120,10 +120,17 @@ class Item(models.Model):
     def __str__(self):
         return f"{self.nome}, ${self.preco_unitario}"
 
+class StatusAtendimento(models.Model):
+    descricao = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.descricao
+
 class AtendimentoVeterinario(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     veterinario = models.ForeignKey(Veterinario, on_delete=models.PROTECT)
     tipo_consulta = models.ForeignKey(TipoConsulta, on_delete=models.PROTECT)
+    status = models.ForeignKey(StatusAtendimento, on_delete=models.PROTECT, null=True)
     data_do_atendimento = models.DateTimeField()
     observacoes = models.TextField()
     

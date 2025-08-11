@@ -12,6 +12,7 @@
                 {% include 'core/partials/_sortable_header.html' with field_name="veterinario__nome" display_name="Veterinário" %}
                 {% include 'core/partials/_sortable_header.html' with field_name="data_do_atendimento" display_name="Data" %}
                 {% include 'core/partials/_sortable_header.html' with field_name="tipo_consulta__descricao" display_name="Tipo de Consulta" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="status__descricao" display_name="Status" %}
                 <th>Ações</th>
             </tr>
         </thead>
@@ -22,15 +23,18 @@
                 <td data-label="Veterinário">{{ atendimento.veterinario.nome }}</td>
                 <td data-label="Data">{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
                 <td data-label="Tipo de Consulta">{{ atendimento.tipo_consulta.descricao }}</td>
+                <td data-label="Status">{{ atendimento.status }}</td>
                 <td data-label="Ações">
                     <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}" class="btn-see"></a>
+                    {% if atendimento.status.descricao != 'Concluído' %}
                     <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}" class="btn-edit"></a>
+                    {% endif %}
                     <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}" class="btn-trash"></a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="5">Nenhum atendimento cadastrado.</td>
+                <td colspan="6">Nenhum atendimento cadastrado.</td>
             </tr>
             {% endfor %}
         </tbody>

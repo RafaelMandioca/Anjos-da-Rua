@@ -1,11 +1,25 @@
 {% extends 'core/base.html' %}
+{% load static %}
 
 {% block title %}{{ form_title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ form_title }}</h1>
+<h1>{{ form_title }}</h1>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <form method="post" novalidate id="atendimentoForm">
         {% csrf_token %}
+        <input type="hidden" name="next" value="{{ back_url }}">
+        {% if initial_animal_id %}
+            <input type="hidden" name="animal_id" value="{{ initial_animal_id }}">
+        {% endif %}
 
         <fieldset>
             <legend>Dados do Atendimento</legend>
@@ -14,7 +28,7 @@
 
         <hr>
 
-        <fieldset>
+        <fieldset id="items-fieldset">
             <legend>Itens Utilizados</legend>
             {{ formset.management_form }}
             <div id="item-form-list">
@@ -31,12 +45,16 @@
                             <small class="error-message"></small>
                         </div>
                         <div style="display: none;">{{ item_form.DELETE }}</div>
-                        <button type="button" class="btn btn-danger remove-item-form">Remover</button>
+                        {% if not is_concluido %}
+                            <button type="button" class="btn btn-danger remove-item-form">Remover</button>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
             <div class="form-btn-wrapper">
-                <button type="button" id="add-item-form" class="btn">Adicionar Outro Item</button>
+                {% if not is_concluido %}
+                    <button type="button" id="add-item-form" class="btn">Adicionar Outro Item</button>
+                {% endif %}
             </div>
             
             <div id="empty-item-form" style="display: none;">
@@ -58,87 +76,149 @@
         </fieldset>
 
         <div class="form-btn-wrapper">
-            <button type="submit" class="btn" id="submit-button">Salvar Atendimento</button>
-            <a href="{% url 'atendimentoveterinario-list' %}" class="btn">Cancelar</a>
+            <button type="submit" class="btn" id="submit-button">Salvar</button>
+            <a href="{{ back_url }}" class="btn">Cancelar</a>
         </div>
     </form>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const formList = document.getElementById('item-form-list');
-    const addItemBtn = document.getElementById('add-item-form');
-    const emptyFormTemplate = document.getElementById('empty-item-form').innerHTML;
-    const totalFormsInput = document.querySelector('[name="{{ formset.prefix }}-TOTAL_FORMS"]');
-    const submitButton = document.getElementById('submit-button');
-    let stockData = {};
+// IIFE para encapsular o escopo e evitar conflitos globais
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- INICIALIZAÇÃO E OBTENÇÃO DE DADOS DO DJANGO ---
+        
+        // Estas constantes recebem dados do template Django.
+        // É normal que editores de código como o VSCode mostrem erros aqui,
+        // pois eles não entendem a sintaxe `{{ ... }}`. Ignore esses alertas.
+        const IS_CONCLUIDO = {{ is_concluido|yesno:"true,false" }};
+        const FORMSET_PREFIX = '{{ formset.prefix }}';
+        const ORIGINAL_QUANTITIES_JSON = '{{ quantidades_antigas_json|escapejs|default:"{}" }}';
 
-    function parseStockFromOption(option) {
-        const match = option.text.match(/Estoque: (\d+)/);
-        return match ? parseInt(match[1], 10) : Infinity;
-    }
+        // Elementos do DOM
+        const itemsFieldset = document.getElementById('items-fieldset');
+        const formList = document.getElementById('item-form-list');
+        const addItemBtn = document.getElementById('add-item-form');
+        const emptyFormTemplate = document.getElementById('empty-item-form').innerHTML;
+        const totalFormsInput = document.querySelector(`[name="${FORMSET_PREFIX}-TOTAL_FORMS"]`);
+        const submitButton = document.getElementById('submit-button');
+        const originalQuantities = JSON.parse(ORIGINAL_QUANTITIES_JSON);
 
-    function validateAllForms() {
-        let allFormsValid = true;
-        formList.querySelectorAll('.item-form').forEach(formContainer => {
-            if (formContainer.style.display === 'none') return;
+        // --- FUNÇÕES AUXILIARES ---
 
+        function parseStockFromOption(option) {
+            if (!option || !option.text) return Infinity;
+            const match = option.text.match(/Estoque: (\d+)/);
+            return match ? parseInt(match[1], 10) : Infinity;
+        }
+
+        function updateRemoveButtons() {
+            const forms = formList.querySelectorAll('.item-form:not([style*="display: none"])');
+            forms.forEach((form) => {
+                const removeButton = form.querySelector('.remove-item-form');
+                if (removeButton) {
+                    removeButton.style.display = forms.length > 1 ? '' : 'none';
+                }
+            });
+        }
+
+        function validateAllForms() {
+            if (IS_CONCLUIDO) {
+                submitButton.disabled = false;
+                return;
+            }
+
+            let allFormsValid = true;
+            formList.querySelectorAll('.item-form').forEach(formContainer => {
+                if (formContainer.style.display === 'none') return;
+
+                const itemSelect = formContainer.querySelector('select[id$="-item"]');
+                const quantidadeInput = formContainer.querySelector('input[id$="-quantidade"]');
+                const errorElement = formContainer.querySelector('.error-message');
+                
+                if (!itemSelect || !quantidadeInput || !errorElement) return;
+
+                const selectedOption = itemSelect.options[itemSelect.selectedIndex];
+                const currentStock = parseStockFromOption(selectedOption);
+                const itemId = itemSelect.value;
+                
+                const originalQuantity = originalQuantities[itemId] || 0;
+                const maxStock = currentStock + originalQuantity;
+                const quantidade = parseInt(quantidadeInput.value, 10) || 0;
+
+                if (quantidade > maxStock) {
+                    errorElement.textContent = `Estoque máximo: ${maxStock}`;
+                    allFormsValid = false;
+                } else {
+                    errorElement.textContent = '';
+                }
+            });
+            submitButton.disabled = !allFormsValid;
+        }
+
+        function addEventListenersToForm(formContainer) {
             const itemSelect = formContainer.querySelector('select[id$="-item"]');
             const quantidadeInput = formContainer.querySelector('input[id$="-quantidade"]');
-            const errorElement = formContainer.querySelector('.error-message');
             
-            const selectedOption = itemSelect.options[itemSelect.selectedIndex];
-            const maxStock = parseStockFromOption(selectedOption);
-            const quantidade = parseInt(quantidadeInput.value, 10) || 0;
-
-            if (quantidade > maxStock) {
-                errorElement.textContent = `Estoque máximo: ${maxStock}`;
-                allFormsValid = false;
-            } else {
-                errorElement.textContent = '';
+            if (itemSelect) itemSelect.addEventListener('change', validateAllForms);
+            if (quantidadeInput) quantidadeInput.addEventListener('input', validateAllForms);
+            
+            const removeButton = formContainer.querySelector('.remove-item-form');
+            if (removeButton) {
+                removeButton.addEventListener('click', function() {
+                    const deleteInput = formContainer.querySelector('input[type="checkbox"][id$="-DELETE"]');
+                    if (deleteInput) {
+                        deleteInput.checked = true;
+                    }
+                    formContainer.style.display = 'none';
+                    validateAllForms();
+                    updateRemoveButtons();
+                });
             }
-        });
-        submitButton.disabled = !allFormsValid;
-    }
+        }
 
-    function addEventListenersToForm(formContainer) {
-        const itemSelect = formContainer.querySelector('select[id$="-item"]');
-        const quantidadeInput = formContainer.querySelector('input[id$="-quantidade"]');
-        
-        itemSelect.addEventListener('change', validateAllForms);
-        quantidadeInput.addEventListener('input', validateAllForms);
-        
-        formContainer.querySelector('.remove-item-form').addEventListener('click', function() {
-            const deleteInput = formContainer.querySelector('input[type="checkbox"][id$="-DELETE"]');
-            if (deleteInput) {
-                deleteInput.checked = true;
-            }
-            formContainer.style.display = 'none';
-            validateAllForms(); // Revalida tudo após remover um item
-        });
-    }
+        // --- LÓGICA PRINCIPAL ---
 
-    // Adiciona eventos aos formulários existentes
-    formList.querySelectorAll('.item-form').forEach(addEventListenersToForm);
+        // Desabilita campos se o atendimento estiver concluído
+        if (IS_CONCLUIDO) {
+            itemsFieldset.querySelectorAll('select, input, button').forEach(el => {
+                el.disabled = true;
+            });
+        }
 
-    // Adiciona um novo formulário
-    addItemBtn.addEventListener('click', function() {
-        let formNum = parseInt(totalFormsInput.value);
-        let newFormHtml = emptyFormTemplate.replace(/__prefix__/g, formNum);
+        // Adiciona listeners aos formulários já existentes na página
+        formList.querySelectorAll('.item-form').forEach(addEventListenersToForm);
+
+        // Lógica para adicionar um novo formulário de item
+        if (addItemBtn) {
+            addItemBtn.addEventListener('click', function() {
+                let formNum = parseInt(totalFormsInput.value);
+                let newFormHtml = emptyFormTemplate.replace(/__prefix__/g, formNum);
+                
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = newFormHtml;
+                const newFormElement = tempDiv.firstElementChild;
+                
+                addEventListenersToForm(newFormElement);
+                formList.append(newFormElement);
+                totalFormsInput.value = formNum + 1;
+                
+                const newSelect = newFormElement.querySelector('select');
+                if (newSelect && typeof createCustomSelect === 'function' && !newSelect.dataset.customized) {
+                    createCustomSelect(newSelect);
+                }
+
+                validateAllForms();
+                updateRemoveButtons();
+            });
+        }
         
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = newFormHtml;
-        const newFormElement = tempDiv.firstElementChild;
-        
-        addEventListenersToForm(newFormElement);
-        formList.append(newFormElement);
-        totalFormsInput.value = formNum + 1;
+        // Execução inicial para configurar o estado da página
         validateAllForms();
+        updateRemoveButtons();
     });
-    
-    // Validação inicial
-    validateAllForms();
-});
+})();
 </script>
 {% endblock %}

@@ -23,8 +23,9 @@
                 <td data-label="Espécie">{{ animal.especie }}</td>
                 <td data-label="Idade">{{ animal.idade }} anos</td>
                 <td data-label="Sexo">{{ animal.get_sexo_display }}</td>
-                <td data-label="Ações">
-                    <a href="{% url 'atendimentoveterinario-create' %}?animal_id={{ animal.pk }}" class="btn btn-mini-add"></a>
+                <td data-label="Ações de Atendimento">
+                    <a href="{% url 'atendimentos-por-animal' animal.pk %}" class="btn-see"></a>
+                    <a href="{% url 'atendimentoveterinario-create' %}?animal_id={{ animal.pk }}" class="btn-mini-add"></a>
                 </td>
             </tr>
             {% empty %}

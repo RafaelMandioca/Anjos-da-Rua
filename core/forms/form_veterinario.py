@@ -26,3 +26,9 @@ class CrmvForm(forms.ModelForm):
     class Meta:
         model = CRMV
         fields = ['numero', 'estado']
+
+    def clean_numero(self):
+        numero = self.cleaned_data.get('numero')
+        if not numero.isdigit() or len(numero) != 11:
+            raise forms.ValidationError("O CRMV deve conter exatamente 11 números.")
+        return numero

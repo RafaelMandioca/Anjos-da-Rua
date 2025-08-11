@@ -4,7 +4,7 @@ from django import forms
 from django.forms import BaseInlineFormSet
 from ..models import (
     AtendimentoVeterinario, ItemHasAtendimentoVeterinario, TipoConsulta, 
-    Abrigo, Animal, Item
+    Abrigo, Animal, Item, StatusAtendimento
 )
 
 class AtendimentoVeterinarioForm(forms.ModelForm):
@@ -16,24 +16,49 @@ class AtendimentoVeterinarioForm(forms.ModelForm):
 
     class Meta:
         model = AtendimentoVeterinario
-        fields = ['animal', 'veterinario', 'tipo_consulta', 'data_do_atendimento', 'observacoes']
+        fields = ['animal', 'veterinario', 'tipo_consulta', 'status', 'data_do_atendimento', 'observacoes']
     
     def __init__(self, *args, **kwargs):
-        # Remove 'initial_animal' dos kwargs para não ser passado ao ModelForm
+        user = kwargs.pop('user', None)
         initial_animal = kwargs.pop('initial_animal', None)
         super().__init__(*args, **kwargs)
 
-        if initial_animal:
-            # Se um animal foi passado, limita o queryset a ele e desabilita o campo
-            self.fields['animal'].queryset = Animal.objects.filter(pk=initial_animal.pk)
-            self.initial['animal'] = initial_animal
-            self.fields['animal'].disabled = True
-        else:
-            # Caso contrário, mostra a lista agrupada por abrigo
-            self.fields['animal'].choices = self.get_animal_choices()
+        is_editing = self.instance and self.instance.pk
+        is_admin = user and user.is_superuser
+
+        # --- Lógica para o campo "Animal" ---
+        if is_editing:
+            if not is_admin:
+                # Veterinário editando: desabilita o campo do animal
+                self.fields['animal'].disabled = True
+                self.fields['animal'].required = False
+            else:
+                # Admin editando: mostra a lista completa de animais
+                self.fields['animal'].choices = self.get_animal_choices()
+        else:  # Criando um novo atendimento
+            if initial_animal:
+                # Criando a partir de um animal específico (workflow do vet)
+                self.fields['animal'].queryset = Animal.objects.filter(pk=initial_animal.pk)
+                self.initial['animal'] = initial_animal
+                self.fields['animal'].disabled = True
+            else:
+                if is_admin:
+                    # Admin criando a partir da página genérica
+                    self.fields['animal'].choices = self.get_animal_choices()
+                else:
+                    # Vet na página genérica: campo desabilitado e vazio (força o workflow correto)
+                    self.fields['animal'].queryset = Animal.objects.none()
+                    self.fields['animal'].disabled = True
         
-        # Formata o valor inicial da data para o padrão brasileiro
-        if self.instance and self.instance.pk and self.instance.data_do_atendimento:
+        # --- Lógica para status "Concluído" ---
+        is_concluido = is_editing and self.instance.status and self.instance.status.descricao == 'Concluído'
+        if is_concluido:
+            for field_name, field in self.fields.items():
+                if field_name != 'status':
+                    field.disabled = True
+        
+        # --- Formatação de data ---
+        if is_editing and self.instance.data_do_atendimento:
             self.initial['data_do_atendimento'] = self.instance.data_do_atendimento.strftime('%d/%m/%Y %H:%M')
 
     def get_animal_choices(self):
@@ -44,10 +69,17 @@ class AtendimentoVeterinarioForm(forms.ModelForm):
             if animais_do_abrigo:
                 choices.append((abrigo.nome, animais_do_abrigo))
         return choices
+        
+    def clean_status(self):
+        status = self.cleaned_data.get('status')
+        if self.instance and self.instance.pk and self.instance.status:
+            if self.instance.status.descricao == 'Concluído' and status.descricao != 'Concluído':
+                raise forms.ValidationError("Um atendimento concluído não pode ser alterado para 'Não Concluído'.")
+        return status
 
 class VeterinarioAtendimentoForm(AtendimentoVeterinarioForm):
     class Meta(AtendimentoVeterinarioForm.Meta):
-        fields = ['animal', 'tipo_consulta', 'data_do_atendimento', 'observacoes']
+        fields = ['animal', 'tipo_consulta', 'status', 'data_do_atendimento', 'observacoes']
 
 
 class TipoConsultaForm(forms.ModelForm):
@@ -60,32 +92,45 @@ class ItemChoiceField(forms.ModelChoiceField):
         return f"{obj.nome} (Estoque: {obj.quantidade})"
 
 class ItemAtendimentoForm(forms.ModelForm):
-    item = ItemChoiceField(queryset=Item.objects.filter(quantidade__gt=0).order_by('nome'))
+    item = ItemChoiceField(queryset=Item.objects.none(), required=False)
+    quantidade = forms.IntegerField(min_value=1)
     
     class Meta:
         model = ItemHasAtendimentoVeterinario
         fields = ['item', 'quantidade']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        current_item = self.instance.item if self.instance and self.instance.pk else None
+        
+        items_in_stock = Item.objects.filter(quantidade__gt=0)
+        
+        if current_item:
+            self.fields['item'].queryset = (items_in_stock | Item.objects.filter(pk=current_item.pk)).distinct().order_by('nome')
+        else:
+            self.fields['item'].queryset = items_in_stock.order_by('nome')
+
 class BaseItemAtendimentoFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
-        item_usage = {}
+        if any(self.errors):
+            return
+
+        is_concluido = self.instance and self.instance.pk and self.instance.status and self.instance.status.descricao == 'Concluído'
+        if is_concluido:
+            return
+
         for form in self.forms:
-            if not form.is_valid() or form in self.deleted_forms:
+            if not form.is_valid() or self.can_delete and self._should_delete_form(form):
                 continue
             
             item = form.cleaned_data.get('item')
-            quantidade = form.cleaned_data.get('quantidade')
+            quantidade_solicitada = form.cleaned_data.get('quantidade')
 
-            if item and quantidade:
-                item_usage[item] = item_usage.get(item, 0) + quantidade
-        
-        for item, total_quantidade_usada in item_usage.items():
-            if total_quantidade_usada > item.quantidade:
-                raise forms.ValidationError(
-                    f"Estoque insuficiente para o item '{item.nome}'. "
-                    f"Solicitado: {total_quantidade_usada}, Disponível: {item.quantidade}."
-                )
+            if item and quantidade_solicitada:
+                if quantidade_solicitada > item.quantidade:
+                    form.add_error('quantidade', f"Estoque insuficiente para '{item.nome}'. Disponível: {item.quantidade}.")
 
 ItemAtendimentoFormSet = forms.inlineformset_factory(
     AtendimentoVeterinario,

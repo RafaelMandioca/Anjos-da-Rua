@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Atendimentos de {{ animal.nome }}{% endblock %}
+
+{% block content %}
+    <h1>Atendimentos de {{ animal.nome }}</h1>
+    <a href="{% url 'animais-por-abrigo' animal.abrigo.pk %}" class="btn btn-back">Voltar para a lista de animais</a>
+    <table>
+        <thead>
+            <tr>
+                {% if user.is_superuser %}
+                    {% include 'core/partials/_sortable_header.html' with field_name="veterinario__nome" display_name="Veterinário" %}
+                {% endif %}
+                {% include 'core/partials/_sortable_header.html' with field_name="data_do_atendimento" display_name="Data" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="tipo_consulta__descricao" display_name="Tipo de Consulta" %}
+                {% include 'core/partials/_sortable_header.html' with field_name="status__descricao" display_name="Status" %}
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atendimento in atendimento_list %}
+            <tr>
+                {% if user.is_superuser %}
+                    <td data-label="Veterinário">{{ atendimento.veterinario.nome }}</td>
+                {% endif %}
+                <td data-label="Data">{{ atendimento.data_do_atendimento|date:"d/m/Y H:i" }}</td>
+                <td data-label="Tipo de Consulta">{{ atendimento.tipo_consulta.descricao }}</td>
+                <td data-label="Status">{{ atendimento.status }}</td>
+                <td data-label="Ações">
+                    <a href="{% url 'atendimentoveterinario-detail' atendimento.pk %}" class="btn-see"></a>
+                    {% if atendimento.veterinario == request.user or request.user.is_superuser %}
+                        {% if atendimento.status.descricao != 'Concluído' %}
+                            <a href="{% url 'atendimentoveterinario-update' atendimento.pk %}" class="btn-edit"></a>
+                        {% endif %}
+                        <a href="{% url 'atendimentoveterinario-delete' atendimento.pk %}" class="btn-trash"></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="{% if user.is_superuser %}5{% else %}4{% endif %}">
+                    {% if user.is_superuser %}
+                        Nenhum atendimento cadastrado para este animal.
+                    {% else %}
+                        Você não cadastrou nenhum atendimento para este animal.
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

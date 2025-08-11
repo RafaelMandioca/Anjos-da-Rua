@@ -57,6 +57,10 @@ table {
 	}
 }
 
+#id_status_error, .messages li, .errorlist {
+	margin: 0 0 var.$sp-sm var.$sp-md;
+}
+
 @media (max-width: var.$desktop) {
 	table {
 		border-radius: 0;

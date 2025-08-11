@@ -58,6 +58,7 @@ urlpatterns = [
 
    # Atendimento Veterinário
    path('atendimentos/', atendimento.AtendimentoVeterinarioListView.as_view(), name='atendimentoveterinario-list'),
+   path('animal/<int:animal_id>/atendimentos/', atendimento.AtendimentoPorAnimalListView.as_view(), name='atendimentos-por-animal'),
    path('atendimento/<int:pk>/', atendimento.AtendimentoVeterinarioDetailView.as_view(), name='atendimentoveterinario-detail'),
    path('atendimento/add/', atendimento.atendimento_veterinario_create_update, name='atendimentoveterinario-create'),
    path('atendimento/<int:pk>/edit/', atendimento.atendimento_veterinario_create_update, name='atendimentoveterinario-update'),

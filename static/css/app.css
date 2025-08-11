@@ -148,6 +148,10 @@ table th a:hover {
     border-top-right-radius: 10px;
   }
 }
+#id_status_error, .messages li, .errorlist {
+  margin: 0 0 0.9rem 1.2rem;
+}
+
 @media (max-width: 800px) {
   table {
     border-radius: 0;
