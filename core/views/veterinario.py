@@ -77,7 +77,7 @@ def perfil_alterar_senha(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, user)
             messages.success(request, 'Sua senha foi alterada com sucesso!')
             return redirect('perfil_alterar_senha')
     else:

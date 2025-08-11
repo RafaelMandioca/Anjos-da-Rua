@@ -11,7 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-# ALTERE A LINHA ABAIXO
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'anjosdaruaproject.settings.development')
 
 application = get_wsgi_application()

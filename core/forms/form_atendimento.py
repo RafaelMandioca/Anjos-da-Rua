@@ -26,38 +26,30 @@ class AtendimentoVeterinarioForm(forms.ModelForm):
         is_editing = self.instance and self.instance.pk
         is_admin = user and user.is_superuser
 
-        # --- Lógica para o campo "Animal" ---
         if is_editing:
             if not is_admin:
-                # Veterinário editando: desabilita o campo do animal
                 self.fields['animal'].disabled = True
                 self.fields['animal'].required = False
             else:
-                # Admin editando: mostra a lista completa de animais
                 self.fields['animal'].choices = self.get_animal_choices()
-        else:  # Criando um novo atendimento
+        else:
             if initial_animal:
-                # Criando a partir de um animal específico (workflow do vet)
                 self.fields['animal'].queryset = Animal.objects.filter(pk=initial_animal.pk)
                 self.initial['animal'] = initial_animal
                 self.fields['animal'].disabled = True
             else:
                 if is_admin:
-                    # Admin criando a partir da página genérica
                     self.fields['animal'].choices = self.get_animal_choices()
                 else:
-                    # Vet na página genérica: campo desabilitado e vazio (força o workflow correto)
                     self.fields['animal'].queryset = Animal.objects.none()
                     self.fields['animal'].disabled = True
         
-        # --- Lógica para status "Concluído" ---
         is_concluido = is_editing and self.instance.status and self.instance.status.descricao == 'Concluído'
         if is_concluido:
             for field_name, field in self.fields.items():
                 if field_name != 'status':
                     field.disabled = True
         
-        # --- Formatação de data ---
         if is_editing and self.instance.data_do_atendimento:
             self.initial['data_do_atendimento'] = self.instance.data_do_atendimento.strftime('%d/%m/%Y %H:%M')
 

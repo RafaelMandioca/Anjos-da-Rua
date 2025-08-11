@@ -116,12 +116,10 @@ def atendimento_veterinario_create_update(request, pk=None):
                     if not atendimento.pk:
                         atendimento.status = StatusAtendimento.objects.get(descricao='Não Concluído')
 
-                    # *** LINHA CORRIGIDA/ADICIONADA AQUI ***
-                    # Se o usuário não for admin, atribui o atendimento a ele
                     if not request.user.is_superuser:
                         atendimento.veterinario = request.user
                     
-                    atendimento.save() # Agora o atendimento tem um veterinário antes de salvar
+                    atendimento.save()
                     formset.instance = atendimento
                     formset.save()
 

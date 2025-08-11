@@ -16,6 +16,5 @@ class ItemForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # CORREÇÃO AQUI: Formata o valor inicial da data para o padrão brasileiro
         if self.instance and self.instance.pk and self.instance.data_validade:
             self.initial['data_validade'] = self.instance.data_validade.strftime('%d/%m/%Y')

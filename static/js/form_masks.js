@@ -20,13 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 Y: {
                     mask: IMask.MaskedRange,
                     from: 1900,
-                    to: new Date().getFullYear() + 10, // Permite datas até 10 anos no futuro
+                    to: new Date().getFullYear() + 10,
                 }
             }
         });
     });
 
-    // Máscara para campos de Data e Hora (DD/MM/AAAA HH:mm)
     const dateTimeMaskElements = document.querySelectorAll('.datetime-mask');
     dateTimeMaskElements.forEach(function(element) {
         IMask(element, {

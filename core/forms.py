@@ -33,7 +33,7 @@ class VeterinarioRegistrationForm(forms.ModelForm):
         if password and password_confirm and password != password_confirm:
             self.add_error('password_confirm', "As senhas não coincidem.")
     
-    def save(self, commit=False): # Alterado para commit=False
+    def save(self, commit=False):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
         return user
@@ -63,7 +63,7 @@ class CidadeForm(forms.ModelForm):
 class AbrigoForm(forms.ModelForm):
     class Meta:
         model = Abrigo
-        fields = ['nome'] # Endereço será tratado separadamente na view
+        fields = ['nome']
 
 class EspecieForm(forms.ModelForm):
    class Meta:
@@ -73,7 +73,7 @@ class EspecieForm(forms.ModelForm):
 class AnimalForm(forms.ModelForm):
    class Meta:
       model = Animal
-      fields = ['nome', 'abrigo', 'peso', 'idade', 'sexo'] # Espécie será tratada separadamente
+      fields = ['nome', 'abrigo', 'peso', 'idade', 'sexo']
 
 class TipoConsultaForm(forms.ModelForm):
    class Meta:

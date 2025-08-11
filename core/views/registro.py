@@ -27,7 +27,7 @@ def registro_veterinario(request):
                 codigo_acesso = CodigoAcesso.objects.get(codigo=codigo_acesso_str)
                 veterinario.codigo_acesso = codigo_acesso
                 
-                veterinario.save() # Salva o veterinário para obter um ID
+                veterinario.save()
 
                 codigo_acesso.utilizado = True
                 codigo_acesso.save()

@@ -11,12 +11,10 @@ from .cadastros_gerais import generic_create_update_view, AdminRequiredMixin, is
 
 # --- Item Views ---
 
-# Veterinários e Admins podem listar os itens
 class ItemListView(LoginRequiredMixin, SortableListViewMixin, ListView): 
     model = Item
     template_name = 'core/item/item_list.html'
 
-# Apenas Admins podem ver detalhes, deletar ou atualizar
 class ItemDetailView(LoginRequiredMixin, AdminRequiredMixin, DetailView): 
     model = Item
     template_name = 'core/item/item_detail.html'

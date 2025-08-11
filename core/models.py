@@ -41,7 +41,6 @@ class Veterinario(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.nome
 
-# NOVO MODELO
 class UF(models.Model):
     sigla = models.CharField(max_length=2, unique=True)
     nome = models.CharField(max_length=50)
@@ -51,7 +50,6 @@ class UF(models.Model):
 
 class Cidade(models.Model):
     cidade = models.CharField(max_length=100)
-    # CAMPO ALTERADO
     uf = models.ForeignKey(UF, on_delete=models.PROTECT)
 
     def __str__(self):
@@ -78,7 +76,6 @@ class Abrigo(models.Model):
 
 class CRMV(models.Model):
     numero = models.CharField(max_length=20)
-    # CAMPO ALTERADO
     estado = models.ForeignKey(UF, on_delete=models.PROTECT)
 
     def __str__(self):

@@ -74,7 +74,7 @@ class Command(BaseCommand):
         self.stdout.write('Status de Atendimento criados.')
 
         # Cria Códigos de Acesso
-        for _ in range(15):  # Criar alguns códigos extras
+        for _ in range(15):
             CodigoAcesso.objects.create()
         self.stdout.write('Códigos de Acesso criados.')
 
@@ -193,7 +193,7 @@ class Command(BaseCommand):
                animal=random.choice(animais_criados),
                veterinario=random.choice(veterinarios_criados),
                tipo_consulta=random.choice(tipos_consulta),
-               status=status_nao_concluido, # Todos começam como não concluídos
+               status=status_nao_concluido,
                data_do_atendimento=fake.date_time_this_year(),
                observacoes=fake.text(max_nb_chars=200)
             )
